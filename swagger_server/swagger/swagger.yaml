@@ -736,25 +736,6 @@ components:
         complete:
           type: boolean
           default: false
-      example:
-        start_time: 2000-01-23T04:56:07.000Z
-        name: name
-        end_time: 2000-01-23T04:56:07.000Z
-        id: id
-        egress_port:
-          node: urn:sdx:port:amlight.net:Novi07
-          name: urn:sdx:port:amlight.net:Novi07:10
-          short_name: "10"
-          id: id
-          status: up
-        ingress_port:
-          node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:9
-          short_name: "9"
-          id: id
-          status: up
-      xml:
-        name: Connection
     User:
       type: object
       properties:
@@ -777,36 +758,32 @@ components:
           type: integer
           description: User Status
           format: int32
-      example:
-        firstName: firstName
-        lastName: lastName
-        password: password
-        userStatus: 6
-        phone: phone
-        id: 0
-        email: email
-        username: username
-      xml:
-        name: User
     topology:
-      required:
-      - id
-      - links
-      - name
-      - nodes
-      - time_stamp
-      - version
       type: object
+      required:
+        - id
+        - name
+        - version
+        - model_version
+        - time_stamp
+        - nodes
+        - links
       properties:
         id:
           type: string
+          pattern: '^([urn:sdx:topology:][A-Za-z_.-])*$'
         name:
           type: string
+          minLength: 3
+          maxLength: 30
+          pattern: '^[A-Za-z]$'
           example: amLight
         version:
           type: integer
           format: int64
           example: 1
+        model_version:
+          type: string
         time_stamp:
           type: string
           format: date-time
@@ -818,251 +795,128 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/link'
-      example:
-        nodes:
-        - name: urn:sdx:node:amlight.net:Novi06
-          short_name: Novi06
-          id: id
-          location:
-            address: Miami
-            latitude: -28.51107891831147
-            longitude: -79.57947854792273
-          ports:
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            short_name: "9"
-            id: id
-            status: up
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            short_name: "9"
-            id: id
-            status: up
-        - name: urn:sdx:node:amlight.net:Novi06
-          short_name: Novi06
-          id: id
-          location:
-            address: Miami
-            latitude: -28.51107891831147
-            longitude: -79.57947854792273
-          ports:
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
-            short_name: "9"
-            id: id
-            status: up
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
-            short_name: "9"
-            id: id
-            status: up
-        time_stamp: 2000-01-23T04:56:07.000Z
-        name: amLight
-        links:
-        - total_bandwidth: 80083.7389632821
-          packet_loss: 59.621339166831824
-          latency: 146582.15146899645
-          name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
-          short_name: Miami-BocaRaton
-          id: id
-          availability: 56.37376656633328
-          ports:
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
-            short_name: "9"
-            id: id
-            status: up
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:10
-            label_range:
-            - label_range
-            - label_range
-            short_name: "10"
-            id: id
-            status: up
-        - total_bandwidth: 80083.7389632821
-          packet_loss: 59.621339166831824
-          latency: 146582.15146899645
-          name: miami-Boca.amLight.sdx
-          available_bandwidth: 602746.015561422
-          short_name: Miami-BocaRaton
-          id: id
-          availability: 56.37376656633328
-          ports:
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:9
-            label_range:
-            - label_range
-            - label_range
-            short_name: "9"
-            id: id
-            status: up
-          - node: urn:sdx:port:amlight.net:Novi06
-            name: urn:sdx:port:amlight.net:Novi06:10
-            label_range:
-            - label_range
-            - label_range
-            short_name: "10"
-            id: id
-            status: up
-        id: id
-        version: 1
-      xml:
-        name: topology
     node:
-      required:
-      - id
-      - location
-      - name
-      - ports
       type: object
+      required:
+        - id
+        - name
+        - location
+        - ports
       properties:
         id:
           type: string
+          pattern: '^([urn:sdx:node:][A-Za-z_.-])*$'
         name:
           type: string
-          example: urn:sdx:node:amlight.net:Novi06
-        short_name:
-          type: string
-          example: Novi06
+          minLength: 3
+          maxLength: 30
+          pattern: '^[A-Za-z_.-]*$'
+          example: amLight
         location:
           $ref: '#/components/schemas/location'
         ports:
           type: array
           items:
             $ref: '#/components/schemas/port'
-      example:
-        name: urn:sdx:node:amlight.net:Novi06
-        short_name: Novi06
-        id: id
-        location:
-          address: Miami
-          latitude: -28.51107891831147
-          longitude: -79.57947854792273
-        ports:
-        - node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:9
-          label_range:
-          - label_range
-          - label_range
-          short_name: "9"
-          id: id
-          status: up
-        - node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:10
-          label_range:
-          - label_range
-          - label_range
-          short_name: "10"
-          id: id
-          status: up
-      xml:
-        name: node
     link:
-      required:
-      - id
-      - name
-      - ports
       type: object
+      required:
+        - id
+        - name
+        - ports
+        - bandwith
+        - type
+        - status
+        - state
       properties:
         id:
           type: string
+          pattern: '^([urn:sdx:link:][A-Za-z_.-])*$'
         name:
           type: string
-          example: miami-Boca.amLight.sdx
-        short_name:
-          type: string
-          example: Miami-BocaRaton
+          minLength: 3
+          maxLength: 30
         ports:
           type: array
           items:
             $ref: '#/components/schemas/port'
-        total_bandwidth:
-          maximum: 1000000
-          minimum: 1
+        type:
+          type: string
+          enum: ['intra','inter']
+        bandwidth:
           type: number
-        available_bandwidth:
-          maximum: 1000000
           minimum: 1
+          maximum: 1000000
+        residual_bandwidth:
           type: number
+          minimum: 0
+          maximum: 100
         latency:
-          maximum: 1000000
+          type: number
           minimum: 1
-          type: number
+          maximum: 1000000
         packet_loss:
-          maximum: 100
-          minimum: 0
           type: number
+          minimum: 0
+          maximum: 100
         availability:
-          maximum: 100
-          minimum: 0
           type: number
-      example:
-        total_bandwidth: 80083.7389632821
-        packet_loss: 59.621339166831824
-        latency: 146582.15146899645
-        name: miami-Boca.amLight.sdx
-        available_bandwidth: 602746.015561422
-        short_name: Miami-BocaRaton
-        id: id
-        availability: 56.37376656633328
-        ports:
-        - node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:9
-          short_name: "9"
-          id: id
-          status: up
-        - node: urn:sdx:port:amlight.net:Novi06
-          name: urn:sdx:port:amlight.net:Novi06:10
-          short_name: "10"
-          id: id
-          status: up
-      xml:
-        name: link
+          minimum: 0
+          maximum: 100
+        status:
+          type: string
+          enum: ['up','down','error']
+        state:
+          type: string
+          enum: ['enabled','disabled','maintenance']
     port:
-      required:
-      - id
-      - name
-      - node
-      - status
       type: object
+      required:
+        - id
+        - name
+        - node
+        - type
+        - status
+        - state
       properties:
         id:
           type: string
+          pattern: '^([urn:sdx:port:][A-Za-z_.-])*$'
         name:
           type: string
-          example: urn:sdx:port:amlight.net:Novi06:9
-        short_name:
-          type: string
-          example: "9"
+          minLength: 3
+          maxLength: 30
         node:
           type: string
-          example: urn:sdx:port:amlight.net:Novi06
-        label_range:
-          type: array
-          items:
-            type: string
+        type:
+          type: string
+          enum: ['100FE','1GE','10GE,'25GE','40GE','50GE','100GE','400GE','Other']
+        mtu:
+          type: integer
+          format: int32
         status:
           type: string
-          example: up
-      example:
-        node: urn:sdx:port:amlight.net:Novi06
-        name: urn:sdx:port:amlight.net:Novi06:9
-        short_name: "9"
-        id: id
-        status: up
-      xml:
-        name: port
+          enum: ['up','down','error']
+        state:
+          type: string
+          enum: ['enabled','disabled']
+    location:
+      type: object
+      required:
+        - address
+        - latitude
+        - longitude
+      properties:
+        address:
+          type: string
+        latitude:
+          type: number
+          minimum: -90.0
+          maximum: 90.0
+        longitude:
+          type: number
+          minimum: -90.0
+          maximum: 90.0
     ApiResponse:
       type: object
       properties:
@@ -1077,15 +931,6 @@ components:
         code: 0
         type: type
         message: message
-    location:
-      type: object
-      properties:
-        address:
-          type: string
-        latitude:
-          type: number
-        longitude:
-          type: number
   requestBodies:
     topology:
       description: topology object that needs to be sent to the SDX LC
