@@ -75,19 +75,19 @@ jobs:
         run: |
           python -m tox
         env:
-          SDX_MQ_IP=localhost
-          SDXLC_DOMAIN=tests
-          SDXLC_HOST=localhost
-          SDXLC_PORT=8080
-          SDXLC_VERSION=1.0.0
-          PUB_TOPIC=topo
-          PUB_QUEUE=sdx_q1
-          SUB_QUEUE=connection
-          SUB_EXCHANGE=connection
-          SUB_TOPIC=lc0_q1
-          MQ_NAME=hello
-          MQ_HOST=localhost
-          MQ_PORT=5672 
-          DB_NAME=test-db
-          DB_CONFIG_TABLE_NAME=test-1
-          KYTOS_URL=""
+          SDX_MQ_IP: localhost
+          SDXLC_DOMAIN: tests
+          SDXLC_HOST: localhost
+          SDXLC_PORT: 8080
+          SDXLC_VERSION: 1.0.0
+          PUB_TOPIC: topo
+          PUB_QUEUE: sdx_q1
+          SUB_QUEUE: connection
+          SUB_EXCHANGE: connection
+          SUB_TOPIC: lc0_q1
+          MQ_NAME: hello
+          MQ_HOST: localhost
+          MQ_PORT: 5672 
+          DB_NAME: test-db
+          DB_CONFIG_TABLE_NAME: test-1
+          KYTOS_URL: ""
