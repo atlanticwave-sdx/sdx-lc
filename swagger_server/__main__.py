@@ -26,6 +26,8 @@ def is_json(myjson):
 def start_consumer(thread_queue, db_instance):
     logger = logging.getLogger(__name__)
     logging.getLogger("pika").setLevel(logging.WARNING)
+    file_handler = logging.FileHandler('/var/log/gunicorn/errorlog.txt')
+    file_handler.setLevel(WARNING)
 
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
@@ -41,7 +43,7 @@ def start_pull_topology_change():
     call(["python", "swagger_server/jobs/pull_topo_changes.py"])
 
 
-def main():
+def main(arg1, arg2):
     logging.basicConfig(level=logging.INFO)
 
     # Run swagger service
@@ -61,7 +63,8 @@ def main():
     db_instance.initialize_db()
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
+    return app
 
 
 if __name__ == "__main__":
-    main()
+    main(None, None)
