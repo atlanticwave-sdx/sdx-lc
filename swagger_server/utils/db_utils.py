@@ -3,7 +3,7 @@ import os
 
 import pymongo
 
-DB_NAME = os.environ.get("AMLIGHT_MONGO_DB")
+DB_NAME = os.environ.get("MONGO_DBNAME")
 TOPO_COLL = os.environ.get("TOPOLOGY_COLLECTION")
 MONGODB_CONNSTRING = os.environ.get("MONGODB_CONNSTRING")
 

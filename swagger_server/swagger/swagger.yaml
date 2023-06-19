@@ -23,13 +23,45 @@ tags:
     description: Find out more about our store
     url: https://www.atlanticwave-sdx.net
 paths:
+  /constructor:
+    post:
+      summary: Send a new topology or update to SDX-LC
+      description: Build a topology
+      tags:
+      - constructor
+      operationId: build_topology
+      requestBody:
+        description: placed for adding or update a new topology
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewConstructor'
+        required: true
+      responses:
+        "200":
+          description: build topology response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Constructor'
+        "400":
+          description: Invalid Connection
+        "405":
+          description: Invalid input
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      x-openapi-router-controller: swagger_server.controllers.constructor_controller
   /topology:
     get:
       tags:
       - topology
       description: |
         Returns topology from the system that the user has access to
-      operationId: find_topology
+      operationId: get_topology
       parameters:
       - name: tags
         in: query
@@ -103,7 +135,7 @@ paths:
       tags:
       - topology
       description: Info for a specific topology
-      operationId: show_topology_by_id
+      operationId: get_topology_by_id
       parameters:
       - name: topologyId
         in: path
@@ -151,13 +183,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorMessage'
       x-openapi-router-controller: swagger_server.controllers.topology_controller
+  /producer:
+    post:
+      tags:
+      - producer
+      summary: Send a new message to Rabbit MQ
+      description: Produce a Queue Message
+      operationId: push_message
+      requestBody:
+        description: placed for adding or updating a new message
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewJob'
+        required: true
+      responses:
+        "200":
+          description: Produce a message response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+        "400":
+          description: Invalid Connection
+        "405":
+          description: Invalid input
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      x-openapi-router-controller: swagger_server.controllers.producer_controller
   /user:
     get:
       tags:
       - user
       description: |
         Returns users from the system that the user has access to
-      operationId: find_user
+      operationId: get_user
       parameters:
       - name: tags
         in: query
@@ -246,7 +310,7 @@ paths:
       tags:
       - user
       description: Fetch a user from the database
-      operationId: read_user
+      operationId: get_user_by_id
       parameters:
       - name: user_id
         in: path
@@ -289,6 +353,14 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.user_controller
 components:
   schemas:
+    Constructor:
+      minItems: 1
+      type: array
+      items:
+        $ref: '#/components/schemas/NewConstructor'
+    NewConstructor:
+      type: object
+      additionalProperties: {}
     Topology:
       allOf:
       - $ref: '#/components/schemas/NewTopology'
@@ -500,6 +572,14 @@ components:
           - disabled
           - maintenance
       additionalProperties: false
+    Job:
+      minItems: 1
+      type: array
+      items:
+        $ref: '#/components/schemas/NewJob'
+    NewJob:
+      type: object
+      additionalProperties: {}
     User:
       allOf:
       - $ref: '#/components/schemas/NewUser'
