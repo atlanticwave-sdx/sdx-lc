@@ -17,7 +17,9 @@ def push_message(cmd):  # noqa: E501
     """
     if connexion.request.is_json:
         cmd = Job.from_dict(connexion.request.get_json())  # noqa: E501
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
+        credentials = pika.PlainCredentials('mq_user', 'mq_pwd')
+        connection = pika.BlockingConnection(
+                pika.ConnectionParameters('rabbitmq3', 5672, '/', credentials))
         channel = connection.channel()
         channel.queue_declare(queue='task_queue', durable=True)
         channel.basic_publish(

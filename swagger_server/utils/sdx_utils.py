@@ -7,7 +7,6 @@ from openapi_core.validation.request.validators import RequestValidator
 from openapi_spec_validator import validate_spec
 from openapi_spec_validator.readers import read_from_filename
 import pytz
-from kytos.core import log
 
 
 def get_timestamp(timestamp=None):
