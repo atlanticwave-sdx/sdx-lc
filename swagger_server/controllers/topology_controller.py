@@ -120,6 +120,23 @@ def get_topology():  # noqa: E501
     return "do some magic!"
 
 
+def get_topology_by_id(topology_id):  # noqa: E501
+    """Find topology by version
+
+    Returns a single topology # noqa: E501
+
+    :param topology_id: ID of topology to return
+    :type topology_id: int
+    :param version: version of topology to return
+    :type version: int
+
+    :rtype: Topology
+    """
+    return "do some magic!"
+
+
+
+
 def get_topologyby_version(topology_id, version):  # noqa: E501
     """Find topology by version
 

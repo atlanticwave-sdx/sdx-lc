@@ -5,7 +5,7 @@ from swagger_server import util
 from swagger_server.models.user import User  # noqa: E501
 
 
-def create_user(body):  # noqa: E501
+def add_user(body):  # noqa: E501
     """Create user
 
     This can only be done by the logged in user. # noqa: E501
@@ -20,7 +20,7 @@ def create_user(body):  # noqa: E501
     return "do some magic!"
 
 
-def create_users_with_array_input(body):  # noqa: E501
+def add_users_with_array_input(body):  # noqa: E501
     """Creates list of users with given input array
 
      # noqa: E501
@@ -35,7 +35,7 @@ def create_users_with_array_input(body):  # noqa: E501
     return "do some magic!"
 
 
-def create_users_with_list_input(body):  # noqa: E501
+def add_users_with_list_input(body):  # noqa: E501
     """Creates list of users with given input array
 
      # noqa: E501
@@ -63,7 +63,16 @@ def delete_user(username):  # noqa: E501
     return "do some magic!"
 
 
-def get_user_by_name(username):  # noqa: E501
+def get_user():  # noqa: E501
+    """Get users
+
+     # noqa: E501
+
+    """
+    return "do some magic!"
+
+
+def get_user_by_id(user_id):  # noqa: E501
     """Get user by user name
 
      # noqa: E501
