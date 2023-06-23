@@ -1,15 +1,35 @@
 """ constructor controller """
+from datetime import datetime
+import logging
 import connexion
 import pika
+import pytz
+import requests
 
+from swagger_server import settings  # pylint: disable=E0401
 from swagger_server.models.constructor import Constructor  # noqa: E501
 from swagger_server.models.parse_topology import (ParseTopology)  # noqa: E501
 # from swagger_server.models.error_message import ErrorMessage  # noqa: E501
-from swagger_server.utils import sdx_utils, topology_mock \
+from swagger_server.utils import topology_mock \
         # pylint: disable=E0401
 
-SDX_TOPOLOGY_API = "http://0.0.0.0:8181/api/kytos/sdx_topology/v1"
-VALIDATE_TOPOLOGY = "http://0.0.0.0:8181/api/kytos/sdx_topology/v1/validate"
+OXPO = "kytos"
+MODEL_VERSION="2.0.0"
+OXP_NAME="AmLight-OXP"
+OXP_URL="amlight.net"
+
+
+def get_timestamp(timestamp=None):
+    """Function to obtain the current time_stamp in a specific format"""
+    if timestamp is not None:
+        if isinstance(timestamp, datetime):
+            timestamp = timestamp.strftime("%Y-%m-%dT%H:%M:%SZ")
+        elif len(timestamp) >= 19:
+            timestamp = timestamp[:10]+"T"+timestamp[11:19]+"Z"
+    else:
+        timestamp = datetime.now(
+            pytz.timezone("America/New_York")).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return timestamp
 
 
 def message_queue(cmd):
@@ -30,37 +50,31 @@ def message_queue(cmd):
     return f" [x] Sent: {cmd}"
 
 
-def create_update_topology(self, event_type=0, event_timestamp=None):
-    """ Create topology """
-    try:
-        if event_type != 0:
-            event_timestamp = sdx_utils.get_timestamp(event_timestamp)
-            topology_update = ParseTopology(
-                    topology=self.get_kytos_topology(),
-                    version=1,
-                    timestamp=event_timestamp,
-                    model_version="2.0.0",
-                    oxp_name="AmLight-OXP",
-                    oxp_url="amlight.net",
-            ).get_sdx_topology()
-            topology_dict = {
-                    "id": topology_update["id"],
-                    "name": topology_update["name"],
-                    "version": topology_update["version"],
-                    "model_version": topology_update["model_version"],
-                    "timestamp": topology_update["timestamp"],
-                    "nodes": topology_update["nodes"],
-                    "links": topology_update["links"],
-            }
-        else:
-            topology_dict = topology_mock.topology_mock()
-        # validate_topology = requests.post(VALIDATE_TOPOLOGY, json=topology_dict)
-        # if validate_topology.status_code == 200:
-        # else
-            #return (validate_topology.json(), 400)
-        return (topology_dict, 200)
-    except Exception as err:  # pylint: disable=W0703
-        return (err, "Validation Error", 400)
+def kytos_event_info(body):  # pylint: disable=W0613
+    """ Function meant describe event """
+    logging.info("######### event_topology #########")
+    admin_events = [
+            "kytos/topology.switch.enabled",
+            "kytos/topology.switch.disabled"]
+    operational_events = [
+            "kytos/topology.link_up",
+            "kytos/topology.link_down"]
+    event = body["event"]
+    topology = body["topology"]
+    if event.name in admin_events:
+        event_type = 1
+    elif event.name in operational_events and event.timestamp is not None:
+        event_type = 2
+    else:
+        event_type = 0
+        topology = topology_mock.topology_mock()
+    topology_info = {
+            "event": event,
+            "event_type": event_type,
+            "event_name": event.name,
+            "timestamp": event.timestamp,
+            "topology": topology}
+    return topology_info
 
 
 def build_topology(body):  # noqa: E501
@@ -75,4 +89,37 @@ def build_topology(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Constructor.from_dict(connexion.request.get_json())  # noqa: E501
+        try:
+            if OXPO == "kytos":
+                topology_info = kytos_event_info(body)
+                if not topology_info["timestamp"]:
+                    timestamp = get_timestamp()
+                else:
+                    timestamp = get_timestamp(topology_info["timestamp"])
+                topology_update = ParseTopology(
+                        topology=topology_info["topology"],
+                        version=1,
+                        timestamp=timestamp,
+                        model_version=MODEL_VERSION,
+                        oxp_name=OXP_NAME,
+                        oxp_url=OXP_URL,
+                        ).get_sdx_topology()
+                topology_dict = {
+                        "id": topology_update["id"],
+                        "name": topology_update["name"],
+                        "version": topology_update["version"],
+                        "model_version": topology_update["model_version"],
+                        "timestamp": topology_update["timestamp"],
+                        "nodes": topology_update["nodes"],
+                        "links": topology_update["links"],
+                        }
+            else:
+                topology_dict = topology_mock.topology_mock()
+            validate_topology = requests.post(
+                    settings.VALIDATE_TOPOLOGY, json=topology_dict)
+            if validate_topology.status_code == 200:
+                return (topology_dict, 200)
+            return (validate_topology.json(), 400)
+        except Exception as err:  # pylint: disable=W0703
+            return (err, "Validation Error", 400)
     return body
