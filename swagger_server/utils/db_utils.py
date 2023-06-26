@@ -1,10 +1,13 @@
+""" Mongodb Connection """
 import logging
 import os
 
 import pymongo
 
-DB_NAME = os.environ.get("MONGO_DBNAME")
-TOPO_COLL = os.environ.get("TOPOLOGY_COLLECTION")
+USER_NAME = os.environ.get("SDXLC_MONGO_USERNAME")
+PASSWORD = os.environ.get("SDXLC_MONGO_PASSWORD")
+DB_NAME = os.environ.get("SDXLC_MONGO_DB")
+TOPO_COLL = os.environ.get("SDXLC_MONGO_COLLECTION")
 MONGODB_CONNSTRING = os.environ.get("MONGODB_CONNSTRING")
 
 
@@ -19,15 +22,16 @@ class DbUtils(object):
 
     def initialize_db(self):
         """Init database"""
-        self.logger.debug("Trying to load {} from DB".format(self.db_name))
+        message = f"Trying to load {self.db_name} from DB"
+        self.logger.debug(message)
 
         if self.db_name not in self.mongo_client.list_database_names():
-            self.logger.debug(
-                "{} do not  exist in DB, creating table".format(self.db_name)
-            )
-        self.sdxdb = self.mongo_client[self.db_name]
-        self.topo_coll = self.sdxdb[self.config_topo_coll]
-        self.logger.debug("DB {} initialized".format(self.db_name))
+            message = f"{self.db_name} do not  exist in DB, creating table"
+            self.logger.debug(message)
+        self.sdxdb = self.mongo_client[self.db_name] # pylint: disable=W0201
+        self.topo_coll = self.sdxdb[self.config_topo_coll] # pylint: disable=W0201
+        message = f"DB {self.db_name} initialized"
+        self.logger.debug(message)
 
     def add_key_value_pair_to_db(self, key, value):
         """Add key value pair to database"""

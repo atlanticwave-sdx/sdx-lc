@@ -1,6 +1,7 @@
 """ constructor controller """
 from datetime import datetime
 import logging
+import os
 import connexion
 import pika
 import pytz
@@ -13,10 +14,10 @@ from swagger_server.models.parse_topology import (ParseTopology)  # noqa: E501
 from swagger_server.utils import topology_mock \
         # pylint: disable=E0401
 
-OXPO = "kytos"
-MODEL_VERSION="2.0.0"
-OXP_NAME="AmLight-OXP"
-OXP_URL="amlight.net"
+OXPO = os.environ.get("SDX_OXPO")
+OXP_NAME= os.environ.get("SDX_NAME")
+MODEL_VERSION= os.environ.get("SDX_VERSION")
+OXP_URL= os.environ.get("SDX_URL")
 
 
 def get_timestamp(timestamp=None):

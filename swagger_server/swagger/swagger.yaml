@@ -678,7 +678,7 @@ components:
       minItems: 1
       type: array
       items:
-        $ref: '#/components/schemas/NewValidate'
+        $ref: '#/components/schemas/NewValidator'
     NewValidator:
       type: object
       additionalProperties: {}
