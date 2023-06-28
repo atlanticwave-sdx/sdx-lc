@@ -53,7 +53,7 @@ def message_queue(cmd):
 
 def kytos_event_info(body):  # pylint: disable=W0613
     """ Function meant describe event """
-    logging.info("######### event_topology #########")
+    logging.debug("######### event_topology #########")
     admin_events = [
             "kytos/topology.switch.enabled",
             "kytos/topology.switch.disabled"]
@@ -75,6 +75,7 @@ def kytos_event_info(body):  # pylint: disable=W0613
             "event_name": event.name,
             "timestamp": event.timestamp,
             "topology": topology}
+    logging.debug(topology_info)
     return topology_info
 
 
@@ -88,8 +89,10 @@ def build_topology(body):  # noqa: E501
 
     :rtype: Constructor
     """
+    logging.debug("######### build_topology #########")
     if connexion.request.is_json:
         body = Constructor.from_dict(connexion.request.get_json())  # noqa: E501
+        logging.debug(body)
         try:
             if OXPO == "kytos":
                 topology_info = kytos_event_info(body)
@@ -119,6 +122,8 @@ def build_topology(body):  # noqa: E501
             validate_topology = requests.post(
                     settings.VALIDATE_TOPOLOGY, json=topology_dict)
             if validate_topology.status_code == 200:
+                logging.debug("######### topology_dict #########")
+                logging.debug(topology_dict)
                 return (topology_dict, 200)
             return (validate_topology.json(), 400)
         except Exception as err:  # pylint: disable=W0703
