@@ -432,6 +432,26 @@ components:
         $ref: '#/components/schemas/NewConstructor'
     NewConstructor:
       type: object
+      properties:
+        event:
+          minItems: 1
+          type: array
+          additionalProperties: {}
+          items:
+            $ref: '#/components/schemas/NewEvent'
+        kytostopology:
+          $ref: '#/components/schemas/NewKytosTopology'
+      example:
+        kytostopology:
+          key: ""
+        event:
+        - key: ""
+        - key: ""
+    NewEvent:
+      type: object
+      additionalProperties: {}
+    NewKytosTopology:
+      type: object
       additionalProperties: {}
     Provisioning:
       minItems: 1

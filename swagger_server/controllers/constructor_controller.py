@@ -119,11 +119,13 @@ def build_topology(body):  # noqa: E501
                         }
             else:
                 topology_dict = topology_mock.topology_mock()
+            logging.debug("######### topology_update #########")
+            logging.debug(topology_update)
             validate_topology = requests.post(
-                    settings.VALIDATE_TOPOLOGY, json=topology_dict)
+                    settings.VALIDATE_TOPOLOGY, json=topology_update)
             if validate_topology.status_code == 200:
-                logging.debug("######### topology_dict #########")
-                logging.debug(topology_dict)
+                validate_topology = requests.post(
+                    settings.SDX_TOPOLOGY, json=topology_update)
                 return (topology_dict, 200)
             return (validate_topology.json(), 400)
         except Exception as err:  # pylint: disable=W0703

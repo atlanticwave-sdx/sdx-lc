@@ -6,4 +6,5 @@ GET_KYTOS_TOPOLOGY = \
 VALIDATE_TOPOLOGY = "http://0.0.0.0:8080/sdx/v2/validate"
 SDX_CONSTRUCTOR = "http://0.0.0.0:8080/sdx/v2/constructor"
 SDX_PROVISIONING = "http://0.0.0.0:8088/sdx/v2/provision"
+SDX_TOPOLOGY = "http://0.0.0.0:8088/sdx/v2/topology"
 HEADERS = {"Content-type": "application/json"}
