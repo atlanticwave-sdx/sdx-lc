@@ -33,7 +33,7 @@ def get_validate(body):  # noqa: E501
                 "########## schema defined in the openapi.yml file ##########")
         spec = create_spec(spec_dict)
         validator = RequestValidator(spec)
-        body = Validator.from_dict(connexion.request.get_json())  # noqa: E501
+        body = validator.from_dict(connexion.request.get_json())  # noqa: E501
         openapi_request = FlaskOpenAPIRequest(body)
         result = validator.validate(openapi_request)
         error_response = {}

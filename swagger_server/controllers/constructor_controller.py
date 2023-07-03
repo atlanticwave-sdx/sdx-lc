@@ -79,7 +79,7 @@ def kytos_event_info(body):  # pylint: disable=W0613
     return topology_info
 
 
-def build_topology(body):  # noqa: E501
+def build_topology(body=None):  # noqa: E501
     """Send a new topology or update to SDX-LC
 
     Build a topology # noqa: E501
@@ -122,12 +122,12 @@ def build_topology(body):  # noqa: E501
             logging.debug("######### topology_update #########")
             logging.debug(topology_update)
             validate_topology = requests.post(
-                    settings.VALIDATE_TOPOLOGY, json=topology_update)
+                    settings.VALIDATE_TOPOLOGY, json=topology_dict)
             if validate_topology.status_code == 200:
-                validate_topology = requests.post(
-                    settings.SDX_TOPOLOGY, json=topology_update)
+                requests.post(settings.SDX_TOPOLOGY, json=topology_dict)
                 return (topology_dict, 200)
             return (validate_topology.json(), 400)
         except Exception as err:  # pylint: disable=W0703
             return (err, "Validation Error", 400)
-    return body
+    logging.debug("######### json format error #########")
+    return ("json format error", 400)
