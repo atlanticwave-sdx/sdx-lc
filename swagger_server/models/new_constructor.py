@@ -1,14 +1,14 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from swagger_server import util
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.new_event import NewEvent  # noqa: F401,E501
 from swagger_server.models.new_kytos_topology import NewKytosTopology  # noqa: F401,E501
-from swagger_server import util
 
 
 class NewConstructor(Model):
@@ -16,7 +16,10 @@ class NewConstructor(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, event: List[NewEvent]=None, kytostopology: NewKytosTopology=None):  # noqa: E501
+
+    def __init__(
+        self, event: List[NewEvent] = None, kytostopology: NewKytosTopology = None
+    ):  # noqa: E501
         """NewConstructor - a model defined in Swagger
 
         :param event: The event of this NewConstructor.  # noqa: E501
@@ -25,19 +28,16 @@ class NewConstructor(Model):
         :type kytostopology: NewKytosTopology
         """
         self.swagger_types = {
-            'event': List[NewEvent],
-            'kytostopology': NewKytosTopology
+            "event": List[NewEvent],
+            "kytostopology": NewKytosTopology,
         }
 
-        self.attribute_map = {
-            'event': 'event',
-            'kytostopology': 'kytostopology'
-        }
+        self.attribute_map = {"event": "event", "kytostopology": "kytostopology"}
         self._event = event
         self._kytostopology = kytostopology
 
     @classmethod
-    def from_dict(cls, dikt) -> 'NewConstructor':
+    def from_dict(cls, dikt) -> "NewConstructor":
         """Returns the dict as a model
 
         :param dikt: A dict.

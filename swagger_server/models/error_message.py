@@ -2,12 +2,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from swagger_server.models.base_model_ import Model
 from swagger_server import util
+from swagger_server.models.base_model_ import Model
 
 
 class ErrorMessage(Model):
@@ -15,7 +15,8 @@ class ErrorMessage(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, error_code: str=None, error_message: str=None):  # noqa: E501
+
+    def __init__(self, error_code: str = None, error_message: str = None):  # noqa: E501
         """ErrorMessage - a model defined in Swagger
 
         :param error_code: The error_code of this ErrorMessage.  # noqa: E501
@@ -23,20 +24,17 @@ class ErrorMessage(Model):
         :param error_message: The error_message of this ErrorMessage.  # noqa: E501
         :type error_message: str
         """
-        self.swagger_types = {
-            'error_code': str,
-            'error_message': str
-        }
+        self.swagger_types = {"error_code": str, "error_message": str}
 
         self.attribute_map = {
-            'error_code': 'error_code',
-            'error_message': 'error_message'
+            "error_code": "error_code",
+            "error_message": "error_message",
         }
         self._error_code = error_code
         self._error_message = error_message
 
     @classmethod
-    def from_dict(cls, dikt) -> 'ErrorMessage':
+    def from_dict(cls, dikt) -> "ErrorMessage":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -65,7 +63,9 @@ class ErrorMessage(Model):
         :type error_code: str
         """
         if error_code is None:
-            raise ValueError("Invalid value for `error_code`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `error_code`, must not be `None`"
+            )  # noqa: E501
 
         self._error_code = error_code
 
@@ -88,7 +88,8 @@ class ErrorMessage(Model):
         :type error_message: str
         """
         if error_message is None:
-            raise ValueError("Invalid value for `error_message`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `error_message`, must not be `None`"
+            )  # noqa: E501
 
         self._error_message = error_message
-

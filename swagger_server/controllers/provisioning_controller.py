@@ -1,9 +1,9 @@
 import connexion
 import six
 
+from swagger_server import util
 from swagger_server.models.error_message import ErrorMessage  # noqa: E501
 from swagger_server.models.provisioning import Provisioning  # noqa: E501
-from swagger_server import util
 
 
 def create_provisioning(body):  # noqa: E501
@@ -18,4 +18,4 @@ def create_provisioning(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Dict[str, Object].from_dict(connexion.request.get_json())  # noqa: E501
-    return 'do some magic!'
+    return "do some magic!"

@@ -66,7 +66,7 @@ def delete_user(username):  # noqa: E501
 def get_user():  # noqa: E501
     """Get users
 
-     # noqa: E501
+    # noqa: E501
 
     """
     return "do some magic!"

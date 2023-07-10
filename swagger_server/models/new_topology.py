@@ -2,15 +2,15 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
+import re  # noqa: F401,E501
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from swagger_server import util
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.new_topology_links import NewTopologyLinks  # noqa: F401,E501
 from swagger_server.models.new_topology_nodes import NewTopologyNodes  # noqa: F401,E501
-import re  # noqa: F401,E501
-from swagger_server import util
 
 
 class NewTopology(Model):
@@ -18,7 +18,17 @@ class NewTopology(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, version: int=None, model_version: str=None, timestamp: datetime=None, nodes: List[NewTopologyNodes]=None, links: List[NewTopologyLinks]=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        version: int = None,
+        model_version: str = None,
+        timestamp: datetime = None,
+        nodes: List[NewTopologyNodes] = None,
+        links: List[NewTopologyLinks] = None,
+    ):  # noqa: E501
         """NewTopology - a model defined in Swagger
 
         :param id: The id of this NewTopology.  # noqa: E501
@@ -37,23 +47,23 @@ class NewTopology(Model):
         :type links: List[NewTopologyLinks]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'version': int,
-            'model_version': str,
-            'timestamp': datetime,
-            'nodes': List[NewTopologyNodes],
-            'links': List[NewTopologyLinks]
+            "id": str,
+            "name": str,
+            "version": int,
+            "model_version": str,
+            "timestamp": datetime,
+            "nodes": List[NewTopologyNodes],
+            "links": List[NewTopologyLinks],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'version': 'version',
-            'model_version': 'model_version',
-            'timestamp': 'timestamp',
-            'nodes': 'nodes',
-            'links': 'links'
+            "id": "id",
+            "name": "name",
+            "version": "version",
+            "model_version": "model_version",
+            "timestamp": "timestamp",
+            "nodes": "nodes",
+            "links": "links",
         }
         self._id = id
         self._name = name
@@ -64,7 +74,7 @@ class NewTopology(Model):
         self._links = links
 
     @classmethod
-    def from_dict(cls, dikt) -> 'NewTopology':
+    def from_dict(cls, dikt) -> "NewTopology":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -116,7 +126,9 @@ class NewTopology(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -139,7 +151,9 @@ class NewTopology(Model):
         :type version: int
         """
         if version is None:
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `version`, must not be `None`"
+            )  # noqa: E501
 
         self._version = version
 
@@ -162,7 +176,9 @@ class NewTopology(Model):
         :type model_version: str
         """
         if model_version is None:
-            raise ValueError("Invalid value for `model_version`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `model_version`, must not be `None`"
+            )  # noqa: E501
 
         self._model_version = model_version
 
@@ -185,7 +201,9 @@ class NewTopology(Model):
         :type timestamp: datetime
         """
         if timestamp is None:
-            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `timestamp`, must not be `None`"
+            )  # noqa: E501
 
         self._timestamp = timestamp
 

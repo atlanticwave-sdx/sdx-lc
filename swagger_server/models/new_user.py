@@ -2,12 +2,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from swagger_server.models.base_model_ import Model
 from swagger_server import util
+from swagger_server.models.base_model_ import Model
 
 
 class NewUser(Model):
@@ -15,7 +15,10 @@ class NewUser(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, username: str=None, password: str=None):  # noqa: E501
+
+    def __init__(
+        self, id: str = None, username: str = None, password: str = None
+    ):  # noqa: E501
         """NewUser - a model defined in Swagger
 
         :param id: The id of this NewUser.  # noqa: E501
@@ -25,23 +28,19 @@ class NewUser(Model):
         :param password: The password of this NewUser.  # noqa: E501
         :type password: str
         """
-        self.swagger_types = {
-            'id': str,
-            'username': str,
-            'password': str
-        }
+        self.swagger_types = {"id": str, "username": str, "password": str}
 
         self.attribute_map = {
-            'id': 'id',
-            'username': 'username',
-            'password': 'password'
+            "id": "id",
+            "username": "username",
+            "password": "password",
         }
         self._id = id
         self._username = username
         self._password = password
 
     @classmethod
-    def from_dict(cls, dikt) -> 'NewUser':
+    def from_dict(cls, dikt) -> "NewUser":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -93,7 +92,9 @@ class NewUser(Model):
         :type username: str
         """
         if username is None:
-            raise ValueError("Invalid value for `username`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `username`, must not be `None`"
+            )  # noqa: E501
 
         self._username = username
 
@@ -117,4 +118,3 @@ class NewUser(Model):
         """
 
         self._password = password
-

@@ -2,13 +2,13 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-from datetime import date, datetime  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from swagger_server.models.base_model_ import Model
 import re  # noqa: F401,E501
+from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
+
 from swagger_server import util
+from swagger_server.models.base_model_ import Model
 
 
 class NewTopologyLinks(Model):
@@ -16,7 +16,21 @@ class NewTopologyLinks(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, ports: List[str]=None, type: str=None, bandwidth: float=None, residual_bandwidth: float=None, latency: float=None, packet_loss: float=None, availability: float=None, status: str=None, state: str=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        ports: List[str] = None,
+        type: str = None,
+        bandwidth: float = None,
+        residual_bandwidth: float = None,
+        latency: float = None,
+        packet_loss: float = None,
+        availability: float = None,
+        status: str = None,
+        state: str = None,
+    ):  # noqa: E501
         """NewTopologyLinks - a model defined in Swagger
 
         :param id: The id of this NewTopologyLinks.  # noqa: E501
@@ -43,31 +57,31 @@ class NewTopologyLinks(Model):
         :type state: str
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'ports': List[str],
-            'type': str,
-            'bandwidth': float,
-            'residual_bandwidth': float,
-            'latency': float,
-            'packet_loss': float,
-            'availability': float,
-            'status': str,
-            'state': str
+            "id": str,
+            "name": str,
+            "ports": List[str],
+            "type": str,
+            "bandwidth": float,
+            "residual_bandwidth": float,
+            "latency": float,
+            "packet_loss": float,
+            "availability": float,
+            "status": str,
+            "state": str,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'ports': 'ports',
-            'type': 'type',
-            'bandwidth': 'bandwidth',
-            'residual_bandwidth': 'residual_bandwidth',
-            'latency': 'latency',
-            'packet_loss': 'packet_loss',
-            'availability': 'availability',
-            'status': 'status',
-            'state': 'state'
+            "id": "id",
+            "name": "name",
+            "ports": "ports",
+            "type": "type",
+            "bandwidth": "bandwidth",
+            "residual_bandwidth": "residual_bandwidth",
+            "latency": "latency",
+            "packet_loss": "packet_loss",
+            "availability": "availability",
+            "status": "status",
+            "state": "state",
         }
         self._id = id
         self._name = name
@@ -82,7 +96,7 @@ class NewTopologyLinks(Model):
         self._state = state
 
     @classmethod
-    def from_dict(cls, dikt) -> 'NewTopologyLinks':
+    def from_dict(cls, dikt) -> "NewTopologyLinks":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -134,7 +148,9 @@ class NewTopologyLinks(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -157,7 +173,9 @@ class NewTopologyLinks(Model):
         :type ports: List[str]
         """
         if ports is None:
-            raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `ports`, must not be `None`"
+            )  # noqa: E501
 
         self._ports = ports
 
@@ -182,8 +200,9 @@ class NewTopologyLinks(Model):
         allowed_values = ["intra", "inter"]  # noqa: E501
         if type not in allowed_values:
             raise ValueError(
-                "Invalid value for `type` ({0}), must be one of {1}"
-                .format(type, allowed_values)
+                "Invalid value for `type` ({0}), must be one of {1}".format(
+                    type, allowed_values
+                )
             )
 
         self._type = type
@@ -207,7 +226,9 @@ class NewTopologyLinks(Model):
         :type bandwidth: float
         """
         if bandwidth is None:
-            raise ValueError("Invalid value for `bandwidth`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `bandwidth`, must not be `None`"
+            )  # noqa: E501
 
         self._bandwidth = bandwidth
 
@@ -316,8 +337,9 @@ class NewTopologyLinks(Model):
         allowed_values = ["up", "down", "error"]  # noqa: E501
         if status not in allowed_values:
             raise ValueError(
-                "Invalid value for `status` ({0}), must be one of {1}"
-                .format(status, allowed_values)
+                "Invalid value for `status` ({0}), must be one of {1}".format(
+                    status, allowed_values
+                )
             )
 
         self._status = status
@@ -343,8 +365,9 @@ class NewTopologyLinks(Model):
         allowed_values = ["enabled", "disabled", "maintenance"]  # noqa: E501
         if state not in allowed_values:
             raise ValueError(
-                "Invalid value for `state` ({0}), must be one of {1}"
-                .format(state, allowed_values)
+                "Invalid value for `state` ({0}), must be one of {1}".format(
+                    state, allowed_values
+                )
             )
 
         self._state = state

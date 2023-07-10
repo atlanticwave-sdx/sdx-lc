@@ -2,15 +2,15 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
+import re  # noqa: F401,E501
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from swagger_server import util
 from swagger_server.models.base_model_ import Model
 from swagger_server.models.location import Location  # noqa: F401,E501
 from swagger_server.models.port import Port  # noqa: F401,E501
-import re  # noqa: F401,E501
-from swagger_server import util
 
 
 class NewTopologyNodes(Model):
@@ -18,7 +18,14 @@ class NewTopologyNodes(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id: str=None, name: str=None, location: Location=None, ports: List[Port]=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id: str = None,
+        name: str = None,
+        location: Location = None,
+        ports: List[Port] = None,
+    ):  # noqa: E501
         """NewTopologyNodes - a model defined in Swagger
 
         :param id: The id of this NewTopologyNodes.  # noqa: E501
@@ -31,17 +38,17 @@ class NewTopologyNodes(Model):
         :type ports: List[Port]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'location': Location,
-            'ports': List[Port]
+            "id": str,
+            "name": str,
+            "location": Location,
+            "ports": List[Port],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'location': 'location',
-            'ports': 'ports'
+            "id": "id",
+            "name": "name",
+            "location": "location",
+            "ports": "ports",
         }
         self._id = id
         self._name = name
@@ -49,7 +56,7 @@ class NewTopologyNodes(Model):
         self._ports = ports
 
     @classmethod
-    def from_dict(cls, dikt) -> 'NewTopologyNodes':
+    def from_dict(cls, dikt) -> "NewTopologyNodes":
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -101,7 +108,9 @@ class NewTopologyNodes(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -124,7 +133,9 @@ class NewTopologyNodes(Model):
         :type location: Location
         """
         if location is None:
-            raise ValueError("Invalid value for `location`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `location`, must not be `None`"
+            )  # noqa: E501
 
         self._location = location
 
@@ -147,6 +158,8 @@ class NewTopologyNodes(Model):
         :type ports: List[Port]
         """
         if ports is None:
-            raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `ports`, must not be `None`"
+            )  # noqa: E501
 
         self._ports = ports

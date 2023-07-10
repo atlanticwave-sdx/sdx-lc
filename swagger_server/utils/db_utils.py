@@ -12,7 +12,8 @@ MONGODB_CONNSTRING = os.environ.get("MONGODB_CONNSTRING")
 
 
 class DbUtils(object):
-    """ mongodb instance """
+    """mongodb instance"""
+
     def __init__(self):
         self.db_name = DB_NAME
         self.config_topo_coll = TOPO_COLL
@@ -28,8 +29,8 @@ class DbUtils(object):
         if self.db_name not in self.mongo_client.list_database_names():
             message = f"{self.db_name} do not  exist in DB, creating table"
             self.logger.debug(message)
-        self.sdxdb = self.mongo_client[self.db_name] # pylint: disable=W0201
-        self.topo_coll = self.sdxdb[self.config_topo_coll] # pylint: disable=W0201
+        self.sdxdb = self.mongo_client[self.db_name]  # pylint: disable=W0201
+        self.topo_coll = self.sdxdb[self.config_topo_coll]  # pylint: disable=W0201
         message = f"DB {self.db_name} initialized"
         self.logger.debug(message)
 
@@ -39,20 +40,14 @@ class DbUtils(object):
         obj = self.read_from_db(key)
         if obj is None:
             self.logger.debug("Adding key value pair to DB.")
-            return self.sdxdb[self.topo_coll].insert_one(
-                {key: value}
-            )
+            return self.sdxdb[self.topo_coll].insert_one({key: value})
 
         query = {"_id": obj["_id"]}
         self.logger.debug("Updating DB entry.")
-        result = self.sdxdb[self.topo_coll].replace_one(
-            query, {key: value}
-        )
+        result = self.sdxdb[self.topo_coll].replace_one(query, {key: value})
         return result
 
     def read_from_db(self, key):
         """Given a user specified key, return the value stored in database"""
         key = str(key)
-        return self.sdxdb[self.topo_coll].find_one(
-            {key: {"$exists": 1}}
-        )
+        return self.sdxdb[self.topo_coll].find_one({key: {"$exists": 1}})

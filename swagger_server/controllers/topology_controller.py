@@ -135,8 +135,6 @@ def get_topology_by_id(topology_id):  # noqa: E501
     return "do some magic!"
 
 
-
-
 def get_topologyby_version(topology_id, version):  # noqa: E501
     """Find topology by version
 

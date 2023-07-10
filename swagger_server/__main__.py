@@ -7,7 +7,6 @@ import connexion
 from swagger_server import encoder
 from swagger_server.utils.db_utils import DbUtils
 
-
 logging.basicConfig(level=logging.INFO)
 
 # Run swagger service
