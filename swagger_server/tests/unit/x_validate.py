@@ -3,13 +3,12 @@ SDX Topology util Unit test
 """
 import flask
 from openapi_core.validation.request.validators import RequestValidator
-from napps.kytos.sdx_topology import utils  # pylint: disable=E0401
 
 
 def test_validate_request(flask_app):
-    ''' test_validate_request '''
+    """test_validate_request"""
     spec = utils.load_spec()
-    flask_app.test_request_context('/api/kytos/sdx_topology/v1/validate')
+    flask_app.test_request_context("/api/kytos/sdx_topology/v1/validate")
     validator = RequestValidator(spec)
     result = validator.validate(flask.request)
     error_response = {"errors": "no errors"}
@@ -24,7 +23,7 @@ def test_validate_request(flask_app):
                 "error_path": list(schema_errors.path),
                 "error_schema": schema_errors.schema,
                 "error_schema_path": list(schema_errors.schema_path),
-                }
+            }
         else:
             error_response = {"errors": errors}
     print(error_response)
