@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+""" main function """
 
 import logging
 
@@ -12,7 +12,8 @@ logging.basicConfig(level=logging.INFO)
 # Run swagger service
 app = connexion.App(__name__, specification_dir="./swagger/")
 app.app.json_encoder = encoder.JSONEncoder
-app.add_api("swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
+app.add_api(
+        "swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
 
 
 # Get DB connection and tables set up.

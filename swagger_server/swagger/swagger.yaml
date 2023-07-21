@@ -442,11 +442,10 @@ components:
         kytostopology:
           $ref: '#/components/schemas/NewKytosTopology'
       example:
+        event:
+          key: ""
         kytostopology:
           key: ""
-        event:
-        - key: ""
-        - key: ""
     NewEvent:
       type: object
       additionalProperties: {}
@@ -475,8 +474,8 @@ components:
       - id
       - model_version
       - name
-      - timestamp
       - version
+      - timestamp
       type: object
       properties:
         id:

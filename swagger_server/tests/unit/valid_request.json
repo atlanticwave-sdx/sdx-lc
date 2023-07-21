@@ -3,7 +3,7 @@
   "PATH_INFO": "/sdx/v2/validator",
   "CONTENT_TYPE": "application/json",
   "SERVER_NAME": "0.0.0.0", 
-  "SERVER_PORT": "8181",
+  "SERVER_PORT": "8080",
   "SERVER_PROTOCOL": "HTTP/1.1"
 }
 

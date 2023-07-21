@@ -1,5 +1,5 @@
 {
-  "url": "http://0.0.0.0:8000/v2/validation",
+  "url": "http://0.0.0.0:8080/sdx/v2/validation",
   "headers" : {"Content-type": "application/json"},
   "id":"urn:sdx:topology:amlight.net",
   "name": "Amlight-OXP",
