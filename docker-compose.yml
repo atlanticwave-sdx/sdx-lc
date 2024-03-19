@@ -39,6 +39,8 @@ services:
       - MQ_NAME=hello
       - MQ_HOST=aw-sdx-monitor.renci.org
       - MQ_PORT=5672 
+      - MQ_USER=guest
+      - MQ_PASS=guest
       - DB_NAME=test-db
       - DB_CONFIG_TABLE_NAME=sdx-config-test-1
       - DOMAIN_CONTROLLER_URL=http://192.168.201.205:8088/SDX-LC/1.0.0/provision
