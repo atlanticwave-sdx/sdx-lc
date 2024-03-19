@@ -54,7 +54,7 @@ def add_topology(body):  # noqa: E501
         return "ID is missing."
 
     domain_name = find_between(msg_id, "topology:", ".net")
-    if domain_name != SDXLC_DOMAIN:
+    if domain_name != SDXLC_DOMAIN and msg_id != SDXLC_DOMAIN:
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
 
