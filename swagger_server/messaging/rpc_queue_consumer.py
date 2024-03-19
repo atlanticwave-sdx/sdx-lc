@@ -7,13 +7,15 @@ from queue import Queue
 import pika
 
 MQ_HOST = os.environ.get("MQ_HOST")
+MQ_PORT = os.environ.get("MQ_PORT")
+MQ_USER = os.environ.get("MQ_USER")
+MQ_PASS = os.environ.get("MQ_PASS")
+
 # subscribe to the corresponding queue
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
 SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
 
-# hardcode for testing
-MQ_HOST = "aw-sdx-monitor.renci.org"
 SUB_QUEUE = "connection"
 SUB_TOPIC = "lc1_q1"
 SUB_EXCHANGE = "connection"
@@ -23,7 +25,11 @@ class RpcConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
+            pika.ConnectionParameters(
+                host=MQ_HOST,
+                port=MQ_PORT,
+                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
+            )
         )
 
         self.channel = self.connection.channel()
@@ -44,7 +50,11 @@ class RpcConsumer(object):
         self._thread_queue.put(message_body)
 
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
+            pika.ConnectionParameters(
+                host=MQ_HOST,
+                port=MQ_PORT,
+                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
+            )
         )
         self.channel = self.connection.channel()
 
