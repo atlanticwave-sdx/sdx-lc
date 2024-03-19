@@ -93,7 +93,7 @@ class TopicQueueConsumer(object):
         if is_json(msg_body):
             self.logger.info("JSON message")
             msg_json = json.loads(msg_body)
-            if "ingress_port" in msg_json and "egress_port" in msg_json:
+            if "uni_a" in msg_json and "uni_z" in msg_json:
                 self.logger.info("Got connection message.")
                 self.db_instance.add_key_value_pair_to_db(self.message_id, msg_body)
                 self.logger.info("Save to database complete.")
