@@ -8,9 +8,9 @@ services:
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: sdx
-      MONGO_INITDB_ROOT_PASSWORD: passw
-      MONGODB_DATA_DIR: /data/db
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGODB_DATA_DIR: ${MONGODB_DATA_DIR}
     volumes:
       # named volumes
       - ~/mongodb:/data/db
@@ -23,25 +23,25 @@ services:
     ports:
       - 8080:8080
     environment:
-      - MONGODB_CONNSTRING=mongodb://sdx:passw@192.168.201.205:27017/
-      - SDX_MQ_IP=152.54.3.143
-      - SDXLC_DOMAIN=amlight
+      - MONGODB_CONNSTRING=${MONGODB_CONNSTRING}
+      - SDX_MQ_IP=${SDX_MQ_IP}
+      - SDXLC_DOMAIN=${SDXLC_DOMAIN}
       # change to local controller host name
-      - SDXLC_HOST=aw-sdx-lc-1.renci.org
-      - SDXLC_PORT=8080
-      - SDXLC_VERSION=1.0.0
-      - PUB_TOPIC=topo
-      - PUB_QUEUE=sdx_q1
-      - SUB_QUEUE=connection
-      - SUB_EXCHANGE=connection
+      - SDXLC_HOST=${SDXLC_HOST}
+      - SDXLC_PORT=${SDXLC_PORT}
+      - SDXLC_VERSION=${SDXLC_VERSION}
+      - PUB_TOPIC=${PUB_TOPIC}
+      - PUB_QUEUE=${PUB_QUEUE}
+      - SUB_QUEUE=${SUB_QUEUE}
+      - SUB_EXCHANGE=${SUB_EXCHANGE}
       # change to local controller config (lcX_q1)
-      - SUB_TOPIC=lc1_q1
-      - MQ_NAME=hello
-      - MQ_HOST=aw-sdx-monitor.renci.org
-      - MQ_PORT=5672 
-      - DB_NAME=test-db
-      - DB_CONFIG_TABLE_NAME=sdx-config-test-1
-      - DOMAIN_CONTROLLER_URL=http://192.168.201.205:8088/SDX-LC/1.0.0/provision
-      - DOMAIN_CONTROLLER_PULL_URL=http://192.168.201.205:8088/SDX-LC/1.0.0/topology
-      - DOMAIN_CONTROLLER_PULL_INTERVAL=180
-      - KYTOS_URL=http://192.168.201.205:8088/SDX-LC/1.0.0/connection
+      - SUB_TOPIC=${SUB_TOPIC}
+      - MQ_NAME=${MQ_NAME}
+      - MQ_HOST=${MQ_HOST}
+      - MQ_PORT=${MQ_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
+      - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
+      - OXP_PULL_URL=${OXP_PULL_URL}
+      - OXP_PULL_INTERVAL=${OXP_PULL_INTERVAL}
+      - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}

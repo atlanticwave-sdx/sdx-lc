@@ -15,7 +15,7 @@ MQ_HOST = os.environ.get("MQ_HOST")
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
 SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
-KYTOS_URL = os.environ.get("KYTOS_URL")
+OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 
 
 def is_json(myjson):
@@ -88,15 +88,15 @@ class TopicQueueConsumer(object):
                 self.logger.info("Save to database complete.")
                 self.logger.info("Message ID:" + str(self.message_id))
                 self.message_id += 1
-                self.logger.info("Sending connection info to Kytos.")
-                # Uncomment lines below to send connection info to Kytos
+                self.logger.info("Sending connection info to OXP.")
+                # Uncomment lines below to send connection info to OXP
                 try:
-                    r = requests.post(str(KYTOS_URL), json=msg_json)
-                    self.logger.info(f"Status from Kytos: {r}")
+                    r = requests.post(str(OXP_CONNECTION_URL), json=msg_json)
+                    self.logger.info(f"Status from OXP: {r}")
                 except Exception as e:
-                    self.logger.error(f"Error on POST to {KYTOS_URL}: {e}")
+                    self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
                     self.logger.info(
-                        "Check your configuration and make sure kytos is running."
+                        "Check your configuration and make sure OXP is running."
                     )
             elif "version" in msg_json:
                 msg_id = msg_json["id"]

@@ -15,8 +15,8 @@ sys.path.append(
 from messaging.rpc_queue_producer import RpcProducer
 from utils.db_utils import DbUtils
 
-DOMAIN_CONTROLLER_PULL_URL = os.environ.get("DOMAIN_CONTROLLER_PULL_URL")
-DOMAIN_CONTROLLER_PULL_INTERVAL = os.environ.get("DOMAIN_CONTROLLER_PULL_INTERVAL")
+OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
+OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
 
 
@@ -49,14 +49,14 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Latest topology does not exist")
 
         try:
-            pulled_topology = urllib.request.urlopen(DOMAIN_CONTROLLER_PULL_URL).read()
+            pulled_topology = urllib.request.urlopen(OXP_PULL_URL).read()
         except urllib.request.URLError:
             logger.debug("Error connecting to domain controller...")
-            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
+            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         if not pulled_topology:
-            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
+            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         logger.debug("Pulled request from domain controller")
@@ -74,7 +74,7 @@ def process_domain_controller_topo(db_instance):
             continue
 
         if latest_topology_exists and latest_topo_version == pulled_topo_version:
-            time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
+            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
@@ -90,7 +90,7 @@ def process_domain_controller_topo(db_instance):
         # Signal to end keep alive pings.
         rpc_producer.stop()
 
-        time.sleep(int(DOMAIN_CONTROLLER_PULL_INTERVAL))
+        time.sleep(int(OXP_PULL_INTERVAL))
 
 
 if __name__ == "__main__":
