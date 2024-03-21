@@ -36,8 +36,12 @@ $ docker run -it --rm --name rabbitmq \
     rabbitmq:latest
 ```
 
-Then in `env` and `docker-compose.yml` files, change `MQ_HOST` host to
-the corresponding IP address or hostname of the RabbitMQ server
+Then in `env` and `docker-compose.yml` files, change the following vars:
+
+- `MQ_HOST` host to the corresponding IP address or hostname of the RabbitMQ server
+- `MQ_PORT` to the corresponding port where the server will listen (default 5672)
+- `MQ_USER` to the corresponding username to authenticate (default guest)
+- `MQ_PASS` to the corresponding password to authenticate (default guest)
 
 
 ## Running SDX Local Controller with Docker Compose
