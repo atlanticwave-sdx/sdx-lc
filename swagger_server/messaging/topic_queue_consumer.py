@@ -107,7 +107,7 @@ class TopicQueueConsumer(object):
                 except Exception as e:
                     self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
                     self.logger.info(
-                        "Check your configuration and make sure OXP is running."
+                        "Check your configuration and make sure OXP service is running."
                     )
             elif "version" in msg_json:
                 msg_id = msg_json["id"]
