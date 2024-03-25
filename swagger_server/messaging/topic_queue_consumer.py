@@ -11,6 +11,9 @@ import requests
 from swagger_server.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
+MQ_PORT = os.environ.get("MQ_PORT")
+MQ_USER = os.environ.get("MQ_USER")
+MQ_PASS = os.environ.get("MQ_PASS")
 # subscribe to the corresponding queue
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
@@ -30,7 +33,11 @@ class TopicQueueConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
+            pika.ConnectionParameters(
+                host=MQ_HOST,
+                port=MQ_PORT,
+                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
+            )
         )
 
         self.channel = self.connection.channel()
@@ -54,7 +61,11 @@ class TopicQueueConsumer(object):
         self._thread_queue.put(message_body)
 
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host=MQ_HOST)
+            pika.ConnectionParameters(
+                host=MQ_HOST,
+                port=MQ_PORT,
+                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
+            )
         )
         self.channel = self.connection.channel()
 
