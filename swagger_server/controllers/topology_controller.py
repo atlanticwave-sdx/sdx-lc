@@ -27,9 +27,9 @@ db_instance = DbUtils()
 db_instance.initialize_db()
 
 
-def find_after(s, splitter):
+def find_after(s, delimiter):
     try:
-        start = s.index(splitter) + len(splitter)
+        start = s.index(delimiter) + len(delimiter)
         return s[start:]
     except ValueError:
         return ""
