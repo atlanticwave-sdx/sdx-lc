@@ -27,11 +27,10 @@ db_instance = DbUtils()
 db_instance.initialize_db()
 
 
-def find_between(s, first, last):
+def find_after(s, splitter):
     try:
-        start = s.index(first) + len(first)
-        end = s.index(last, start)
-        return s[start:end]
+        start = s.index(splitter) + len(splitter)
+        return s[start:]
     except ValueError:
         return ""
 
@@ -53,7 +52,7 @@ def add_topology(body):  # noqa: E501
     if msg_id is None:
         return "ID is missing."
 
-    domain_name = find_between(msg_id, "topology:", ".")
+    domain_name = find_after(msg_id, "topology:")
     if domain_name != SDXLC_DOMAIN:
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
