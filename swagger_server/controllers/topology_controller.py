@@ -1,14 +1,10 @@
 import json
 import logging
 import os
-import threading
 
 import connexion
-import six
 
-from swagger_server import util
 from swagger_server.messaging.rpc_queue_producer import RpcProducer
-from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server.utils.db_utils import DbUtils
 
