@@ -2,6 +2,7 @@
 /swagger_server.egg-info/
 __pycache__/
 /venv*
+logs
 
 # Ignore sqlite files
 test-db
