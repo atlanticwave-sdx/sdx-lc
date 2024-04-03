@@ -1,14 +1,10 @@
 import json
 import logging
 import os
-import threading
 
 import connexion
-import six
 
-from swagger_server import util
 from swagger_server.messaging.rpc_queue_producer import RpcProducer
-from swagger_server.models.api_response import ApiResponse  # noqa: E501
 from swagger_server.models.topology import Topology  # noqa: E501
 from swagger_server.utils.db_utils import DbUtils
 
@@ -27,13 +23,15 @@ db_instance = DbUtils()
 db_instance.initialize_db()
 
 
-def find_between(s, first, last):
-    try:
-        start = s.index(first) + len(first)
-        end = s.index(last, start)
-        return s[start:end]
-    except ValueError:
-        return ""
+def find_domain_name(topology_id, delimiter):
+    """
+    Find domain name from topology id.
+
+    Topology IDs are expected to be of the format
+    "urn:ogf:network:sdx:topology:zaoxi.net"
+    """
+    *_, domain_name = topology_id.split(delimiter)
+    return domain_name
 
 
 def add_topology(body):  # noqa: E501
@@ -53,7 +51,7 @@ def add_topology(body):  # noqa: E501
     if msg_id is None:
         return "ID is missing."
 
-    domain_name = find_between(msg_id, "topology:", ".net")
+    domain_name = find_domain_name(msg_id, ":")
     if domain_name != SDXLC_DOMAIN:
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
