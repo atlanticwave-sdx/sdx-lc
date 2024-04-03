@@ -69,7 +69,7 @@ class TestTopologyController(BaseTestCase):
     ]
 
     __topology = Topology(
-        id="test_topology_id",
+        id="test:topology:test_topology.net",
         name="test_topology_name",
         domain_service=None,
         version=0,
