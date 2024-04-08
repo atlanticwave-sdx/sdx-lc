@@ -43,7 +43,7 @@ class TopicQueueConsumer(object):
         self.channel = self.connection.channel()
         self.exchange_name = exchange_name
 
-        self.result = self.channel.queue_declare(queue=SUB_QUEUE)
+        self.result = self.channel.queue_declare(queue="", exclusive=True)
         self._thread_queue = thread_queue
 
         self.binding_keys = []
