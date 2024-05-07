@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc import util
 
 
 class LinkMeasurementPeriod(Model):
@@ -14,8 +14,7 @@ class LinkMeasurementPeriod(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(self, period: float = None, time_unit: str = None):  # noqa: E501
+    def __init__(self, period=None, time_unit=None):  # noqa: E501
         """LinkMeasurementPeriod - a model defined in Swagger
 
         :param period: The period of this LinkMeasurementPeriod.  # noqa: E501
@@ -23,14 +22,20 @@ class LinkMeasurementPeriod(Model):
         :param time_unit: The time_unit of this LinkMeasurementPeriod.  # noqa: E501
         :type time_unit: str
         """
-        self.swagger_types = {"period": float, "time_unit": str}
+        self.swagger_types = {
+            'period': float,
+            'time_unit': str
+        }
 
-        self.attribute_map = {"period": "period", "time_unit": "time_unit"}
+        self.attribute_map = {
+            'period': 'period',
+            'time_unit': 'time_unit'
+        }
         self._period = period
         self._time_unit = time_unit
 
     @classmethod
-    def from_dict(cls, dikt) -> "LinkMeasurementPeriod":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -41,7 +46,7 @@ class LinkMeasurementPeriod(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def period(self) -> float:
+    def period(self):
         """Gets the period of this LinkMeasurementPeriod.
 
 
@@ -51,7 +56,7 @@ class LinkMeasurementPeriod(Model):
         return self._period
 
     @period.setter
-    def period(self, period: float):
+    def period(self, period):
         """Sets the period of this LinkMeasurementPeriod.
 
 
@@ -62,7 +67,7 @@ class LinkMeasurementPeriod(Model):
         self._period = period
 
     @property
-    def time_unit(self) -> str:
+    def time_unit(self):
         """Gets the time_unit of this LinkMeasurementPeriod.
 
 
@@ -72,7 +77,7 @@ class LinkMeasurementPeriod(Model):
         return self._time_unit
 
     @time_unit.setter
-    def time_unit(self, time_unit: str):
+    def time_unit(self, time_unit):
         """Sets the time_unit of this LinkMeasurementPeriod.
 
 

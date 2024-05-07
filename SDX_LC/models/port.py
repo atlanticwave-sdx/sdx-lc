@@ -1,12 +1,13 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc.models.service import Service  # noqa: F401,E501
+from sdx_lc import util
 
 
 class Port(Model):
@@ -14,18 +15,7 @@ class Port(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        id: str = None,
-        name: str = None,
-        short_name: str = None,
-        node: str = None,
-        label_range: List[str] = None,
-        status: str = None,
-        state: str = None,
-        private_attributes: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, id=None, name=None, short_name=None, node=None, label_range=None, status=None, state=None, services=None, private_attributes=None):  # noqa: E501
         """Port - a model defined in Swagger
 
         :param id: The id of this Port.  # noqa: E501
@@ -42,29 +32,33 @@ class Port(Model):
         :type status: str
         :param state: The state of this Port.  # noqa: E501
         :type state: str
+        :param services: The services of this Port.  # noqa: E501
+        :type services: Service
         :param private_attributes: The private_attributes of this Port.  # noqa: E501
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            "id": str,
-            "name": str,
-            "short_name": str,
-            "node": str,
-            "label_range": List[str],
-            "status": str,
-            "state": str,
-            "private_attributes": List[str],
+            'id': str,
+            'name': str,
+            'short_name': str,
+            'node': str,
+            'label_range': List[str],
+            'status': str,
+            'state': str,
+            'services': Service,
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "name": "name",
-            "short_name": "short_name",
-            "node": "node",
-            "label_range": "label_range",
-            "status": "status",
-            "state": "state",
-            "private_attributes": "private_attributes",
+            'id': 'id',
+            'name': 'name',
+            'short_name': 'short_name',
+            'node': 'node',
+            'label_range': 'label_range',
+            'status': 'status',
+            'state': 'state',
+            'services': 'services',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
@@ -73,10 +67,11 @@ class Port(Model):
         self._label_range = label_range
         self._status = status
         self._state = state
+        self._services = services
         self._private_attributes = private_attributes
 
     @classmethod
-    def from_dict(cls, dikt) -> "Port":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -87,7 +82,7 @@ class Port(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self):
         """Gets the id of this Port.
 
 
@@ -97,7 +92,7 @@ class Port(Model):
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id):
         """Sets the id of this Port.
 
 
@@ -110,7 +105,7 @@ class Port(Model):
         self._id = id
 
     @property
-    def name(self) -> str:
+    def name(self):
         """Gets the name of this Port.
 
 
@@ -120,7 +115,7 @@ class Port(Model):
         return self._name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name):
         """Sets the name of this Port.
 
 
@@ -128,14 +123,12 @@ class Port(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def short_name(self) -> str:
+    def short_name(self):
         """Gets the short_name of this Port.
 
 
@@ -145,7 +138,7 @@ class Port(Model):
         return self._short_name
 
     @short_name.setter
-    def short_name(self, short_name: str):
+    def short_name(self, short_name):
         """Sets the short_name of this Port.
 
 
@@ -156,7 +149,7 @@ class Port(Model):
         self._short_name = short_name
 
     @property
-    def node(self) -> str:
+    def node(self):
         """Gets the node of this Port.
 
 
@@ -166,7 +159,7 @@ class Port(Model):
         return self._node
 
     @node.setter
-    def node(self, node: str):
+    def node(self, node):
         """Sets the node of this Port.
 
 
@@ -174,14 +167,12 @@ class Port(Model):
         :type node: str
         """
         if node is None:
-            raise ValueError(
-                "Invalid value for `node`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `node`, must not be `None`")  # noqa: E501
 
         self._node = node
 
     @property
-    def label_range(self) -> List[str]:
+    def label_range(self):
         """Gets the label_range of this Port.
 
 
@@ -191,7 +182,7 @@ class Port(Model):
         return self._label_range
 
     @label_range.setter
-    def label_range(self, label_range: List[str]):
+    def label_range(self, label_range):
         """Sets the label_range of this Port.
 
 
@@ -202,7 +193,7 @@ class Port(Model):
         self._label_range = label_range
 
     @property
-    def status(self) -> str:
+    def status(self):
         """Gets the status of this Port.
 
 
@@ -212,7 +203,7 @@ class Port(Model):
         return self._status
 
     @status.setter
-    def status(self, status: str):
+    def status(self, status):
         """Sets the status of this Port.
 
 
@@ -220,14 +211,12 @@ class Port(Model):
         :type status: str
         """
         if status is None:
-            raise ValueError(
-                "Invalid value for `status`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `status`, must not be `None`")  # noqa: E501
 
         self._status = status
 
     @property
-    def state(self) -> str:
+    def state(self):
         """Gets the state of this Port.
 
 
@@ -237,7 +226,7 @@ class Port(Model):
         return self._state
 
     @state.setter
-    def state(self, state: str):
+    def state(self, state):
         """Sets the state of this Port.
 
 
@@ -248,7 +237,28 @@ class Port(Model):
         self._state = state
 
     @property
-    def private_attributes(self) -> List[str]:
+    def services(self):
+        """Gets the services of this Port.
+
+
+        :return: The services of this Port.
+        :rtype: Service
+        """
+        return self._services
+
+    @services.setter
+    def services(self, services):
+        """Sets the services of this Port.
+
+
+        :param services: The services of this Port.
+        :type services: Service
+        """
+
+        self._services = services
+
+    @property
+    def private_attributes(self):
         """Gets the private_attributes of this Port.
 
 
@@ -258,7 +268,7 @@ class Port(Model):
         return self._private_attributes
 
     @private_attributes.setter
-    def private_attributes(self, private_attributes: List[str]):
+    def private_attributes(self, private_attributes):
         """Sets the private_attributes of this Port.
 
 

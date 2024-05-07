@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc import util
 
 
 class Location(Model):
@@ -14,10 +14,7 @@ class Location(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self, address: str = None, latitude: float = None, longitude: float = None
-    ):  # noqa: E501
+    def __init__(self, address=None, latitude=None, longitude=None, iso3166_2_lvl4=None):  # noqa: E501
         """Location - a model defined in Swagger
 
         :param address: The address of this Location.  # noqa: E501
@@ -26,20 +23,29 @@ class Location(Model):
         :type latitude: float
         :param longitude: The longitude of this Location.  # noqa: E501
         :type longitude: float
+        :param iso3166_2_lvl4: The iso3166_2_lvl4 of this Location.  # noqa: E501
+        :type iso3166_2_lvl4: str
         """
-        self.swagger_types = {"address": str, "latitude": float, "longitude": float}
+        self.swagger_types = {
+            'address': str,
+            'latitude': float,
+            'longitude': float,
+            'iso3166_2_lvl4': str
+        }
 
         self.attribute_map = {
-            "address": "address",
-            "latitude": "latitude",
-            "longitude": "longitude",
+            'address': 'address',
+            'latitude': 'latitude',
+            'longitude': 'longitude',
+            'iso3166_2_lvl4': 'iso3166_2_lvl4'
         }
         self._address = address
         self._latitude = latitude
         self._longitude = longitude
+        self._iso3166_2_lvl4 = iso3166_2_lvl4
 
     @classmethod
-    def from_dict(cls, dikt) -> "Location":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -50,7 +56,7 @@ class Location(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def address(self) -> str:
+    def address(self):
         """Gets the address of this Location.
 
 
@@ -60,7 +66,7 @@ class Location(Model):
         return self._address
 
     @address.setter
-    def address(self, address: str):
+    def address(self, address):
         """Sets the address of this Location.
 
 
@@ -71,7 +77,7 @@ class Location(Model):
         self._address = address
 
     @property
-    def latitude(self) -> float:
+    def latitude(self):
         """Gets the latitude of this Location.
 
 
@@ -81,7 +87,7 @@ class Location(Model):
         return self._latitude
 
     @latitude.setter
-    def latitude(self, latitude: float):
+    def latitude(self, latitude):
         """Sets the latitude of this Location.
 
 
@@ -92,7 +98,7 @@ class Location(Model):
         self._latitude = latitude
 
     @property
-    def longitude(self) -> float:
+    def longitude(self):
         """Gets the longitude of this Location.
 
 
@@ -102,7 +108,7 @@ class Location(Model):
         return self._longitude
 
     @longitude.setter
-    def longitude(self, longitude: float):
+    def longitude(self, longitude):
         """Sets the longitude of this Location.
 
 
@@ -111,3 +117,24 @@ class Location(Model):
         """
 
         self._longitude = longitude
+
+    @property
+    def iso3166_2_lvl4(self):
+        """Gets the iso3166_2_lvl4 of this Location.
+
+
+        :return: The iso3166_2_lvl4 of this Location.
+        :rtype: str
+        """
+        return self._iso3166_2_lvl4
+
+    @iso3166_2_lvl4.setter
+    def iso3166_2_lvl4(self, iso3166_2_lvl4):
+        """Sets the iso3166_2_lvl4 of this Location.
+
+
+        :param iso3166_2_lvl4: The iso3166_2_lvl4 of this Location.
+        :type iso3166_2_lvl4: str
+        """
+
+        self._iso3166_2_lvl4 = iso3166_2_lvl4

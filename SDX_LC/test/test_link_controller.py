@@ -7,8 +7,8 @@ import datetime
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.link import Link  # noqa: E501
-from swagger_server.test import BaseTestCase
+from sdx_lc.models.link import Link  # noqa: E501
+from sdx_lc.test import BaseTestCase
 
 
 class TestLinkController(BaseTestCase):
@@ -36,7 +36,7 @@ class TestLinkController(BaseTestCase):
             measurement_period=None,
         )
         response = self.client.open(
-            "/SDX-LC/1.0.0/link",
+            "/SDX-LC/2.0.0/link",
             method="POST",
             data=json.dumps(body),
             content_type="application/json",
@@ -51,7 +51,7 @@ class TestLinkController(BaseTestCase):
         query_string = [("node_id", 789)]
         headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            "/SDX-LC/1.0.0/link",
+            "/SDX-LC/2.0.0/link",
             method="DELETE",
             headers=headers,
             query_string=query_string,
@@ -63,7 +63,7 @@ class TestLinkController(BaseTestCase):
 
         get an existing link
         """
-        response = self.client.open("/SDX-LC/1.0.0/link", method="GET")
+        response = self.client.open("/SDX-LC/2.0.0/link", method="GET")
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_update_link(self):
@@ -88,7 +88,7 @@ class TestLinkController(BaseTestCase):
             measurement_period=None,
         )
         response = self.client.open(
-            "/SDX-LC/1.0.0/link",
+            "/SDX-LC/2.0.0/link",
             method="PUT",
             data=json.dumps(body),
             content_type="application/json",

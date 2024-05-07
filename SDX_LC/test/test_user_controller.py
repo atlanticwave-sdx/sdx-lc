@@ -5,8 +5,8 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.user import User  # noqa: E501
-from swagger_server.test import BaseTestCase
+from sdx_lc.models.user import User  # noqa: E501
+from sdx_lc.test import BaseTestCase
 
 
 class TestUserController(BaseTestCase):
@@ -19,7 +19,7 @@ class TestUserController(BaseTestCase):
         """
         body = User()
         response = self.client.open(
-            "/SDX-LC/1.0.0/user",
+            "/SDX-LC/2.0.0/user",
             method="POST",
             data=json.dumps(body),
             content_type="application/json",
@@ -33,7 +33,7 @@ class TestUserController(BaseTestCase):
         """
         body = [User()]
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/createWithArray",
+            "/SDX-LC/2.0.0/user/createWithArray",
             method="POST",
             data=json.dumps(body),
             content_type="application/json",
@@ -47,7 +47,7 @@ class TestUserController(BaseTestCase):
         """
         body = [User()]
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/createWithList",
+            "/SDX-LC/2.0.0/user/createWithList",
             method="POST",
             data=json.dumps(body),
             content_type="application/json",
@@ -60,7 +60,7 @@ class TestUserController(BaseTestCase):
         Delete user
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/{username}".format(username="username_example"),
+            "/SDX-LC/2.0.0/user/{username}".format(username="username_example"),
             method="DELETE",
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
@@ -71,7 +71,7 @@ class TestUserController(BaseTestCase):
         Get user by user name
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/{username}".format(username="username_example"),
+            "/SDX-LC/2.0.0/user/{username}".format(username="username_example"),
             method="GET",
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
@@ -86,7 +86,7 @@ class TestUserController(BaseTestCase):
             ("password", "password_example"),
         ]
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/login", method="GET", query_string=query_string
+            "/SDX-LC/2.0.0/user/login", method="GET", query_string=query_string
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
@@ -95,7 +95,7 @@ class TestUserController(BaseTestCase):
 
         Logs out current logged in user session
         """
-        response = self.client.open("/SDX-LC/1.0.0/user/logout", method="GET")
+        response = self.client.open("/SDX-LC/2.0.0/user/logout", method="GET")
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_update_user(self):
@@ -105,7 +105,7 @@ class TestUserController(BaseTestCase):
         """
         body = User()
         response = self.client.open(
-            "/SDX-LC/1.0.0/user/{username}".format(username="username_example"),
+            "/SDX-LC/2.0.0/user/{username}".format(username="username_example"),
             method="PUT",
             data=json.dumps(body),
             content_type="application/json",

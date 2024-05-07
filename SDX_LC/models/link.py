@@ -1,16 +1,14 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
-from swagger_server.models.link_measurement_period import (  # noqa: F401,E501
-    LinkMeasurementPeriod,
-)
-from swagger_server.models.port import Port  # noqa: F401,E501
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc.models.link_measurement_period import LinkMeasurementPeriod  # noqa: F401,E501
+from sdx_lc.models.port import Port  # noqa: F401,E501
+from sdx_lc import util
 
 
 class Link(Model):
@@ -18,24 +16,7 @@ class Link(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        id: str = None,
-        name: str = None,
-        short_name: str = None,
-        ports: List[Port] = None,
-        bandwidth: float = None,
-        residual_bandwidth: float = None,
-        latency: float = None,
-        packet_loss: float = None,
-        availability: float = None,
-        status: str = None,
-        state: str = None,
-        private_attributes: List[str] = None,
-        timestamp: datetime = None,
-        measurement_period: LinkMeasurementPeriod = None,
-    ):  # noqa: E501
+    def __init__(self, id=None, name=None, short_name=None, ports=None, bandwidth=None, residual_bandwidth=None, latency=None, packet_loss=None, availability=None, status=None, state=None, private_attributes=None, timestamp=None, measurement_period=None):  # noqa: E501
         """Link - a model defined in Swagger
 
         :param id: The id of this Link.  # noqa: E501
@@ -68,37 +49,37 @@ class Link(Model):
         :type measurement_period: LinkMeasurementPeriod
         """
         self.swagger_types = {
-            "id": str,
-            "name": str,
-            "short_name": str,
-            "ports": List[Port],
-            "bandwidth": float,
-            "residual_bandwidth": float,
-            "latency": float,
-            "packet_loss": float,
-            "availability": float,
-            "status": str,
-            "state": str,
-            "private_attributes": List[str],
-            "timestamp": datetime,
-            "measurement_period": LinkMeasurementPeriod,
+            'id': str,
+            'name': str,
+            'short_name': str,
+            'ports': List[Port],
+            'bandwidth': float,
+            'residual_bandwidth': float,
+            'latency': float,
+            'packet_loss': float,
+            'availability': float,
+            'status': str,
+            'state': str,
+            'private_attributes': List[str],
+            'timestamp': datetime,
+            'measurement_period': LinkMeasurementPeriod
         }
 
         self.attribute_map = {
-            "id": "id",
-            "name": "name",
-            "short_name": "short_name",
-            "ports": "ports",
-            "bandwidth": "bandwidth",
-            "residual_bandwidth": "residual_bandwidth",
-            "latency": "latency",
-            "packet_loss": "packet_loss",
-            "availability": "availability",
-            "status": "status",
-            "state": "state",
-            "private_attributes": "private_attributes",
-            "timestamp": "timestamp",
-            "measurement_period": "measurement_period",
+            'id': 'id',
+            'name': 'name',
+            'short_name': 'short_name',
+            'ports': 'ports',
+            'bandwidth': 'bandwidth',
+            'residual_bandwidth': 'residual_bandwidth',
+            'latency': 'latency',
+            'packet_loss': 'packet_loss',
+            'availability': 'availability',
+            'status': 'status',
+            'state': 'state',
+            'private_attributes': 'private_attributes',
+            'timestamp': 'timestamp',
+            'measurement_period': 'measurement_period'
         }
         self._id = id
         self._name = name
@@ -116,7 +97,7 @@ class Link(Model):
         self._measurement_period = measurement_period
 
     @classmethod
-    def from_dict(cls, dikt) -> "Link":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -127,7 +108,7 @@ class Link(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self):
         """Gets the id of this Link.
 
 
@@ -137,7 +118,7 @@ class Link(Model):
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id):
         """Sets the id of this Link.
 
 
@@ -150,7 +131,7 @@ class Link(Model):
         self._id = id
 
     @property
-    def name(self) -> str:
+    def name(self):
         """Gets the name of this Link.
 
 
@@ -160,7 +141,7 @@ class Link(Model):
         return self._name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name):
         """Sets the name of this Link.
 
 
@@ -168,14 +149,12 @@ class Link(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def short_name(self) -> str:
+    def short_name(self):
         """Gets the short_name of this Link.
 
 
@@ -185,7 +164,7 @@ class Link(Model):
         return self._short_name
 
     @short_name.setter
-    def short_name(self, short_name: str):
+    def short_name(self, short_name):
         """Sets the short_name of this Link.
 
 
@@ -196,7 +175,7 @@ class Link(Model):
         self._short_name = short_name
 
     @property
-    def ports(self) -> List[Port]:
+    def ports(self):
         """Gets the ports of this Link.
 
 
@@ -206,7 +185,7 @@ class Link(Model):
         return self._ports
 
     @ports.setter
-    def ports(self, ports: List[Port]):
+    def ports(self, ports):
         """Sets the ports of this Link.
 
 
@@ -214,14 +193,12 @@ class Link(Model):
         :type ports: List[Port]
         """
         if ports is None:
-            raise ValueError(
-                "Invalid value for `ports`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
 
         self._ports = ports
 
     @property
-    def bandwidth(self) -> float:
+    def bandwidth(self):
         """Gets the bandwidth of this Link.
 
 
@@ -231,7 +208,7 @@ class Link(Model):
         return self._bandwidth
 
     @bandwidth.setter
-    def bandwidth(self, bandwidth: float):
+    def bandwidth(self, bandwidth):
         """Sets the bandwidth of this Link.
 
 
@@ -242,7 +219,7 @@ class Link(Model):
         self._bandwidth = bandwidth
 
     @property
-    def residual_bandwidth(self) -> float:
+    def residual_bandwidth(self):
         """Gets the residual_bandwidth of this Link.
 
 
@@ -252,7 +229,7 @@ class Link(Model):
         return self._residual_bandwidth
 
     @residual_bandwidth.setter
-    def residual_bandwidth(self, residual_bandwidth: float):
+    def residual_bandwidth(self, residual_bandwidth):
         """Sets the residual_bandwidth of this Link.
 
 
@@ -263,7 +240,7 @@ class Link(Model):
         self._residual_bandwidth = residual_bandwidth
 
     @property
-    def latency(self) -> float:
+    def latency(self):
         """Gets the latency of this Link.
 
 
@@ -273,7 +250,7 @@ class Link(Model):
         return self._latency
 
     @latency.setter
-    def latency(self, latency: float):
+    def latency(self, latency):
         """Sets the latency of this Link.
 
 
@@ -284,7 +261,7 @@ class Link(Model):
         self._latency = latency
 
     @property
-    def packet_loss(self) -> float:
+    def packet_loss(self):
         """Gets the packet_loss of this Link.
 
 
@@ -294,7 +271,7 @@ class Link(Model):
         return self._packet_loss
 
     @packet_loss.setter
-    def packet_loss(self, packet_loss: float):
+    def packet_loss(self, packet_loss):
         """Sets the packet_loss of this Link.
 
 
@@ -305,7 +282,7 @@ class Link(Model):
         self._packet_loss = packet_loss
 
     @property
-    def availability(self) -> float:
+    def availability(self):
         """Gets the availability of this Link.
 
 
@@ -315,7 +292,7 @@ class Link(Model):
         return self._availability
 
     @availability.setter
-    def availability(self, availability: float):
+    def availability(self, availability):
         """Sets the availability of this Link.
 
 
@@ -326,7 +303,7 @@ class Link(Model):
         self._availability = availability
 
     @property
-    def status(self) -> str:
+    def status(self):
         """Gets the status of this Link.
 
 
@@ -336,7 +313,7 @@ class Link(Model):
         return self._status
 
     @status.setter
-    def status(self, status: str):
+    def status(self, status):
         """Sets the status of this Link.
 
 
@@ -347,7 +324,7 @@ class Link(Model):
         self._status = status
 
     @property
-    def state(self) -> str:
+    def state(self):
         """Gets the state of this Link.
 
 
@@ -357,7 +334,7 @@ class Link(Model):
         return self._state
 
     @state.setter
-    def state(self, state: str):
+    def state(self, state):
         """Sets the state of this Link.
 
 
@@ -368,7 +345,7 @@ class Link(Model):
         self._state = state
 
     @property
-    def private_attributes(self) -> List[str]:
+    def private_attributes(self):
         """Gets the private_attributes of this Link.
 
 
@@ -378,7 +355,7 @@ class Link(Model):
         return self._private_attributes
 
     @private_attributes.setter
-    def private_attributes(self, private_attributes: List[str]):
+    def private_attributes(self, private_attributes):
         """Sets the private_attributes of this Link.
 
 
@@ -389,7 +366,7 @@ class Link(Model):
         self._private_attributes = private_attributes
 
     @property
-    def timestamp(self) -> datetime:
+    def timestamp(self):
         """Gets the timestamp of this Link.
 
 
@@ -399,7 +376,7 @@ class Link(Model):
         return self._timestamp
 
     @timestamp.setter
-    def timestamp(self, timestamp: datetime):
+    def timestamp(self, timestamp):
         """Sets the timestamp of this Link.
 
 
@@ -410,7 +387,7 @@ class Link(Model):
         self._timestamp = timestamp
 
     @property
-    def measurement_period(self) -> LinkMeasurementPeriod:
+    def measurement_period(self):
         """Gets the measurement_period of this Link.
 
 
@@ -420,7 +397,7 @@ class Link(Model):
         return self._measurement_period
 
     @measurement_period.setter
-    def measurement_period(self, measurement_period: LinkMeasurementPeriod):
+    def measurement_period(self, measurement_period):
         """Sets the measurement_period of this Link.
 
 

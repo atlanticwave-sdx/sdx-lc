@@ -1,8 +1,8 @@
 import connexion
 import six
 
-from swagger_server import util
-from swagger_server.models.user import User  # noqa: E501
+from sdx_lc import util
+from sdx_lc.models.user import User  # noqa: E501
 
 
 def create_user(body):  # noqa: E501

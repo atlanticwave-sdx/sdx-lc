@@ -57,8 +57,8 @@ $ docker compose up --build
 Or, to build the image and run:
 
 ```console
-$ docker build -t swagger_server .
-$ docker run -p 8080:8080 swagger_server
+$ docker build -t sdx_lc .
+$ docker run -p 8080:8080 sdx_lc
 ```
 
 
@@ -82,7 +82,7 @@ the server:
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
 $ pip3 install -r requirements.txt
-$ python3 -m swagger_server
+$ python3 -m sdx_lc
 ```
 
 

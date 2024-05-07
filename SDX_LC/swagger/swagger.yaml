@@ -56,7 +56,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: Topology not found
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
     put:
       tags:
       - topology
@@ -73,7 +73,7 @@ paths:
           description: Topology not found
         "405":
           description: Validation exception
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
     post:
       tags:
       - topology
@@ -97,7 +97,7 @@ paths:
           description: Invalid Connection
         "405":
           description: Invalid input
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
     delete:
       tags:
       - topology
@@ -118,7 +118,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: topology not found
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
   /topology/version:
     get:
       tags:
@@ -144,7 +144,7 @@ paths:
                 $ref: '#/components/schemas/topology'
         "400":
           description: Invalid id value
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
   /topology/{version}:
     get:
       tags:
@@ -182,7 +182,7 @@ paths:
           description: Invalid version supplied
         "404":
           description: Topology not found
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
     delete:
       tags:
       - topology
@@ -212,7 +212,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: topology not found
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
   /topology/{topology_id}/uploadImage:
     post:
       tags:
@@ -242,7 +242,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-      x-openapi-router-controller: swagger_server.controllers.topology_controller
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
   /node:
     get:
       tags:
@@ -257,7 +257,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: Topology not found
-      x-openapi-router-controller: swagger_server.controllers.node_controller
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
     put:
       tags:
       - node
@@ -273,7 +273,7 @@ paths:
           description: Node not found
         "405":
           description: Validation exception
-      x-openapi-router-controller: swagger_server.controllers.node_controller
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
     post:
       tags:
       - node
@@ -295,7 +295,7 @@ paths:
           description: Invalid Connection
         "405":
           description: Invalid input
-      x-openapi-router-controller: swagger_server.controllers.node_controller
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
     delete:
       tags:
       - node
@@ -316,7 +316,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: node not found
-      x-openapi-router-controller: swagger_server.controllers.node_controller
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
   /link:
     get:
       tags:
@@ -331,7 +331,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: Link not found
-      x-openapi-router-controller: swagger_server.controllers.link_controller
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
     put:
       tags:
       - link
@@ -347,7 +347,7 @@ paths:
           description: Topology not found
         "405":
           description: Validation exception
-      x-openapi-router-controller: swagger_server.controllers.link_controller
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
     post:
       tags:
       - link
@@ -358,7 +358,7 @@ paths:
       responses:
         "405":
           description: Invalid input
-      x-openapi-router-controller: swagger_server.controllers.link_controller
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
     delete:
       tags:
       - link
@@ -379,7 +379,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: link not found
-      x-openapi-router-controller: swagger_server.controllers.link_controller
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
   /conection:
     post:
       tags:
@@ -402,7 +402,7 @@ paths:
                 $ref: '#/components/schemas/connection'
         "400":
           description: Invalid Connection
-      x-openapi-router-controller: swagger_server.controllers.connection_controller
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
   /connection/{connection_id}:
     get:
       tags:
@@ -418,10 +418,8 @@ paths:
         style: simple
         explode: false
         schema:
-          maximum: 10
-          minimum: 1
-          type: integer
-          format: int64
+          type: string
+          format: uuid
       responses:
         "200":
           description: successful operation
@@ -436,7 +434,7 @@ paths:
           description: Invalid ID supplied
         "404":
           description: connection not found
-      x-openapi-router-controller: swagger_server.controllers.connection_controller
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
     delete:
       tags:
       - connection
@@ -451,15 +449,14 @@ paths:
         style: simple
         explode: false
         schema:
-          minimum: 1
-          type: integer
-          format: int64
+          type: string
+          format: uuid
       responses:
         "400":
           description: Invalid ID supplied
         "404":
           description: connection not found
-      x-openapi-router-controller: swagger_server.controllers.connection_controller
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
   /user:
     post:
       tags:
@@ -477,7 +474,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
   /user/createWithArray:
     post:
       tags:
@@ -489,7 +486,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
   /user/createWithList:
     post:
       tags:
@@ -501,7 +498,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
   /user/login:
     get:
       tags:
@@ -553,7 +550,7 @@ paths:
                 type: string
         "400":
           description: Invalid username/password supplied
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
   /user/logout:
     get:
       tags:
@@ -563,7 +560,7 @@ paths:
       responses:
         default:
           description: successful operation
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
   /user/{username}:
     get:
       tags:
@@ -593,7 +590,7 @@ paths:
           description: Invalid username supplied
         "404":
           description: User not found
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
     put:
       tags:
       - user
@@ -621,7 +618,7 @@ paths:
           description: Invalid user supplied
         "404":
           description: User not found
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
     delete:
       tags:
       - user
@@ -642,7 +639,7 @@ paths:
           description: Invalid username supplied
         "404":
           description: User not found
-      x-openapi-router-controller: swagger_server.controllers.user_controller
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
 components:
   schemas:
     connection:
@@ -670,6 +667,61 @@ components:
         end_time:
           type: string
           format: date-time
+        multi_path:
+          type: boolean
+        preempt:
+          type: boolean
+        backup_path_type:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        exclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        inclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        bandwidth_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        bandwidth_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        packetloss_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        packetloss_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        paths:
+          type: array
+          items:
+            type: string
         status:
           type: string
           description: Connection Status
@@ -685,18 +737,24 @@ components:
         start_time: 2000-01-23T04:56:07.000Z
         name: name
         end_time: 2000-01-23T04:56:07.000Z
-        id: id
+        id: a9a861f9-da3b-4fde-86b7-9435b5a33648
+        bandwidth_required: 100
+        latency_required: 20
         egress_port:
           node: urn:sdx:port:amlight.net:Novi07
           name: urn:sdx:port:amlight.net:Novi07:10
           short_name: "10"
           id: id
+          label: vlan
+          label_range: 100
           status: up
         ingress_port:
           node: urn:sdx:port:amlight.net:Novi06
           name: urn:sdx:port:amlight.net:Novi06:9
           short_name: "9"
           id: id
+          label: vlan
+          label_range: 100
           status: up
       xml:
         name: Connection

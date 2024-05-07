@@ -10,9 +10,9 @@ from subprocess import call
 
 import connexion
 
-from swagger_server import encoder
-from swagger_server.messaging.topic_queue_consumer import *
-from swagger_server.utils.db_utils import *
+from sdx_lc import encoder
+from sdx_lc.messaging.topic_queue_consumer import *
+from sdx_lc.utils.db_utils import *
 
 logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
@@ -39,7 +39,7 @@ def start_consumer(thread_queue, db_instance):
 def start_pull_topology_change():
     # Run pull_topo_job as a sub process, so if sdx-lc was killed,
     # pull_topo_job will continue to run as a independent process
-    call(["python", "swagger_server/jobs/pull_topo_changes.py"])
+    call(["python", "sdx_lc/jobs/pull_topo_changes.py"])
 
 
 def main():

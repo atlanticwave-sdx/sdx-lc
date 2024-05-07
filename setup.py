@@ -4,7 +4,7 @@ import sys
 
 from setuptools import find_packages, setup
 
-NAME = "swagger_server"
+NAME = "sdx_lc"
 VERSION = "2.0.0"
 # To install the library, run the following
 #
@@ -26,7 +26,7 @@ setup(
     packages=find_packages(),
     package_data={"": ["swagger/swagger.yaml"]},
     include_package_data=True,
-    entry_points={"console_scripts": ["swagger_server=swagger_server.__main__:main"]},
+    entry_points={"console_scripts": ["sdx_lc=sdx_lc.__main__:main"]},
     long_description="""\
     You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). 
     """,

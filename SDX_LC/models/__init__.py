@@ -2,15 +2,14 @@
 
 # flake8: noqa
 from __future__ import absolute_import
-
 # import models into model package
-from swagger_server.models.api_response import ApiResponse
-from swagger_server.models.connection import Connection
-from swagger_server.models.link import Link
-from swagger_server.models.link_measurement_period import LinkMeasurementPeriod
-from swagger_server.models.location import Location
-from swagger_server.models.node import Node
-from swagger_server.models.port import Port
-from swagger_server.models.service import Service
-from swagger_server.models.topology import Topology
-from swagger_server.models.user import User
+from sdx_lc.models.api_response import ApiResponse
+from sdx_lc.models.connection import Connection
+from sdx_lc.models.link import Link
+from sdx_lc.models.link_measurement_period import LinkMeasurementPeriod
+from sdx_lc.models.location import Location
+from sdx_lc.models.node import Node
+from sdx_lc.models.port import Port
+from sdx_lc.models.service import Service
+from sdx_lc.models.topology import Topology
+from sdx_lc.models.user import User

@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc import util
 
 
 class ApiResponse(Model):
@@ -14,10 +14,7 @@ class ApiResponse(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self, code: int = None, type: str = None, message: str = None
-    ):  # noqa: E501
+    def __init__(self, code=None, type=None, message=None):  # noqa: E501
         """ApiResponse - a model defined in Swagger
 
         :param code: The code of this ApiResponse.  # noqa: E501
@@ -27,15 +24,23 @@ class ApiResponse(Model):
         :param message: The message of this ApiResponse.  # noqa: E501
         :type message: str
         """
-        self.swagger_types = {"code": int, "type": str, "message": str}
+        self.swagger_types = {
+            'code': int,
+            'type': str,
+            'message': str
+        }
 
-        self.attribute_map = {"code": "code", "type": "type", "message": "message"}
+        self.attribute_map = {
+            'code': 'code',
+            'type': 'type',
+            'message': 'message'
+        }
         self._code = code
         self._type = type
         self._message = message
 
     @classmethod
-    def from_dict(cls, dikt) -> "ApiResponse":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -46,7 +51,7 @@ class ApiResponse(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def code(self) -> int:
+    def code(self):
         """Gets the code of this ApiResponse.
 
 
@@ -56,7 +61,7 @@ class ApiResponse(Model):
         return self._code
 
     @code.setter
-    def code(self, code: int):
+    def code(self, code):
         """Sets the code of this ApiResponse.
 
 
@@ -67,7 +72,7 @@ class ApiResponse(Model):
         self._code = code
 
     @property
-    def type(self) -> str:
+    def type(self):
         """Gets the type of this ApiResponse.
 
 
@@ -77,7 +82,7 @@ class ApiResponse(Model):
         return self._type
 
     @type.setter
-    def type(self, type: str):
+    def type(self, type):
         """Sets the type of this ApiResponse.
 
 
@@ -88,7 +93,7 @@ class ApiResponse(Model):
         self._type = type
 
     @property
-    def message(self) -> str:
+    def message(self):
         """Gets the message of this ApiResponse.
 
 
@@ -98,7 +103,7 @@ class ApiResponse(Model):
         return self._message
 
     @message.setter
-    def message(self, message: str):
+    def message(self, message):
         """Sets the message of this ApiResponse.
 
 

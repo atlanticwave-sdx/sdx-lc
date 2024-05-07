@@ -1,8 +1,8 @@
 import connexion
 import six
 
-from swagger_server import util
-from swagger_server.models.node import Node  # noqa: E501
+from sdx_lc import util
+from sdx_lc.models.node import Node  # noqa: E501
 
 
 def add_node(body):  # noqa: E501

@@ -1,8 +1,8 @@
 import connexion
 import six
 
-from swagger_server import util
-from swagger_server.models.link import Link  # noqa: E501
+from sdx_lc import util
+from sdx_lc.models.link import Link  # noqa: E501
 
 
 def add_link(body):  # noqa: E501

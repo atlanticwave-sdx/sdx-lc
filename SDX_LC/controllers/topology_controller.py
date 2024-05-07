@@ -4,9 +4,9 @@ import os
 
 import connexion
 
-from swagger_server.messaging.rpc_queue_producer import RpcProducer
-from swagger_server.models.topology import Topology  # noqa: E501
-from swagger_server.utils.db_utils import DbUtils
+from sdx_lc.messaging.rpc_queue_producer import RpcProducer
+from sdx_lc.models.topology import Topology  # noqa: E501
+from sdx_lc.utils.db_utils import DbUtils
 
 LOG_FORMAT = (
     "%(levelname) -10s %(asctime)s %(name) -30s %(funcName) "

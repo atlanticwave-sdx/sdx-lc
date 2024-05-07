@@ -1,14 +1,14 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
-from swagger_server.models.location import Location  # noqa: F401,E501
-from swagger_server.models.port import Port  # noqa: F401,E501
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc.models.location import Location  # noqa: F401,E501
+from sdx_lc.models.port import Port  # noqa: F401,E501
+from sdx_lc import util
 
 
 class Node(Model):
@@ -16,16 +16,7 @@ class Node(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        id: str = None,
-        name: str = None,
-        short_name: str = None,
-        location: Location = None,
-        ports: List[Port] = None,
-        private_attributes: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, id=None, name=None, short_name=None, location=None, ports=None, private_attributes=None):  # noqa: E501
         """Node - a model defined in Swagger
 
         :param id: The id of this Node.  # noqa: E501
@@ -42,21 +33,21 @@ class Node(Model):
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            "id": str,
-            "name": str,
-            "short_name": str,
-            "location": Location,
-            "ports": List[Port],
-            "private_attributes": List[str],
+            'id': str,
+            'name': str,
+            'short_name': str,
+            'location': Location,
+            'ports': List[Port],
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "name": "name",
-            "short_name": "short_name",
-            "location": "location",
-            "ports": "ports",
-            "private_attributes": "private_attributes",
+            'id': 'id',
+            'name': 'name',
+            'short_name': 'short_name',
+            'location': 'location',
+            'ports': 'ports',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
@@ -66,7 +57,7 @@ class Node(Model):
         self._private_attributes = private_attributes
 
     @classmethod
-    def from_dict(cls, dikt) -> "Node":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -77,7 +68,7 @@ class Node(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self):
         """Gets the id of this Node.
 
 
@@ -87,7 +78,7 @@ class Node(Model):
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id):
         """Sets the id of this Node.
 
 
@@ -100,7 +91,7 @@ class Node(Model):
         self._id = id
 
     @property
-    def name(self) -> str:
+    def name(self):
         """Gets the name of this Node.
 
 
@@ -110,7 +101,7 @@ class Node(Model):
         return self._name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name):
         """Sets the name of this Node.
 
 
@@ -118,14 +109,12 @@ class Node(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def short_name(self) -> str:
+    def short_name(self):
         """Gets the short_name of this Node.
 
 
@@ -135,7 +124,7 @@ class Node(Model):
         return self._short_name
 
     @short_name.setter
-    def short_name(self, short_name: str):
+    def short_name(self, short_name):
         """Sets the short_name of this Node.
 
 
@@ -146,7 +135,7 @@ class Node(Model):
         self._short_name = short_name
 
     @property
-    def location(self) -> Location:
+    def location(self):
         """Gets the location of this Node.
 
 
@@ -156,7 +145,7 @@ class Node(Model):
         return self._location
 
     @location.setter
-    def location(self, location: Location):
+    def location(self, location):
         """Sets the location of this Node.
 
 
@@ -164,14 +153,12 @@ class Node(Model):
         :type location: Location
         """
         if location is None:
-            raise ValueError(
-                "Invalid value for `location`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `location`, must not be `None`")  # noqa: E501
 
         self._location = location
 
     @property
-    def ports(self) -> List[Port]:
+    def ports(self):
         """Gets the ports of this Node.
 
 
@@ -181,7 +168,7 @@ class Node(Model):
         return self._ports
 
     @ports.setter
-    def ports(self, ports: List[Port]):
+    def ports(self, ports):
         """Sets the ports of this Node.
 
 
@@ -189,14 +176,12 @@ class Node(Model):
         :type ports: List[Port]
         """
         if ports is None:
-            raise ValueError(
-                "Invalid value for `ports`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `ports`, must not be `None`")  # noqa: E501
 
         self._ports = ports
 
     @property
-    def private_attributes(self) -> List[str]:
+    def private_attributes(self):
         """Gets the private_attributes of this Node.
 
 
@@ -206,7 +191,7 @@ class Node(Model):
         return self._private_attributes
 
     @private_attributes.setter
-    def private_attributes(self, private_attributes: List[str]):
+    def private_attributes(self, private_attributes):
         """Sets the private_attributes of this Node.
 
 

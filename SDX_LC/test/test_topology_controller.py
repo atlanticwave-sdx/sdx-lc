@@ -7,13 +7,13 @@ import datetime
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.api_response import ApiResponse  # noqa: E501
-from swagger_server.models.link import Link
-from swagger_server.models.location import Location
-from swagger_server.models.node import Node
-from swagger_server.models.port import Port
-from swagger_server.models.topology import Topology  # noqa: E501
-from swagger_server.test import BaseTestCase
+from sdx_lc.models.api_response import ApiResponse  # noqa: E501
+from sdx_lc.models.link import Link
+from sdx_lc.models.location import Location
+from sdx_lc.models.node import Node
+from sdx_lc.models.port import Port
+from sdx_lc.models.topology import Topology  # noqa: E501
+from sdx_lc.test import BaseTestCase
 
 
 class TestTopologyController(BaseTestCase):
@@ -71,7 +71,7 @@ class TestTopologyController(BaseTestCase):
     __topology = Topology(
         id="test:topology:test_topology.net",
         name="test_topology_name",
-        domain_service=None,
+        services=None,
         version=0,
         timestamp=datetime.datetime.fromtimestamp(0),
         nodes=__nodes,
@@ -85,7 +85,7 @@ class TestTopologyController(BaseTestCase):
         Send a new topology to SDX-LC
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology",
+            "/SDX-LC/2.0.0/topology",
             method="POST",
             data=json.dumps(self.__topology),
             content_type="application/json",
@@ -100,7 +100,7 @@ class TestTopologyController(BaseTestCase):
         query_string = [("topology_id", 789)]
         headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology",
+            "/SDX-LC/2.0.0/topology",
             method="DELETE",
             headers=headers,
             query_string=query_string,
@@ -115,7 +115,7 @@ class TestTopologyController(BaseTestCase):
         query_string = [("topology_id", 789)]
         headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology/{version}".format(version=789),
+            "/SDX-LC/2.0.0/topology/{version}".format(version=789),
             method="DELETE",
             headers=headers,
             query_string=query_string,
@@ -127,7 +127,7 @@ class TestTopologyController(BaseTestCase):
 
         get an existing topology
         """
-        response = self.client.open("/SDX-LC/1.0.0/topology", method="GET")
+        response = self.client.open("/SDX-LC/2.0.0/topology", method="GET")
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_get_topologyby_version(self):
@@ -137,7 +137,7 @@ class TestTopologyController(BaseTestCase):
         """
         query_string = [("topology_id", 789)]
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology/{version}".format(version=789),
+            "/SDX-LC/2.0.0/topology/{version}".format(version=789),
             method="GET",
             query_string=query_string,
         )
@@ -150,7 +150,7 @@ class TestTopologyController(BaseTestCase):
         """
         query_string = [("topology_id", "topology_id_example")]
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology/version", method="GET", query_string=query_string
+            "/SDX-LC/2.0.0/topology/version", method="GET", query_string=query_string
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
@@ -160,7 +160,7 @@ class TestTopologyController(BaseTestCase):
         Update an existing topology
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology",
+            "/SDX-LC/2.0.0/topology",
             method="PUT",
             data=json.dumps(self.__topology),
             content_type="application/json",
@@ -174,7 +174,7 @@ class TestTopologyController(BaseTestCase):
         """
         body = Topology()
         response = self.client.open(
-            "/SDX-LC/1.0.0/topology/{topology_id}/uploadImage".format(topology_id=789),
+            "/SDX-LC/2.0.0/topology/{topology_id}/uploadImage".format(topology_id=789),
             method="POST",
             data=json.dumps(body),
             content_type="application/octet-stream",

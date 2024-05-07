@@ -1,15 +1,15 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
-from swagger_server.models.link import Link  # noqa: F401,E501
-from swagger_server.models.node import Node  # noqa: F401,E501
-from swagger_server.models.service import Service  # noqa: F401,E501
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc.models.link import Link  # noqa: F401,E501
+from sdx_lc.models.node import Node  # noqa: F401,E501
+from sdx_lc.models.service import Service  # noqa: F401,E501
+from sdx_lc import util
 
 
 class Topology(Model):
@@ -17,28 +17,19 @@ class Topology(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        id: str = None,
-        name: str = None,
-        domain_service: Service = None,
-        version: int = None,
-        timestamp: datetime = None,
-        nodes: List[Node] = None,
-        links: List[Link] = None,
-        private_attributes: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, id=None, name=None, services=None, version=None, model_version=None, timestamp=None, nodes=None, links=None, private_attributes=None):  # noqa: E501
         """Topology - a model defined in Swagger
 
         :param id: The id of this Topology.  # noqa: E501
         :type id: str
         :param name: The name of this Topology.  # noqa: E501
         :type name: str
-        :param domain_service: The domain_service of this Topology.  # noqa: E501
-        :type domain_service: Service
+        :param services: The services of this Topology.  # noqa: E501
+        :type services: Service
         :param version: The version of this Topology.  # noqa: E501
         :type version: int
+        :param model_version: The model_version of this Topology.  # noqa: E501
+        :type model_version: str
         :param timestamp: The timestamp of this Topology.  # noqa: E501
         :type timestamp: datetime
         :param nodes: The nodes of this Topology.  # noqa: E501
@@ -49,37 +40,40 @@ class Topology(Model):
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            "id": str,
-            "name": str,
-            "domain_service": Service,
-            "version": int,
-            "timestamp": datetime,
-            "nodes": List[Node],
-            "links": List[Link],
-            "private_attributes": List[str],
+            'id': str,
+            'name': str,
+            'services': Service,
+            'version': int,
+            'model_version': str,
+            'timestamp': datetime,
+            'nodes': List[Node],
+            'links': List[Link],
+            'private_attributes': List[str]
         }
 
         self.attribute_map = {
-            "id": "id",
-            "name": "name",
-            "domain_service": "domain_service",
-            "version": "version",
-            "timestamp": "timestamp",
-            "nodes": "nodes",
-            "links": "links",
-            "private_attributes": "private_attributes",
+            'id': 'id',
+            'name': 'name',
+            'services': 'services',
+            'version': 'version',
+            'model_version': 'model_version',
+            'timestamp': 'timestamp',
+            'nodes': 'nodes',
+            'links': 'links',
+            'private_attributes': 'private_attributes'
         }
         self._id = id
         self._name = name
-        self._domain_service = domain_service
+        self._services = services
         self._version = version
+        self._model_version = model_version
         self._timestamp = timestamp
         self._nodes = nodes
         self._links = links
         self._private_attributes = private_attributes
 
     @classmethod
-    def from_dict(cls, dikt) -> "Topology":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -90,7 +84,7 @@ class Topology(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def id(self) -> str:
+    def id(self):
         """Gets the id of this Topology.
 
 
@@ -100,7 +94,7 @@ class Topology(Model):
         return self._id
 
     @id.setter
-    def id(self, id: str):
+    def id(self, id):
         """Sets the id of this Topology.
 
 
@@ -113,7 +107,7 @@ class Topology(Model):
         self._id = id
 
     @property
-    def name(self) -> str:
+    def name(self):
         """Gets the name of this Topology.
 
 
@@ -123,7 +117,7 @@ class Topology(Model):
         return self._name
 
     @name.setter
-    def name(self, name: str):
+    def name(self, name):
         """Sets the name of this Topology.
 
 
@@ -131,35 +125,33 @@ class Topology(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def domain_service(self) -> Service:
-        """Gets the domain_service of this Topology.
+    def services(self):
+        """Gets the services of this Topology.
 
 
-        :return: The domain_service of this Topology.
+        :return: The services of this Topology.
         :rtype: Service
         """
-        return self._domain_service
+        return self._services
 
-    @domain_service.setter
-    def domain_service(self, domain_service: Service):
-        """Sets the domain_service of this Topology.
+    @services.setter
+    def services(self, services):
+        """Sets the services of this Topology.
 
 
-        :param domain_service: The domain_service of this Topology.
-        :type domain_service: Service
+        :param services: The services of this Topology.
+        :type services: Service
         """
 
-        self._domain_service = domain_service
+        self._services = services
 
     @property
-    def version(self) -> int:
+    def version(self):
         """Gets the version of this Topology.
 
 
@@ -169,7 +161,7 @@ class Topology(Model):
         return self._version
 
     @version.setter
-    def version(self, version: int):
+    def version(self, version):
         """Sets the version of this Topology.
 
 
@@ -177,14 +169,33 @@ class Topology(Model):
         :type version: int
         """
         if version is None:
-            raise ValueError(
-                "Invalid value for `version`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
 
         self._version = version
 
     @property
-    def timestamp(self) -> datetime:
+    def model_version(self):
+        """Gets the model_version of this Topology.
+
+
+        :return: The model_version of this Topology.
+        :rtype: str
+        """
+        return self._model_version
+
+    @model_version.setter
+    def model_version(self, model_version):
+        """Sets the model_version of this Topology.
+
+
+        :param model_version: The model_version of this Topology.
+        :type model_version: str
+        """
+
+        self._model_version = model_version
+
+    @property
+    def timestamp(self):
         """Gets the timestamp of this Topology.
 
 
@@ -194,7 +205,7 @@ class Topology(Model):
         return self._timestamp
 
     @timestamp.setter
-    def timestamp(self, timestamp: datetime):
+    def timestamp(self, timestamp):
         """Sets the timestamp of this Topology.
 
 
@@ -202,14 +213,12 @@ class Topology(Model):
         :type timestamp: datetime
         """
         if timestamp is None:
-            raise ValueError(
-                "Invalid value for `timestamp`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
 
         self._timestamp = timestamp
 
     @property
-    def nodes(self) -> List[Node]:
+    def nodes(self):
         """Gets the nodes of this Topology.
 
 
@@ -219,7 +228,7 @@ class Topology(Model):
         return self._nodes
 
     @nodes.setter
-    def nodes(self, nodes: List[Node]):
+    def nodes(self, nodes):
         """Sets the nodes of this Topology.
 
 
@@ -227,14 +236,12 @@ class Topology(Model):
         :type nodes: List[Node]
         """
         if nodes is None:
-            raise ValueError(
-                "Invalid value for `nodes`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `nodes`, must not be `None`")  # noqa: E501
 
         self._nodes = nodes
 
     @property
-    def links(self) -> List[Link]:
+    def links(self):
         """Gets the links of this Topology.
 
 
@@ -244,7 +251,7 @@ class Topology(Model):
         return self._links
 
     @links.setter
-    def links(self, links: List[Link]):
+    def links(self, links):
         """Sets the links of this Topology.
 
 
@@ -252,14 +259,12 @@ class Topology(Model):
         :type links: List[Link]
         """
         if links is None:
-            raise ValueError(
-                "Invalid value for `links`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `links`, must not be `None`")  # noqa: E501
 
         self._links = links
 
     @property
-    def private_attributes(self) -> List[str]:
+    def private_attributes(self):
         """Gets the private_attributes of this Topology.
 
 
@@ -269,7 +274,7 @@ class Topology(Model):
         return self._private_attributes
 
     @private_attributes.setter
-    def private_attributes(self, private_attributes: List[str]):
+    def private_attributes(self, private_attributes):
         """Sets the private_attributes of this Topology.
 
 

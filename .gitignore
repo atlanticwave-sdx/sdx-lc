@@ -1,5 +1,5 @@
 /.tox/
-/swagger_server.egg-info/
+/sdx_lc.egg-info/
 __pycache__/
 /venv*
 

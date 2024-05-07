@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from swagger_server import util
-from swagger_server.models.base_model_ import Model
+from typing import List, Dict  # noqa: F401
+
+from sdx_lc.models.base_model_ import Model
+from sdx_lc import util
 
 
 class Service(Model):
@@ -14,18 +14,13 @@ class Service(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        monitoring_capability: str = None,
-        owner: str = None,
-        private_attributes: List[str] = None,
-        provisioning_system: str = None,
-        provisioning_url: str = None,
-        vendor: List[str] = None,
-    ):  # noqa: E501
+    def __init__(self, l2vpn_ptp=None, l2vpn_ptmp=None, monitoring_capability=None, owner=None, private_attributes=None, provisioning_system=None, provisioning_url=None, vendor=None):  # noqa: E501
         """Service - a model defined in Swagger
 
+        :param l2vpn_ptp: The l2vpn_ptp of this Service.  # noqa: E501
+        :type l2vpn_ptp: object
+        :param l2vpn_ptmp: The l2vpn_ptmp of this Service.  # noqa: E501
+        :type l2vpn_ptmp: object
         :param monitoring_capability: The monitoring_capability of this Service.  # noqa: E501
         :type monitoring_capability: str
         :param owner: The owner of this Service.  # noqa: E501
@@ -40,22 +35,28 @@ class Service(Model):
         :type vendor: List[str]
         """
         self.swagger_types = {
-            "monitoring_capability": str,
-            "owner": str,
-            "private_attributes": List[str],
-            "provisioning_system": str,
-            "provisioning_url": str,
-            "vendor": List[str],
+            'l2vpn_ptp': object,
+            'l2vpn_ptmp': object,
+            'monitoring_capability': str,
+            'owner': str,
+            'private_attributes': List[str],
+            'provisioning_system': str,
+            'provisioning_url': str,
+            'vendor': List[str]
         }
 
         self.attribute_map = {
-            "monitoring_capability": "monitoring_capability",
-            "owner": "owner",
-            "private_attributes": "private_attributes",
-            "provisioning_system": "provisioning_system",
-            "provisioning_url": "provisioning_url",
-            "vendor": "vendor",
+            'l2vpn_ptp': 'l2vpn-ptp',
+            'l2vpn_ptmp': 'l2vpn-ptmp',
+            'monitoring_capability': 'monitoring_capability',
+            'owner': 'owner',
+            'private_attributes': 'private_attributes',
+            'provisioning_system': 'provisioning_system',
+            'provisioning_url': 'provisioning_url',
+            'vendor': 'vendor'
         }
+        self._l2vpn_ptp = l2vpn_ptp
+        self._l2vpn_ptmp = l2vpn_ptmp
         self._monitoring_capability = monitoring_capability
         self._owner = owner
         self._private_attributes = private_attributes
@@ -64,7 +65,7 @@ class Service(Model):
         self._vendor = vendor
 
     @classmethod
-    def from_dict(cls, dikt) -> "Service":
+    def from_dict(cls, dikt):
         """Returns the dict as a model
 
         :param dikt: A dict.
@@ -75,7 +76,49 @@ class Service(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def monitoring_capability(self) -> str:
+    def l2vpn_ptp(self):
+        """Gets the l2vpn_ptp of this Service.
+
+
+        :return: The l2vpn_ptp of this Service.
+        :rtype: object
+        """
+        return self._l2vpn_ptp
+
+    @l2vpn_ptp.setter
+    def l2vpn_ptp(self, l2vpn_ptp):
+        """Sets the l2vpn_ptp of this Service.
+
+
+        :param l2vpn_ptp: The l2vpn_ptp of this Service.
+        :type l2vpn_ptp: object
+        """
+
+        self._l2vpn_ptp = l2vpn_ptp
+
+    @property
+    def l2vpn_ptmp(self):
+        """Gets the l2vpn_ptmp of this Service.
+
+
+        :return: The l2vpn_ptmp of this Service.
+        :rtype: object
+        """
+        return self._l2vpn_ptmp
+
+    @l2vpn_ptmp.setter
+    def l2vpn_ptmp(self, l2vpn_ptmp):
+        """Sets the l2vpn_ptmp of this Service.
+
+
+        :param l2vpn_ptmp: The l2vpn_ptmp of this Service.
+        :type l2vpn_ptmp: object
+        """
+
+        self._l2vpn_ptmp = l2vpn_ptmp
+
+    @property
+    def monitoring_capability(self):
         """Gets the monitoring_capability of this Service.
 
 
@@ -85,7 +128,7 @@ class Service(Model):
         return self._monitoring_capability
 
     @monitoring_capability.setter
-    def monitoring_capability(self, monitoring_capability: str):
+    def monitoring_capability(self, monitoring_capability):
         """Sets the monitoring_capability of this Service.
 
 
@@ -96,7 +139,7 @@ class Service(Model):
         self._monitoring_capability = monitoring_capability
 
     @property
-    def owner(self) -> str:
+    def owner(self):
         """Gets the owner of this Service.
 
 
@@ -106,7 +149,7 @@ class Service(Model):
         return self._owner
 
     @owner.setter
-    def owner(self, owner: str):
+    def owner(self, owner):
         """Sets the owner of this Service.
 
 
@@ -117,7 +160,7 @@ class Service(Model):
         self._owner = owner
 
     @property
-    def private_attributes(self) -> List[str]:
+    def private_attributes(self):
         """Gets the private_attributes of this Service.
 
 
@@ -127,7 +170,7 @@ class Service(Model):
         return self._private_attributes
 
     @private_attributes.setter
-    def private_attributes(self, private_attributes: List[str]):
+    def private_attributes(self, private_attributes):
         """Sets the private_attributes of this Service.
 
 
@@ -138,7 +181,7 @@ class Service(Model):
         self._private_attributes = private_attributes
 
     @property
-    def provisioning_system(self) -> str:
+    def provisioning_system(self):
         """Gets the provisioning_system of this Service.
 
 
@@ -148,7 +191,7 @@ class Service(Model):
         return self._provisioning_system
 
     @provisioning_system.setter
-    def provisioning_system(self, provisioning_system: str):
+    def provisioning_system(self, provisioning_system):
         """Sets the provisioning_system of this Service.
 
 
@@ -159,7 +202,7 @@ class Service(Model):
         self._provisioning_system = provisioning_system
 
     @property
-    def provisioning_url(self) -> str:
+    def provisioning_url(self):
         """Gets the provisioning_url of this Service.
 
 
@@ -169,7 +212,7 @@ class Service(Model):
         return self._provisioning_url
 
     @provisioning_url.setter
-    def provisioning_url(self, provisioning_url: str):
+    def provisioning_url(self, provisioning_url):
         """Sets the provisioning_url of this Service.
 
 
@@ -180,7 +223,7 @@ class Service(Model):
         self._provisioning_url = provisioning_url
 
     @property
-    def vendor(self) -> List[str]:
+    def vendor(self):
         """Gets the vendor of this Service.
 
 
@@ -190,7 +233,7 @@ class Service(Model):
         return self._vendor
 
     @vendor.setter
-    def vendor(self, vendor: List[str]):
+    def vendor(self, vendor):
         """Sets the vendor of this Service.
 
 

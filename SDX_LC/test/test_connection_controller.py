@@ -7,9 +7,9 @@ import datetime
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.connection import Connection  # noqa: E501
-from swagger_server.models.port import Port
-from swagger_server.test import BaseTestCase
+from sdx_lc.models.connection import Connection  # noqa: E501
+from sdx_lc.models.port import Port
+from sdx_lc.test import BaseTestCase
 
 
 class TestConnectionController(BaseTestCase):
@@ -21,7 +21,7 @@ class TestConnectionController(BaseTestCase):
         Delete connection order by ID
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/connection/{connection_id}".format(connection_id=2),
+            "/SDX-LC/2.0.0/connection/{connection_id}".format(connection_id=2),
             method="DELETE",
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
@@ -32,7 +32,7 @@ class TestConnectionController(BaseTestCase):
         Find connection by ID
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/connection/{connection_id}".format(connection_id=10),
+            "/SDX-LC/2.0.0/connection/{connection_id}".format(connection_id=10),
             method="GET",
         )
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
@@ -75,7 +75,7 @@ class TestConnectionController(BaseTestCase):
         )
 
         response = self.client.open(
-            "/SDX-LC/1.0.0/conection",
+            "/SDX-LC/2.0.0/conection",
             method="POST",
             data=json.dumps(body),
             content_type="application/json",

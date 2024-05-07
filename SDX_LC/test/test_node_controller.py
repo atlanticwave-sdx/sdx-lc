@@ -5,10 +5,10 @@ from __future__ import absolute_import
 from flask import json
 from six import BytesIO
 
-from swagger_server.models.location import Location
-from swagger_server.models.node import Node  # noqa: E501
-from swagger_server.models.port import Port
-from swagger_server.test import BaseTestCase
+from sdx_lc.models.location import Location
+from sdx_lc.models.node import Node  # noqa: E501
+from sdx_lc.models.port import Port
+from sdx_lc.test import BaseTestCase
 
 
 class TestNodeController(BaseTestCase):
@@ -48,7 +48,7 @@ class TestNodeController(BaseTestCase):
         add a new node to the topology
         """
         response = self.client.open(
-            "/SDX-LC/1.0.0/node",
+            "/SDX-LC/2.0.0/node",
             method="POST",
             data=json.dumps(self.__node),
             content_type="application/json",
@@ -63,7 +63,7 @@ class TestNodeController(BaseTestCase):
         query_string = [("node_id", 789)]
         headers = [("api_key", "api_key_example")]
         response = self.client.open(
-            "/SDX-LC/1.0.0/node",
+            "/SDX-LC/2.0.0/node",
             method="DELETE",
             headers=headers,
             query_string=query_string,
@@ -75,7 +75,7 @@ class TestNodeController(BaseTestCase):
 
         get an existing node
         """
-        response = self.client.open("/SDX-LC/1.0.0/node", method="GET")
+        response = self.client.open("/SDX-LC/2.0.0/node", method="GET")
         self.assert200(response, "Response body is : " + response.data.decode("utf-8"))
 
     def test_update_node(self):
@@ -89,7 +89,7 @@ class TestNodeController(BaseTestCase):
             longitude=0.0,
         )
         response = self.client.open(
-            "/SDX-LC/1.0.0/node",
+            "/SDX-LC/2.0.0/node",
             method="PUT",
             data=json.dumps(self.__node),
             content_type="application/json",
