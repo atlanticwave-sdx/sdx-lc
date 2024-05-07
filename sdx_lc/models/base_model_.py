@@ -1,7 +1,5 @@
 import pprint
-
 import six
-
 from sdx_lc import util
 
 
