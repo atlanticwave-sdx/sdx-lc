@@ -2,6 +2,7 @@
 
 # flake8: noqa
 from __future__ import absolute_import
+
 # import models into model package
 from sdx_lc.models.api_response import ApiResponse
 from sdx_lc.models.connection import Connection

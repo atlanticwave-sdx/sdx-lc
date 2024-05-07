@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from sdx_lc.models.base_model_ import Model
 from sdx_lc import util
+from sdx_lc.models.base_model_ import Model
 
 
 class User(Model):
@@ -14,7 +14,18 @@ class User(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id=None, username=None, first_name=None, last_name=None, email=None, password=None, phone=None, user_status=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id=None,
+        username=None,
+        first_name=None,
+        last_name=None,
+        email=None,
+        password=None,
+        phone=None,
+        user_status=None,
+    ):  # noqa: E501
         """User - a model defined in Swagger
 
         :param id: The id of this User.  # noqa: E501
@@ -35,25 +46,25 @@ class User(Model):
         :type user_status: int
         """
         self.swagger_types = {
-            'id': int,
-            'username': str,
-            'first_name': str,
-            'last_name': str,
-            'email': str,
-            'password': str,
-            'phone': str,
-            'user_status': int
+            "id": int,
+            "username": str,
+            "first_name": str,
+            "last_name": str,
+            "email": str,
+            "password": str,
+            "phone": str,
+            "user_status": int,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'username': 'username',
-            'first_name': 'firstName',
-            'last_name': 'lastName',
-            'email': 'email',
-            'password': 'password',
-            'phone': 'phone',
-            'user_status': 'userStatus'
+            "id": "id",
+            "username": "username",
+            "first_name": "firstName",
+            "last_name": "lastName",
+            "email": "email",
+            "password": "password",
+            "phone": "phone",
+            "user_status": "userStatus",
         }
         self._id = id
         self._username = username

@@ -1,15 +1,15 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from sdx_lc import util
 from sdx_lc.models.base_model_ import Model
 from sdx_lc.models.link import Link  # noqa: F401,E501
 from sdx_lc.models.node import Node  # noqa: F401,E501
 from sdx_lc.models.service import Service  # noqa: F401,E501
-from sdx_lc import util
 
 
 class Topology(Model):
@@ -17,7 +17,19 @@ class Topology(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id=None, name=None, services=None, version=None, model_version=None, timestamp=None, nodes=None, links=None, private_attributes=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        services=None,
+        version=None,
+        model_version=None,
+        timestamp=None,
+        nodes=None,
+        links=None,
+        private_attributes=None,
+    ):  # noqa: E501
         """Topology - a model defined in Swagger
 
         :param id: The id of this Topology.  # noqa: E501
@@ -40,27 +52,27 @@ class Topology(Model):
         :type private_attributes: List[str]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'services': Service,
-            'version': int,
-            'model_version': str,
-            'timestamp': datetime,
-            'nodes': List[Node],
-            'links': List[Link],
-            'private_attributes': List[str]
+            "id": str,
+            "name": str,
+            "services": Service,
+            "version": int,
+            "model_version": str,
+            "timestamp": datetime,
+            "nodes": List[Node],
+            "links": List[Link],
+            "private_attributes": List[str],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'services': 'services',
-            'version': 'version',
-            'model_version': 'model_version',
-            'timestamp': 'timestamp',
-            'nodes': 'nodes',
-            'links': 'links',
-            'private_attributes': 'private_attributes'
+            "id": "id",
+            "name": "name",
+            "services": "services",
+            "version": "version",
+            "model_version": "model_version",
+            "timestamp": "timestamp",
+            "nodes": "nodes",
+            "links": "links",
+            "private_attributes": "private_attributes",
         }
         self._id = id
         self._name = name
@@ -125,7 +137,9 @@ class Topology(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -169,7 +183,9 @@ class Topology(Model):
         :type version: int
         """
         if version is None:
-            raise ValueError("Invalid value for `version`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `version`, must not be `None`"
+            )  # noqa: E501
 
         self._version = version
 
@@ -213,7 +229,9 @@ class Topology(Model):
         :type timestamp: datetime
         """
         if timestamp is None:
-            raise ValueError("Invalid value for `timestamp`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `timestamp`, must not be `None`"
+            )  # noqa: E501
 
         self._timestamp = timestamp
 
@@ -236,7 +254,9 @@ class Topology(Model):
         :type nodes: List[Node]
         """
         if nodes is None:
-            raise ValueError("Invalid value for `nodes`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `nodes`, must not be `None`"
+            )  # noqa: E501
 
         self._nodes = nodes
 
@@ -259,7 +279,9 @@ class Topology(Model):
         :type links: List[Link]
         """
         if links is None:
-            raise ValueError("Invalid value for `links`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `links`, must not be `None`"
+            )  # noqa: E501
 
         self._links = links
 

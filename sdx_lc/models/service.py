@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from sdx_lc.models.base_model_ import Model
 from sdx_lc import util
+from sdx_lc.models.base_model_ import Model
 
 
 class Service(Model):
@@ -14,7 +14,18 @@ class Service(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, l2vpn_ptp=None, l2vpn_ptmp=None, monitoring_capability=None, owner=None, private_attributes=None, provisioning_system=None, provisioning_url=None, vendor=None):  # noqa: E501
+
+    def __init__(
+        self,
+        l2vpn_ptp=None,
+        l2vpn_ptmp=None,
+        monitoring_capability=None,
+        owner=None,
+        private_attributes=None,
+        provisioning_system=None,
+        provisioning_url=None,
+        vendor=None,
+    ):  # noqa: E501
         """Service - a model defined in Swagger
 
         :param l2vpn_ptp: The l2vpn_ptp of this Service.  # noqa: E501
@@ -35,25 +46,25 @@ class Service(Model):
         :type vendor: List[str]
         """
         self.swagger_types = {
-            'l2vpn_ptp': object,
-            'l2vpn_ptmp': object,
-            'monitoring_capability': str,
-            'owner': str,
-            'private_attributes': List[str],
-            'provisioning_system': str,
-            'provisioning_url': str,
-            'vendor': List[str]
+            "l2vpn_ptp": object,
+            "l2vpn_ptmp": object,
+            "monitoring_capability": str,
+            "owner": str,
+            "private_attributes": List[str],
+            "provisioning_system": str,
+            "provisioning_url": str,
+            "vendor": List[str],
         }
 
         self.attribute_map = {
-            'l2vpn_ptp': 'l2vpn-ptp',
-            'l2vpn_ptmp': 'l2vpn-ptmp',
-            'monitoring_capability': 'monitoring_capability',
-            'owner': 'owner',
-            'private_attributes': 'private_attributes',
-            'provisioning_system': 'provisioning_system',
-            'provisioning_url': 'provisioning_url',
-            'vendor': 'vendor'
+            "l2vpn_ptp": "l2vpn-ptp",
+            "l2vpn_ptmp": "l2vpn-ptmp",
+            "monitoring_capability": "monitoring_capability",
+            "owner": "owner",
+            "private_attributes": "private_attributes",
+            "provisioning_system": "provisioning_system",
+            "provisioning_url": "provisioning_url",
+            "vendor": "vendor",
         }
         self._l2vpn_ptp = l2vpn_ptp
         self._l2vpn_ptmp = l2vpn_ptmp

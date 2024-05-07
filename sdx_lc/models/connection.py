@@ -1,14 +1,14 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from sdx_lc import util
 from sdx_lc.models.base_model_ import Model
 from sdx_lc.models.link import Link  # noqa: F401,E501
 from sdx_lc.models.port import Port  # noqa: F401,E501
-from sdx_lc import util
 
 
 class Connection(Model):
@@ -16,7 +16,33 @@ class Connection(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id=None, name=None, ingress_port=None, egress_port=None, quantity=None, start_time=None, end_time=None, multi_path=None, preempt=None, backup_path_type=None, exclusive_links=None, inclusive_links=None, bandwidth_required=None, bandwidth_measured=None, latency_required=None, latency_measured=None, packetloss_required=None, packetloss_measured=None, availability_required=None, availability_measured=None, paths=None, status=None, complete=False):  # noqa: E501
+
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        ingress_port=None,
+        egress_port=None,
+        quantity=None,
+        start_time=None,
+        end_time=None,
+        multi_path=None,
+        preempt=None,
+        backup_path_type=None,
+        exclusive_links=None,
+        inclusive_links=None,
+        bandwidth_required=None,
+        bandwidth_measured=None,
+        latency_required=None,
+        latency_measured=None,
+        packetloss_required=None,
+        packetloss_measured=None,
+        availability_required=None,
+        availability_measured=None,
+        paths=None,
+        status=None,
+        complete=False,
+    ):  # noqa: E501
         """Connection - a model defined in Swagger
 
         :param id: The id of this Connection.  # noqa: E501
@@ -67,55 +93,55 @@ class Connection(Model):
         :type complete: bool
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'ingress_port': Port,
-            'egress_port': Port,
-            'quantity': int,
-            'start_time': datetime,
-            'end_time': datetime,
-            'multi_path': bool,
-            'preempt': bool,
-            'backup_path_type': str,
-            'exclusive_links': List[Link],
-            'inclusive_links': List[Link],
-            'bandwidth_required': float,
-            'bandwidth_measured': float,
-            'latency_required': float,
-            'latency_measured': float,
-            'packetloss_required': float,
-            'packetloss_measured': float,
-            'availability_required': float,
-            'availability_measured': float,
-            'paths': List[str],
-            'status': str,
-            'complete': bool
+            "id": str,
+            "name": str,
+            "ingress_port": Port,
+            "egress_port": Port,
+            "quantity": int,
+            "start_time": datetime,
+            "end_time": datetime,
+            "multi_path": bool,
+            "preempt": bool,
+            "backup_path_type": str,
+            "exclusive_links": List[Link],
+            "inclusive_links": List[Link],
+            "bandwidth_required": float,
+            "bandwidth_measured": float,
+            "latency_required": float,
+            "latency_measured": float,
+            "packetloss_required": float,
+            "packetloss_measured": float,
+            "availability_required": float,
+            "availability_measured": float,
+            "paths": List[str],
+            "status": str,
+            "complete": bool,
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'ingress_port': 'ingress_port',
-            'egress_port': 'egress_port',
-            'quantity': 'quantity',
-            'start_time': 'start_time',
-            'end_time': 'end_time',
-            'multi_path': 'multi_path',
-            'preempt': 'preempt',
-            'backup_path_type': 'backup_path_type',
-            'exclusive_links': 'exclusive_links',
-            'inclusive_links': 'inclusive_links',
-            'bandwidth_required': 'bandwidth_required',
-            'bandwidth_measured': 'bandwidth_measured',
-            'latency_required': 'latency_required',
-            'latency_measured': 'latency_measured',
-            'packetloss_required': 'packetloss_required',
-            'packetloss_measured': 'packetloss_measured',
-            'availability_required': 'availability_required',
-            'availability_measured': 'availability_measured',
-            'paths': 'paths',
-            'status': 'status',
-            'complete': 'complete'
+            "id": "id",
+            "name": "name",
+            "ingress_port": "ingress_port",
+            "egress_port": "egress_port",
+            "quantity": "quantity",
+            "start_time": "start_time",
+            "end_time": "end_time",
+            "multi_path": "multi_path",
+            "preempt": "preempt",
+            "backup_path_type": "backup_path_type",
+            "exclusive_links": "exclusive_links",
+            "inclusive_links": "inclusive_links",
+            "bandwidth_required": "bandwidth_required",
+            "bandwidth_measured": "bandwidth_measured",
+            "latency_required": "latency_required",
+            "latency_measured": "latency_measured",
+            "packetloss_required": "packetloss_required",
+            "packetloss_measured": "packetloss_measured",
+            "availability_required": "availability_required",
+            "availability_measured": "availability_measured",
+            "paths": "paths",
+            "status": "status",
+            "complete": "complete",
         }
         self._id = id
         self._name = name
@@ -194,7 +220,9 @@ class Connection(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -217,7 +245,9 @@ class Connection(Model):
         :type ingress_port: Port
         """
         if ingress_port is None:
-            raise ValueError("Invalid value for `ingress_port`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `ingress_port`, must not be `None`"
+            )  # noqa: E501
 
         self._ingress_port = ingress_port
 
@@ -240,7 +270,9 @@ class Connection(Model):
         :type egress_port: Port
         """
         if egress_port is None:
-            raise ValueError("Invalid value for `egress_port`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `egress_port`, must not be `None`"
+            )  # noqa: E501
 
         self._egress_port = egress_port
 
@@ -370,8 +402,9 @@ class Connection(Model):
         allowed_values = ["0", "1", "2", "3"]  # noqa: E501
         if backup_path_type not in allowed_values:
             raise ValueError(
-                "Invalid value for `backup_path_type` ({0}), must be one of {1}"
-                .format(backup_path_type, allowed_values)
+                "Invalid value for `backup_path_type` ({0}), must be one of {1}".format(
+                    backup_path_type, allowed_values
+                )
             )
 
         self._backup_path_type = backup_path_type
@@ -630,8 +663,9 @@ class Connection(Model):
         allowed_values = ["success", "fail", "scheduled", "provisioining"]  # noqa: E501
         if status not in allowed_values:
             raise ValueError(
-                "Invalid value for `status` ({0}), must be one of {1}"
-                .format(status, allowed_values)
+                "Invalid value for `status` ({0}), must be one of {1}".format(
+                    status, allowed_values
+                )
             )
 
         self._status = status

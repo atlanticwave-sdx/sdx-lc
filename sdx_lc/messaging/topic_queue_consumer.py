@@ -7,7 +7,6 @@ from queue import Queue
 
 import pika
 import requests
-
 from swagger_server.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
