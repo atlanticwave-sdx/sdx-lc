@@ -25,6 +25,7 @@ class Port(Model):
         label_range=None,
         status=None,
         state=None,
+        nni=None,
         services=None,
         private_attributes=None,
     ):  # noqa: E501
@@ -44,6 +45,8 @@ class Port(Model):
         :type status: str
         :param state: The state of this Port.  # noqa: E501
         :type state: str
+        :param nni: The nni of this Port.  # noqa: E501
+        :type nni: str
         :param services: The services of this Port.  # noqa: E501
         :type services: Service
         :param private_attributes: The private_attributes of this Port.  # noqa: E501
@@ -57,6 +60,7 @@ class Port(Model):
             "label_range": List[str],
             "status": str,
             "state": str,
+            "nni": str,
             "services": Service,
             "private_attributes": List[str],
         }
@@ -69,6 +73,7 @@ class Port(Model):
             "label_range": "label_range",
             "status": "status",
             "state": "state",
+            "nni": "nni",
             "services": "services",
             "private_attributes": "private_attributes",
         }
@@ -79,6 +84,7 @@ class Port(Model):
         self._label_range = label_range
         self._status = status
         self._state = state
+        self._nni = nni
         self._services = services
         self._private_attributes = private_attributes
 
@@ -253,6 +259,27 @@ class Port(Model):
         """
 
         self._state = state
+
+    @property
+    def nni(self):
+        """Gets the nni of this Port.
+
+
+        :return: The nni of this Port.
+        :rtype: str
+        """
+        return self._nni
+
+    @nni.setter
+    def nni(self, nni):
+        """Sets the nni of this Port.
+
+
+        :param nni: The nni of this Port.
+        :type nni: str
+        """
+
+        self._nni = nni
 
     @property
     def services(self):

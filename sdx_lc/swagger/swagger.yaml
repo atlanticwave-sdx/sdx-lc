@@ -1105,6 +1105,9 @@ components:
         state:
           type: string
           example: enabled
+        nni:
+          type: string
+          example: urn:sdx:link:amlight.net:Novi03/2_s3/s3-eth2
         services:
           $ref: '#/components/schemas/service'
         private_attributes:
