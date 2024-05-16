@@ -1,0 +1,1224 @@
+openapi: 3.0.0
+info:
+  title: SDX LC
+  description: |
+    You can find
+    out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: yxin@renci.org
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: https://virtserver.swaggerhub.com/SDX-LC/2.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://0.0.0.0:8080/v2
+  description: Localhost
+tags:
+- name: topology
+  description: Everything about your domain topology
+  externalDocs:
+    description: Find out more
+    url: https://www.atlanticwave-sdx.net
+- name: node
+  description: everything about a node in your domain
+- name: link
+  description: everything about a link in your domain
+- name: user
+  description: Operations about user
+  externalDocs:
+    description: Find out more about our store
+    url: https://www.atlanticwave-sdx.net
+paths:
+  /topology:
+    get:
+      tags:
+      - topology
+      summary: get an existing topology
+      description: ID of the topology
+      operationId: get_topology
+      responses:
+        "200":
+          description: ok
+          content:
+            text/plain:
+              schema:
+                type: string
+                x-content-type: text/plain
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Topology not found
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+    put:
+      tags:
+      - topology
+      summary: Update an existing topology
+      description: "ID of topology that needs to be updated. \\\\ The topology update\
+        \ only updates the addition or deletion \\\\ of node, port, link."
+      operationId: update_topology
+      requestBody:
+        $ref: '#/components/requestBodies/topology'
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Topology not found
+        "405":
+          description: Validation exception
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+    post:
+      tags:
+      - topology
+      summary: Send a new topology to SDX-LC
+      operationId: add_topology
+      requestBody:
+        description: placed for adding a new topology
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/topology'
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/topology'
+        "400":
+          description: Invalid Connection
+        "405":
+          description: Invalid input
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+    delete:
+      tags:
+      - topology
+      summary: Deletes a topology
+      operationId: delete_topology
+      parameters:
+      - name: topology_id
+        in: query
+        description: ID of topology to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: topology not found
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+  /topology/version:
+    get:
+      tags:
+      - topology
+      summary: Finds topology version
+      description: Topology version
+      operationId: topology_version
+      parameters:
+      - name: topology_id
+        in: query
+        description: topology id
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/topology'
+        "400":
+          description: Invalid id value
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+  /topology/{version}:
+    get:
+      tags:
+      - topology
+      summary: Find topology by version
+      description: Returns a single topology
+      operationId: get_topologyby_version
+      parameters:
+      - name: topology_id
+        in: query
+        description: ID of topology to return
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: version
+        in: path
+        description: version of topology to return
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/topology'
+        "400":
+          description: Invalid version supplied
+        "404":
+          description: Topology not found
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+    delete:
+      tags:
+      - topology
+      summary: Deletes a topology version
+      operationId: delete_topology_version
+      parameters:
+      - name: topology_id
+        in: query
+        description: ID of topology to return
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      - name: version
+        in: path
+        description: topology version to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: topology not found
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+  /topology/{topology_id}/uploadImage:
+    post:
+      tags:
+      - topology
+      summary: uploads an topology image
+      operationId: upload_file
+      parameters:
+      - name: topology_id
+        in: path
+        description: ID of topology to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
+  /node:
+    get:
+      tags:
+      - node
+      summary: get an existing node
+      description: ID of the node
+      operationId: get_node
+      responses:
+        "200":
+          description: ok
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Topology not found
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
+    put:
+      tags:
+      - node
+      summary: Update an existing node
+      description: ID of node that needs to be updated.
+      operationId: update_node
+      requestBody:
+        $ref: '#/components/requestBodies/node'
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Node not found
+        "405":
+          description: Validation exception
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
+    post:
+      tags:
+      - node
+      summary: add a new node to the topology
+      operationId: add_node
+      requestBody:
+        $ref: '#/components/requestBodies/node'
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/node'
+            text/plain:
+              schema:
+                type: string
+        "400":
+          description: Invalid Connection
+        "405":
+          description: Invalid input
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
+    delete:
+      tags:
+      - node
+      summary: Deletes a node
+      operationId: delete_node
+      parameters:
+      - name: node_id
+        in: query
+        description: ID of node to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: node not found
+      x-openapi-router-controller: sdx_lc.controllers.node_controller
+  /link:
+    get:
+      tags:
+      - link
+      summary: get an existing link
+      description: ID of the link
+      operationId: get_link
+      responses:
+        "200":
+          description: ok
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Link not found
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
+    put:
+      tags:
+      - link
+      summary: Update an existing link
+      description: ID of link that needs to be updated.
+      operationId: update_link
+      requestBody:
+        $ref: '#/components/requestBodies/link'
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Topology not found
+        "405":
+          description: Validation exception
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
+    post:
+      tags:
+      - link
+      summary: add a new link to the topology
+      operationId: add_link
+      requestBody:
+        $ref: '#/components/requestBodies/link'
+      responses:
+        "405":
+          description: Invalid input
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
+    delete:
+      tags:
+      - link
+      summary: Deletes a link
+      operationId: delete_link
+      parameters:
+      - name: node_id
+        in: query
+        description: ID of link to delete
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: link not found
+      x-openapi-router-controller: sdx_lc.controllers.link_controller
+  /conection:
+    post:
+      tags:
+      - connection
+      summary: Place an connection request from the SDX-Controller
+      operationId: place_connection
+      requestBody:
+        description: order placed for creating a connection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connection'
+        required: true
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connection'
+        "400":
+          description: Invalid Connection
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
+  /connection/{connection_id}:
+    get:
+      tags:
+      - connection
+      summary: Find connection by ID
+      description: connection details
+      operationId: getconnection_by_id
+      parameters:
+      - name: connection_id
+        in: path
+        description: ID of connection that needs to be fetched
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/connection'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/connection'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: connection not found
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
+    delete:
+      tags:
+      - connection
+      summary: Delete connection order by ID
+      description: delete a connection
+      operationId: delete_connection
+      parameters:
+      - name: connection_id
+        in: path
+        description: ID of the connection that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: connection not found
+      x-openapi-router-controller: sdx_lc.controllers.connection_controller
+  /user:
+    post:
+      tags:
+      - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: create_user
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+  /user/createWithArray:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      operationId: create_users_with_array_input
+      requestBody:
+        $ref: '#/components/requestBodies/UserArray'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+  /user/createWithList:
+    post:
+      tags:
+      - user
+      summary: Creates list of users with given input array
+      operationId: create_users_with_list_input
+      requestBody:
+        $ref: '#/components/requestBodies/UserArray'
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+  /user/login:
+    get:
+      tags:
+      - user
+      summary: Logs user into the system
+      operationId: login_user
+      parameters:
+      - name: username
+        in: query
+        description: The user name for login
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: The password for login in clear text
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              style: simple
+              explode: false
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              style: simple
+              explode: false
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+                x-content-type: application/json
+            application/xml:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+  /user/logout:
+    get:
+      tags:
+      - user
+      summary: Logs out current logged in user session
+      operationId: logout_user
+      responses:
+        default:
+          description: successful operation
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+  /user/{username}:
+    get:
+      tags:
+      - user
+      summary: Get user by user name
+      operationId: get_user_by_name
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be fetched. Use user1 for testing.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+    put:
+      tags:
+      - user
+      summary: Updated user
+      description: This can only be done by the logged in user.
+      operationId: update_user
+      parameters:
+      - name: username
+        in: path
+        description: name that need to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Updated user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        "400":
+          description: Invalid user supplied
+        "404":
+          description: User not found
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+    delete:
+      tags:
+      - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: delete_user
+      parameters:
+      - name: username
+        in: path
+        description: The name that needs to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "400":
+          description: Invalid username supplied
+        "404":
+          description: User not found
+      x-openapi-router-controller: sdx_lc.controllers.user_controller
+components:
+  schemas:
+    connection:
+      required:
+      - egress_port
+      - id
+      - ingress_port
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        ingress_port:
+          $ref: '#/components/schemas/port'
+        egress_port:
+          $ref: '#/components/schemas/port'
+        quantity:
+          type: integer
+          format: int32
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        multi_path:
+          type: boolean
+        preempt:
+          type: boolean
+        backup_path_type:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        exclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        inclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        bandwidth_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        bandwidth_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        packetloss_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        packetloss_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        paths:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          description: Connection Status
+          enum:
+          - success
+          - fail
+          - scheduled
+          - provisioining
+        complete:
+          type: boolean
+          default: false
+      example:
+        start_time: 2000-01-23T04:56:07.000Z
+        name: name
+        end_time: 2000-01-23T04:56:07.000Z
+        id: a9a861f9-da3b-4fde-86b7-9435b5a33648
+        bandwidth_required: 100
+        latency_required: 20
+        egress_port:
+          node: urn:sdx:port:amlight.net:Novi07
+          name: urn:sdx:port:amlight.net:Novi07:10
+          short_name: "10"
+          id: id
+          label: vlan
+          label_range: 100
+          status: up
+        ingress_port:
+          node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
+          short_name: "9"
+          id: id
+          label: vlan
+          label_range: 100
+          status: up
+      xml:
+        name: Connection
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+      example:
+        firstName: firstName
+        lastName: lastName
+        password: password
+        userStatus: 6
+        phone: phone
+        id: 0
+        email: email
+        username: username
+      xml:
+        name: User
+    topology:
+      required:
+      - id
+      - links
+      - name
+      - nodes
+      - timestamp
+      - version
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: amLight
+        services:
+          $ref: '#/components/schemas/service'
+        version:
+          type: integer
+          format: int64
+          example: 1
+        model_version:
+          type: string
+          example: 2.0.0
+        timestamp:
+          type: string
+          format: date-time
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/node'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        private_attributes:
+          type: array
+          items:
+            type: string
+      example:
+        nodes:
+        - name: urn:sdx:node:amlight.net:Novi06
+          short_name: Novi06
+          id: id
+          location:
+            address: Miami
+            latitude: -28.51107891831147
+            longitude: -79.57947854792273
+            iso3166_2_lvl4: iso3166_2_lvl4
+          ports:
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            short_name: "9"
+            id: id
+            status: up
+            services:
+              l2vpn-ptp:
+                vlan_range:
+                - 1000
+                - 1500
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            short_name: "9"
+            id: id
+            status: up
+            services:
+              l2vpn-ptp:
+                vlan_range:
+                - - 1000
+                  - 2000
+                - - 3000
+                  - 4000
+        - name: urn:sdx:node:amlight.net:Novi06
+          short_name: Novi06
+          id: id
+          location:
+            address: Miami
+            latitude: -28.51107891831147
+            longitude: -79.57947854792273
+            iso3166_2_lvl4: iso3166_2_lvl4
+          ports:
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+        timestamp: 2000-01-23T04:56:07.000Z
+        name: amLight
+        links:
+        - bandwidth: 80083.7389632821
+          packet_loss: 59.621339166831824
+          latency: 146582.15146899645
+          name: miami-Boca.amLight.sdx
+          residual_bandwidth: 602746.015561422
+          short_name: Miami-BocaRaton
+          id: id
+          availability: 56.37376656633328
+          ports:
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:10
+            label_range:
+            - label_range
+            - label_range
+            short_name: "10"
+            id: id
+            status: up
+        - bandwidth: 80083.7389632821
+          packet_loss: 59.621339166831824
+          latency: 146582.15146899645
+          name: miami-Boca.amLight.sdx
+          residual_bandwidth: 602746.015561422
+          short_name: Miami-BocaRaton
+          id: id
+          availability: 56.37376656633328
+          ports:
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:9
+            label_range:
+            - label_range
+            - label_range
+            short_name: "9"
+            id: id
+            status: up
+          - node: urn:sdx:port:amlight.net:Novi06
+            name: urn:sdx:port:amlight.net:Novi06:10
+            label_range:
+            - label_range
+            - label_range
+            short_name: "10"
+            id: id
+            status: up
+        id: id
+        version: 1
+        model_version: 2.0.0
+      xml:
+        name: topology
+    node:
+      required:
+      - id
+      - location
+      - name
+      - ports
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: urn:sdx:node:amlight.net:Novi06
+        short_name:
+          type: string
+          example: Novi06
+        location:
+          $ref: '#/components/schemas/location'
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/port'
+        private_attributes:
+          type: array
+          items:
+            type: string
+      example:
+        name: urn:sdx:node:amlight.net:Novi06
+        short_name: Novi06
+        id: id
+        location:
+          address: Miami
+          latitude: -28.51107891831147
+          longitude: -79.57947854792273
+          iso3166_2_lvl4: iso3166_2_lvl4
+        ports:
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
+          label_range:
+          - label_range
+          - label_range
+          short_name: "9"
+          id: id
+          status: up
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:10
+          label_range:
+          - label_range
+          - label_range
+          short_name: "10"
+          id: id
+          status: up
+      xml:
+        name: node
+    link:
+      required:
+      - id
+      - name
+      - ports
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: miami-Boca.amLight.sdx
+        short_name:
+          type: string
+          example: Miami-BocaRaton
+        ports:
+          type: array
+          items:
+            $ref: '#/components/schemas/port'
+        bandwidth:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        residual_bandwidth:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        packet_loss:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability:
+          maximum: 100
+          minimum: 0
+          type: number
+        status:
+          type: string
+          example: up
+        state:
+          type: string
+          example: enabled
+        private_attributes:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: string
+          format: date-time
+        measurement_period:
+          $ref: '#/components/schemas/link_measurement_period'
+      example:
+        bandwidth: 80083.7389632821
+        packet_loss: 59.621339166831824
+        latency: 146582.15146899645
+        name: miami-Boca.amLight.sdx
+        residual_bandwidth: 602746.015561422
+        short_name: Miami-BocaRaton
+        id: id
+        availability: 56.37376656633328
+        ports:
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
+          short_name: "9"
+          id: id
+          status: up
+        - node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:10
+          short_name: "10"
+          id: id
+          status: up
+      xml:
+        name: link
+    port:
+      required:
+      - id
+      - name
+      - node
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: urn:sdx:port:amlight.net:Novi06:9
+        short_name:
+          type: string
+          example: "9"
+        node:
+          type: string
+          example: urn:sdx:port:amlight.net:Novi06
+        label_range:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          example: up
+        state:
+          type: string
+          example: enabled
+        nni:
+          type: string
+          example: urn:sdx:link:amlight.net:Novi03/2_s3/s3-eth2
+        services:
+          $ref: '#/components/schemas/service'
+        private_attributes:
+          type: array
+          items:
+            type: string
+      example:
+        node: urn:sdx:port:amlight.net:Novi06
+        name: urn:sdx:port:amlight.net:Novi06:9
+        short_name: "9"
+        id: id
+        status: up
+        services:
+          l2vpn-ptp:
+            vlan_range:
+            - 1000
+            - 2000
+      xml:
+        name: port
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      example:
+        code: 0
+        type: type
+        message: message
+    location:
+      type: object
+      properties:
+        address:
+          type: string
+        latitude:
+          type: number
+        longitude:
+          type: number
+        iso3166_2_lvl4:
+          type: string
+    service:
+      type: object
+      properties:
+        l2vpn-ptp:
+          type: object
+        l2vpn-ptmp:
+          type: object
+        monitoring_capability:
+          type: string
+        owner:
+          type: string
+        private_attributes:
+          type: array
+          items:
+            type: string
+        provisioning_system:
+          type: string
+        provisioning_url:
+          type: string
+        vendor:
+          type: array
+          items:
+            type: string
+      description: Domain Services
+    link_measurement_period:
+      type: object
+      properties:
+        period:
+          type: number
+        time_unit:
+          type: string
+  requestBodies:
+    topology:
+      description: topology object that needs to be sent to the SDX LC
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/topology'
+      required: true
+    node:
+      description: node object that needs to be sent to the SDX LC
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/node'
+      required: true
+    link:
+      description: link object that needs to be sent to the SDX LC
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/link'
+      required: true
+    port:
+      description: port object that needs to be sent to the SDX LC
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/port'
+      required: true
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+      required: true
+
