@@ -88,10 +88,12 @@ $ python3 -m sdx_lc
 
 ## Running tests
 
-To launch the integration tests, use tox:
+To run tests, use [tox] and [tox-docker]:
 
 ```console
-$ pip install tox
+$ python3 -m venv venv --upgrade-deps
+$ source venv/bin/activate
+$ pip install tox tox-docker
 $ tox
 ```
 
@@ -129,3 +131,6 @@ Local controller sends domain information to SDX controller:
 
 [sdx-controller-to-lc]: https://user-images.githubusercontent.com/29924060/139590360-d6c9aaef-e9ba-4c32-a8f9-7a0644b4b35f.jpg
 [sdx-lc-to-controller]: https://user-images.githubusercontent.com/29924060/139590365-361b4f46-984c-4ab6-8d47-83c9c362910b.jpg
+
+[tox]: https://tox.wiki/en/latest/
+[tox-docker]: https://tox-docker.readthedocs.io/
