@@ -7,7 +7,8 @@ from queue import Queue
 
 import pika
 import requests
-from swagger_server.utils.db_utils import DbUtils
+
+from sdx_lc.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
