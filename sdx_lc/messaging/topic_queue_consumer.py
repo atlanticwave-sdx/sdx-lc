@@ -7,6 +7,7 @@ from queue import Queue
 
 import pika
 import requests
+
 from sdx_lc.utils.db_utils import DbUtils
 
 MQ_HOST = os.environ.get("MQ_HOST")
