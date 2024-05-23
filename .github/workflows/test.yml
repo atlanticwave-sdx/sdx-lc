@@ -75,7 +75,7 @@ jobs:
           python -m tox
         env:
           SDXLC_HOST: 'localhost'
-          SDXLC_DOMAIN: 'test_topology.net'
+          SDXLC_DOMAIN: 'example.net'
           SDXLC_PORT: '8080'
           SDXLC_VERSION: '1.0.0'
           SDXLC_NAME: 'test-lc'
