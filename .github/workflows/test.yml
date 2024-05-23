@@ -84,7 +84,7 @@ jobs:
           MQ_USER: 'guest'
           MQ_PASS: 'guest'
           MQ_NAME: 'hello'
-          MQ_EXCHANGE: ''          
+          MQ_EXCHANGE: ''
           SUB_QUEUE: 'test-queue'
           SUB_TOPIC: 'test-topic'
           SUB_EXCHANGE: 'test-exchange'
