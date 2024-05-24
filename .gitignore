@@ -2,6 +2,9 @@
 /sdx_lc.egg-info/
 __pycache__/
 /venv*
+/.venv*
+/dist/
+/build/
 
 # Ignore sqlite files
 test-db
