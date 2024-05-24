@@ -93,7 +93,7 @@ To run tests, use [tox] and [tox-docker]:
 ```console
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
-$ pip install tox tox-docker
+$ pip install 'tox>=4' tox-docker
 $ tox
 ```
 
