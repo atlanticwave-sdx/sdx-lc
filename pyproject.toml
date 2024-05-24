@@ -44,6 +44,9 @@ format = [
     "isort == 5.*",
 ]
 
+[options.packages.find]
+where = "sdx_lc"
+
 [tool.black]
 include = '\.py?$'
 
