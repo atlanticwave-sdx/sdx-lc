@@ -39,6 +39,10 @@ test = [
     "pytest>=7.1.2",
     "pytest-cov>=3.0.0",
 ]
+format = [
+    "black == 24.*",
+    "isort == 5.*",
+]
 
 [tool.black]
 include = '\.py?$'
