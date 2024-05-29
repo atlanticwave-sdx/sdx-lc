@@ -10,7 +10,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGODB_DATA_DIR: ${MONGODB_DATA_DIR}
     volumes:
       # See https://docs.docker.com/storage/volumes/
       #
