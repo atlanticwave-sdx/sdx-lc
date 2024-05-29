@@ -16,6 +16,7 @@ test-db
 
 # Ignore copies of env
 env.*
+.env
 
 # Ignore files written by code coverage tools
 .coverage
