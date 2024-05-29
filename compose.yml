@@ -30,7 +30,7 @@ services:
         # the `healthcheck` above.
         condition: service_started
     environment:
-      # - MONGODB_CONNSTRING=${MONGODB_CONNSTRING}
+      # connect to the mongodb service started by compose.
       - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
       - SDX_MQ_IP=${SDX_MQ_IP}
       - SDXLC_DOMAIN=${SDXLC_DOMAIN}
