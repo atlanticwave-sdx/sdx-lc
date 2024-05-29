@@ -4,7 +4,6 @@ services:
 
   mongodb:
     image: mongo:7.0.5
-    container_name: mongodb-lc
     ports:
       - 27017:27017
     environment:
@@ -23,7 +22,6 @@ services:
 
   sdx-lc:
     image: sdx-lc
-    container_name: sdx-lc
     tty: true
     build: ./
     ports:
