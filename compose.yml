@@ -37,7 +37,6 @@ services:
       - SDXLC_HOST=${SDXLC_HOST}
       - SDXLC_PORT=${SDXLC_PORT}
       - SDXLC_VERSION=${SDXLC_VERSION}
-      - PUB_QUEUE=${PUB_QUEUE}
       - SUB_QUEUE=${SUB_QUEUE}
       - SUB_EXCHANGE=${SUB_EXCHANGE}
       # change to local controller config (lcX_q1)
