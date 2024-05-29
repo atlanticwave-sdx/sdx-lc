@@ -32,7 +32,6 @@ services:
     environment:
       # connect to the mongodb service started by compose.
       - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
-      - SDX_MQ_IP=${SDX_MQ_IP}
       - SDXLC_DOMAIN=${SDXLC_DOMAIN}
       # change to local controller host name
       - SDXLC_HOST=${SDXLC_HOST}
