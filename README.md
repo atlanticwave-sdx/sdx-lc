@@ -36,19 +36,10 @@ $ docker run -it --rm --name rabbitmq \
     rabbitmq:latest
 ```
 
-Then in `env` and `docker-compose.yml` files, change the following vars:
-
-- `MQ_HOST` host to the corresponding IP address or hostname of the RabbitMQ server
-- `MQ_PORT` to the corresponding port where the server will listen (default 5672)
-- `MQ_USER` to the corresponding username to authenticate (default guest)
-- `MQ_PASS` to the corresponding password to authenticate (default guest)
-
-
 ## Running SDX Local Controller with Docker Compose
 
-Adjust the rest of the environment in `docker-compose.yml` according
-to your needs (these will be eventually parameterized), and run Docker
-Compose from the top-level directory:
+Copy `env.template` to `.env`, and adjust it according to your needs
+and then run Docker Compose from the top-level directory:
 
 ```console
 $ docker compose up --build
@@ -75,13 +66,19 @@ $ docker run -it --rm --name mongo \
     mongo:7.0.5
 ```
 
-Now create a virtual environment, install the dependencies, and run
-the server:
+Now create a virtual environment, and install the server:
 
 ```console
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
 $ pip3 install .
+```
+
+Now export required environment variables with `source .env` (for
+example -- see above), and then run the server:
+
+```console
+$ source .env
 $ python3 -m sdx_lc
 ```
 
