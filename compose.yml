@@ -41,7 +41,6 @@ services:
       - SUB_EXCHANGE=${SUB_EXCHANGE}
       # change to local controller config (lcX_q1)
       - SUB_TOPIC=${SUB_TOPIC}
-      - MQ_NAME=${MQ_NAME}
       - MQ_HOST=${MQ_HOST}
       - MQ_PORT=${MQ_PORT}
       - MQ_USER=${MQ_USER}
