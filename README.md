@@ -72,7 +72,7 @@ $ docker run -it --rm --name mongo \
     -p 27017:27017 \
     -e MONGO_INITDB_ROOT_USERNAME=guest \
     -e MONGO_INITDB_ROOT_PASSWORD=guest \
-    mongo:3.7
+    mongo:7.0.5
 ```
 
 Now create a virtual environment, install the dependencies, and run
