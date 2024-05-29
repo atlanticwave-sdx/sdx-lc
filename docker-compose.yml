@@ -12,8 +12,15 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
       MONGODB_DATA_DIR: ${MONGODB_DATA_DIR}
     volumes:
-      # named volumes
-      - ~/mongodb:/data/db
+      # See https://docs.docker.com/storage/volumes/
+      #
+      # The 'Z' option tells Docker to label the content with a
+      # private unshared label. Private volumes can only be used by
+      # the current container.  See
+      # https://docs.docker.com/engine/reference/commandline/run/
+      - type: volume
+        source: mongodb
+        target: /data/db:Z
 
   sdx-lc:
     image: sdx-lc
@@ -48,3 +55,5 @@ services:
       - OXP_PULL_INTERVAL=${OXP_PULL_INTERVAL}
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
 
+volumes:
+  mongodb:
