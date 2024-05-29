@@ -22,3 +22,6 @@ env.*
 .coverage.*
 .coverage.el
 coverage-html/
+
+# Ignore patches.
+/*.patch

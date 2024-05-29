@@ -1,29 +1,37 @@
-version: '3.8'
-
 services:
 
-  my-mongodb:
-    image: mongo:3.7
-    container_name: mongodb-lc
-    ports:
-      - 27017:27017
+  mongodb:
+    image: mongo:7.0.5
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGODB_DATA_DIR: ${MONGODB_DATA_DIR}
     volumes:
-      # named volumes
-      - ~/mongodb:/data/db
+      # See https://docs.docker.com/storage/volumes/
+      #
+      # The 'Z' option tells Docker to label the content with a
+      # private unshared label. Private volumes can only be used by
+      # the current container.  See
+      # https://docs.docker.com/engine/reference/commandline/run/
+      - type: volume
+        source: mongodb
+        target: /data/db:Z
+    healthcheck:
+      test: ["CMD", "mongosh", "localhost:27017/test", "--quiet"]
 
   sdx-lc:
     image: sdx-lc
-    container_name: sdx-lc
     tty: true
     build: ./
     ports:
       - 8080:8080
+    depends_on:
+      mongodb:
+        # Anther condition is `service_healthy`, and it will require
+        # the `healthcheck` above.
+        condition: service_started
     environment:
-      - MONGODB_CONNSTRING=${MONGODB_CONNSTRING}
+      # connect to the mongodb service started by compose.
+      - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
       - SDX_MQ_IP=${SDX_MQ_IP}
       - SDXLC_DOMAIN=${SDXLC_DOMAIN}
       # change to local controller host name
@@ -39,8 +47,8 @@ services:
       - MQ_NAME=${MQ_NAME}
       - MQ_HOST=${MQ_HOST}
       - MQ_PORT=${MQ_PORT}
-      - MQ_USER=guest
-      - MQ_PASS=guest
+      - MQ_USER=${MQ_USER}
+      - MQ_PASS=${MQ_PASS}
       - DB_NAME=${DB_NAME}
       - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
@@ -48,3 +56,5 @@ services:
       - OXP_PULL_INTERVAL=${OXP_PULL_INTERVAL}
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
 
+volumes:
+  mongodb:
