@@ -30,23 +30,25 @@ services:
         # the `healthcheck` above.
         condition: service_started
     environment:
-      # connect to the mongodb service started by compose.
-      - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
+      # Local controller settings.
       - SDXLC_DOMAIN=${SDXLC_DOMAIN}
-      # change to local controller host name
       - SDXLC_HOST=${SDXLC_HOST}
       - SDXLC_PORT=${SDXLC_PORT}
       - SDXLC_VERSION=${SDXLC_VERSION}
-      - SUB_QUEUE=${SUB_QUEUE}
-      - SUB_EXCHANGE=${SUB_EXCHANGE}
-      # change to local controller config (lcX_q1)
-      - SUB_TOPIC=${SUB_TOPIC}
+      # MongoDB settings.  When using compose, we connect to the
+      # mongodb service started by compose.
+      - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
+      - DB_NAME=${DB_NAME}
+      - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
+      # Message queue settings.
       - MQ_HOST=${MQ_HOST}
       - MQ_PORT=${MQ_PORT}
       - MQ_USER=${MQ_USER}
       - MQ_PASS=${MQ_PASS}
-      - DB_NAME=${DB_NAME}
-      - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
+      - SUB_QUEUE=${SUB_QUEUE}
+      - SUB_EXCHANGE=${SUB_EXCHANGE}
+      - SUB_TOPIC=${SUB_TOPIC}
+      # OXP settings.
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
       - OXP_PULL_URL=${OXP_PULL_URL}
       - OXP_PULL_INTERVAL=${OXP_PULL_INTERVAL}
