@@ -18,9 +18,9 @@ Flask.
 
 SDX-LC provides a REST API that other services can use.  Once SDX-LC
 is up and running (see below), navigate to
-http://localhost:8080/SDX-LC/1.0.0/ui/ for testing the API.  The
+http://localhost:8080/SDX-LC/2.0.0/ui/ for testing the API.  The
 OpenAPI/Swagger definition should be available at
-http://localhost:8080/SDX-LC/1.0.0/openapi.json.
+http://localhost:8080/SDX-LC/2.0.0/openapi.json.
 
 
 ## Requirement: RabbitMQ
