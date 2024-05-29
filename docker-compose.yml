@@ -49,8 +49,8 @@ services:
       - MQ_NAME=${MQ_NAME}
       - MQ_HOST=${MQ_HOST}
       - MQ_PORT=${MQ_PORT}
-      - MQ_USER=guest
-      - MQ_PASS=guest
+      - MQ_USER=${MQ_USER}
+      - MQ_PASS=${MQ_PASS}
       - DB_NAME=${DB_NAME}
       - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
