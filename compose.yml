@@ -34,7 +34,6 @@ services:
       - SDXLC_DOMAIN=${SDXLC_DOMAIN}
       - SDXLC_HOST=${SDXLC_HOST}
       - SDXLC_PORT=${SDXLC_PORT}
-      - SDXLC_VERSION=${SDXLC_VERSION}
       # MongoDB settings.  When using compose, we connect to the
       # mongodb service started by compose.
       - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/

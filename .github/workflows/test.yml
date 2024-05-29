@@ -80,7 +80,6 @@ jobs:
           SDXLC_HOST: 'localhost'
           SDXLC_DOMAIN: 'example.net'
           SDXLC_PORT: '8080'
-          SDXLC_VERSION: '1.0.0'
           SDXLC_NAME: 'test-lc'
           MQ_HOST: 'localhost'
           MQ_PORT: '5672'
