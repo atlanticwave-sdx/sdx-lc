@@ -18,9 +18,9 @@ Flask.
 
 SDX-LC provides a REST API that other services can use.  Once SDX-LC
 is up and running (see below), navigate to
-http://localhost:8080/SDX-LC/1.0.0/ui/ for testing the API.  The
+http://localhost:8080/SDX-LC/2.0.0/ui/ for testing the API.  The
 OpenAPI/Swagger definition should be available at
-http://localhost:8080/SDX-LC/1.0.0/openapi.json.
+http://localhost:8080/SDX-LC/2.0.0/openapi.json.
 
 
 ## Requirement: RabbitMQ
@@ -36,19 +36,10 @@ $ docker run -it --rm --name rabbitmq \
     rabbitmq:latest
 ```
 
-Then in `env` and `docker-compose.yml` files, change the following vars:
-
-- `MQ_HOST` host to the corresponding IP address or hostname of the RabbitMQ server
-- `MQ_PORT` to the corresponding port where the server will listen (default 5672)
-- `MQ_USER` to the corresponding username to authenticate (default guest)
-- `MQ_PASS` to the corresponding password to authenticate (default guest)
-
-
 ## Running SDX Local Controller with Docker Compose
 
-Adjust the rest of the environment in `docker-compose.yml` according
-to your needs (these will be eventually parameterized), and run Docker
-Compose from the top-level directory:
+Copy `env.template` to `.env`, and adjust it according to your needs
+and then run Docker Compose from the top-level directory:
 
 ```console
 $ docker compose up --build
@@ -72,16 +63,22 @@ $ docker run -it --rm --name mongo \
     -p 27017:27017 \
     -e MONGO_INITDB_ROOT_USERNAME=guest \
     -e MONGO_INITDB_ROOT_PASSWORD=guest \
-    mongo:3.7
+    mongo:7.0.5
 ```
 
-Now create a virtual environment, install the dependencies, and run
-the server:
+Now create a virtual environment, and install the server:
 
 ```console
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
-$ pip3 install -r requirements.txt
+$ pip3 install .
+```
+
+Now export required environment variables with `source .env` (for
+example -- see above), and then run the server:
+
+```console
+$ source .env
 $ python3 -m sdx_lc
 ```
 
