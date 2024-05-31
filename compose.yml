@@ -2,6 +2,8 @@ services:
 
   mongodb:
     image: mongo:7.0.11
+    expose:
+      - ${MONGO_PORT}
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
@@ -16,7 +18,7 @@ services:
         source: mongodb
         target: /data/db:Z
     healthcheck:
-      test: ["CMD", "mongosh", "localhost:27017/test", "--quiet"]
+      test: ["CMD", "mongosh", "localhost:${MONGO_PORT}/test", "--quiet"]
 
   sdx-lc:
     image: sdx-lc
@@ -36,7 +38,7 @@ services:
       - SDXLC_PORT=${SDXLC_PORT}
       # MongoDB settings.  When using compose, we connect to the
       # mongodb service started by compose.
-      - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/
+      - MONGODB_CONNSTRING=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:${MONGO_PORT}/
       - DB_NAME=${DB_NAME}
       - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
       # Message queue settings.
