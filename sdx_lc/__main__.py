@@ -3,6 +3,7 @@
 import argparse
 import json
 import logging
+import os
 import threading
 import time
 from optparse import OptionParser
@@ -52,8 +53,11 @@ def main():
     app = connexion.App(__name__, specification_dir="./swagger/")
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api("swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
+
     # Run swagger in a thread
-    threading.Thread(target=lambda: app.run(port=8080)).start()
+    threading.Thread(
+        target=lambda: app.run(port=os.getenv("SDXLC_PORT") or 8080)
+    ).start()
 
     # Start pulling topology changes from domain controller in a
     # separate subprocess
