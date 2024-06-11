@@ -32,7 +32,7 @@ def start_consumer(thread_queue, db_instance):
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
 
-    rpc = TopicQueueConsumer(thread_queue, "connection")
+    rpc = TopicQueueConsumer(thread_queue=thread_queue, exchange_name="connection")
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
 
