@@ -25,7 +25,7 @@ services:
     tty: true
     build: ./
     ports:
-      - 8080:8080
+      - ${SDXLC_PORT}:${SDXLC_PORT}
     depends_on:
       mongodb:
         # Another condition is `service_healthy`, and it will require
