@@ -46,7 +46,6 @@ services:
       - MQ_PORT=${MQ_PORT}
       - MQ_USER=${MQ_USER}
       - MQ_PASS=${MQ_PASS}
-      - SUB_QUEUE=${SUB_QUEUE}
       - SUB_EXCHANGE=${SUB_EXCHANGE}
       - SUB_TOPIC=${SUB_TOPIC}
       # OXP settings.
