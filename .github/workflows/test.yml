@@ -85,7 +85,6 @@ jobs:
           MQ_PORT: '5672'
           MQ_USER: 'guest'
           MQ_PASS: 'guest'
-          SUB_TOPIC: 'test-topic'
           DB_NAME: 'test-db'
           DB_CONFIG_TABLE_NAME: 'test-config-table'
           MONGODB_CONNSTRING: 'mongodb://guest:guest@localhost:27017/'

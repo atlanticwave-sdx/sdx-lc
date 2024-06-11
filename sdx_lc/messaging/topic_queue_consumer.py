@@ -15,8 +15,6 @@ MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
 
-# subscribe to the corresponding queue
-SUB_TOPIC = os.environ.get("SUB_TOPIC")
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 
 
