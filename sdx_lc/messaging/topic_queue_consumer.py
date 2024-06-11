@@ -17,7 +17,6 @@ MQ_PASS = os.environ.get("MQ_PASS")
 
 # subscribe to the corresponding queue
 SUB_TOPIC = os.environ.get("SUB_TOPIC")
-SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 
 
@@ -127,12 +126,14 @@ class TopicQueueConsumer(object):
 
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)
-        self.channel.exchange_declare(exchange=SUB_EXCHANGE, exchange_type="topic")
+        self.channel.exchange_declare(
+            exchange=self.exchange_name, exchange_type="topic"
+        )
         queue_name = self.result.method.queue
         # print('queue_name: ' + queue_name)
 
         self.channel.queue_bind(
-            exchange=SUB_EXCHANGE, queue=queue_name, routing_key=self.routing_key
+            exchange=self.exchange_name, queue=queue_name, routing_key=self.routing_key
         )
 
         self.channel.basic_qos(prefetch_count=1)
@@ -143,7 +144,8 @@ class TopicQueueConsumer(object):
 
         self.logger.info(
             f" [MQ] Awaiting requests from queue:'{queue_name}'"
-            f" with routing_key:'{self.routing_key}'"
+            f" with exchange_name: '{self.exchange_name}'"
+            f" routing_key:'{self.routing_key}'"
             f" (MQ_HOST: {MQ_HOST}, MQ_PORT: {MQ_PORT})"
         )
 
