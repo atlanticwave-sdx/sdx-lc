@@ -46,8 +46,7 @@ class TopicQueueConsumer(object):
         self.result = self.channel.queue_declare(queue="", exclusive=True)
         self._thread_queue = thread_queue
 
-        self.binding_keys = []
-        self.binding_keys.append(SUB_TOPIC)
+        self.routing_key = os.getenv("SDXLC_DOMAIN")
 
         # Get DB connection and tables set up.
         self.db_instance = DbUtils()
@@ -132,11 +131,9 @@ class TopicQueueConsumer(object):
         queue_name = self.result.method.queue
         # print('queue_name: ' + queue_name)
 
-        # binding to: queue--'', exchange--connection, routing_key--lc1_q1
-        for binding_key in self.binding_keys:
-            self.channel.queue_bind(
-                exchange=SUB_EXCHANGE, queue=queue_name, routing_key=binding_key
-            )
+        self.channel.queue_bind(
+            exchange=SUB_EXCHANGE, queue=queue_name, routing_key=self.routing_key
+        )
 
         self.channel.basic_qos(prefetch_count=1)
 
