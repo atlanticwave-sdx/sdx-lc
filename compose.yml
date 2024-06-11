@@ -46,8 +46,6 @@ services:
       - MQ_PORT=${MQ_PORT}
       - MQ_USER=${MQ_USER}
       - MQ_PASS=${MQ_PASS}
-      - SUB_EXCHANGE=${SUB_EXCHANGE}
-      - SUB_TOPIC=${SUB_TOPIC}
       # OXP settings.
       - OXP_CONNECTION_URL=${OXP_CONNECTION_URL}
       - OXP_PULL_URL=${OXP_PULL_URL}
