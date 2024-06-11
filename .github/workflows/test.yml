@@ -78,16 +78,16 @@ jobs:
           python -m coverage lcov -o coverage.lcov
         env:
           SDXLC_HOST: 'localhost'
-          SDXLC_DOMAIN: 'example.net'
           SDXLC_PORT: '8080'
+          SDXLC_DOMAIN: 'example.net'
           SDXLC_NAME: 'test-lc'
           MQ_HOST: 'localhost'
           MQ_PORT: '5672'
           MQ_USER: 'guest'
           MQ_PASS: 'guest'
+          MONGODB_CONNSTRING: 'mongodb://guest:guest@localhost:27017/'
           DB_NAME: 'test-db'
           DB_CONFIG_TABLE_NAME: 'test-config-table'
-          MONGODB_CONNSTRING: 'mongodb://guest:guest@localhost:27017/'
 
       - name: Send coverage data to coveralls.io
         uses: coverallsapp/github-action@v2
