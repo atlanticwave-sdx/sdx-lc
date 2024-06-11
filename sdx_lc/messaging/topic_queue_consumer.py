@@ -141,7 +141,12 @@ class TopicQueueConsumer(object):
             queue=queue_name, on_message_callback=self.callback, auto_ack=True
         )
 
-        self.logger.info(" [MQ] Awaiting requests from queue: " + SUB_QUEUE)
+        self.logger.info(
+            f" [MQ] Awaiting requests from queue:'{queue_name}'"
+            f" with routing_key:'{self.routing_key}'"
+            f" (MQ_HOST: {MQ_HOST}, MQ_PORT: {MQ_PORT})"
+        )
+
         self.channel.start_consuming()
 
 
