@@ -106,7 +106,7 @@ class TopicQueueConsumer(object):
                 self.message_id += 1
                 self.logger.info("Sending connection info to OXP.")
                 # send connection info to OXP
-                if msg_json["operation"] == "post":
+                if msg_json.get("operation") == "post":
                     try:
                         r = requests.post(str(OXP_CONNECTION_URL), json=connection)
                         self.logger.info(f"Status from OXP: {r}")
