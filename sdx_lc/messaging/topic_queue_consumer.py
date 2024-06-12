@@ -115,7 +115,7 @@ class TopicQueueConsumer(object):
                         self.logger.info(
                             "Check your configuration and make sure OXP service is running."
                         )
-                elif msg_json["operation"] == "delete":
+                elif msg_json.get("operation") == "delete":
                     try:
                         r = requests.delete(str(OXP_CONNECTION_URL), json=connection)
                         self.logger.info(f"Status from OXP: {r}")
