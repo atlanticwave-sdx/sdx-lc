@@ -93,7 +93,11 @@ class TopicQueueConsumer(object):
         if is_json(msg_body):
             self.logger.info("JSON message")
             msg_json = json.loads(msg_body)
-            if "operation" in msg_json and "uni_a" in msg_json["link"] and "uni_z" in msg_json["link"]:
+            if (
+                "link" in msg_json
+                and "uni_a" in msg_json["link"]
+                and "uni_z" in msg_json["link"]
+            ):
                 connection = msg_json["link"]
                 self.logger.info("Got connection message.")
                 self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
