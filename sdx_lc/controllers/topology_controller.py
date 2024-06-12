@@ -56,7 +56,6 @@ def add_topology(body):  # noqa: E501
         logger.debug("Domain name not matching LC domain. Returning 400 status.")
         return "Domain name not matching LC domain. Please check again.", 400
 
-    body["lc_queue_name"] = os.environ.get("SUB_TOPIC")
     json_body = json.dumps(body)
 
     logger.debug("Adding topology. Saving to database.")

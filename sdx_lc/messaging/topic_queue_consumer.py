@@ -14,10 +14,7 @@ MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
-# subscribe to the corresponding queue
-SUB_QUEUE = os.environ.get("SUB_QUEUE")
-SUB_TOPIC = os.environ.get("SUB_TOPIC")
-SUB_EXCHANGE = os.environ.get("SUB_EXCHANGE")
+
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 
 
@@ -46,8 +43,7 @@ class TopicQueueConsumer(object):
         self.result = self.channel.queue_declare(queue="", exclusive=True)
         self._thread_queue = thread_queue
 
-        self.binding_keys = []
-        self.binding_keys.append(SUB_TOPIC)
+        self.routing_key = os.getenv("SDXLC_DOMAIN")
 
         # Get DB connection and tables set up.
         self.db_instance = DbUtils()
@@ -128,15 +124,15 @@ class TopicQueueConsumer(object):
 
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)
-        self.channel.exchange_declare(exchange=SUB_EXCHANGE, exchange_type="topic")
+        self.channel.exchange_declare(
+            exchange=self.exchange_name, exchange_type="topic"
+        )
         queue_name = self.result.method.queue
         # print('queue_name: ' + queue_name)
 
-        # binding to: queue--'', exchange--connection, routing_key--lc1_q1
-        for binding_key in self.binding_keys:
-            self.channel.queue_bind(
-                exchange=SUB_EXCHANGE, queue=queue_name, routing_key=binding_key
-            )
+        self.channel.queue_bind(
+            exchange=self.exchange_name, queue=queue_name, routing_key=self.routing_key
+        )
 
         self.channel.basic_qos(prefetch_count=1)
 
@@ -144,7 +140,13 @@ class TopicQueueConsumer(object):
             queue=queue_name, on_message_callback=self.callback, auto_ack=True
         )
 
-        self.logger.info(" [MQ] Awaiting requests from queue: " + SUB_QUEUE)
+        self.logger.info(
+            f" [MQ] Awaiting requests from queue:'{queue_name}'"
+            f" with exchange_name: '{self.exchange_name}'"
+            f" routing_key:'{self.routing_key}'"
+            f" (MQ_HOST: {MQ_HOST}, MQ_PORT: {MQ_PORT})"
+        )
+
         self.channel.start_consuming()
 
 

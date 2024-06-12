@@ -29,10 +29,18 @@ def is_json(myjson):
 
 
 def start_consumer(thread_queue, db_instance):
+    """
+    Accept connection (also called link) messages from SDX Controller.
+
+    :param thread_queue: TODO: unsure what this is used for.
+    :param db_instance: TODO: this appears to be unused in this
+        function.
+    """
+
     MESSAGE_ID = 0
     HEARTBEAT_ID = 0
 
-    rpc = TopicQueueConsumer(thread_queue, "connection")
+    rpc = TopicQueueConsumer(thread_queue=thread_queue, exchange_name="connection")
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
 
