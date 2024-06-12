@@ -93,22 +93,33 @@ class TopicQueueConsumer(object):
         if is_json(msg_body):
             self.logger.info("JSON message")
             msg_json = json.loads(msg_body)
-            if "uni_a" in msg_json and "uni_z" in msg_json:
+            if "operation" in msg_json and "uni_a" in msg_json["link"] and "uni_z" in msg_json["link"]:
+                connection = msg_json["link"]
                 self.logger.info("Got connection message.")
-                self.db_instance.add_key_value_pair_to_db(self.message_id, msg_body)
+                self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
                 self.logger.info("Save to database complete.")
                 self.logger.info("Message ID:" + str(self.message_id))
                 self.message_id += 1
                 self.logger.info("Sending connection info to OXP.")
-                # Uncomment lines below to send connection info to OXP
-                try:
-                    r = requests.post(str(OXP_CONNECTION_URL), json=msg_json)
-                    self.logger.info(f"Status from OXP: {r}")
-                except Exception as e:
-                    self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
-                    self.logger.info(
-                        "Check your configuration and make sure OXP service is running."
-                    )
+                # send connection info to OXP
+                if msg_json["operation"] == "post":
+                    try:
+                        r = requests.post(str(OXP_CONNECTION_URL), json=connection)
+                        self.logger.info(f"Status from OXP: {r}")
+                    except Exception as e:
+                        self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
+                        self.logger.info(
+                            "Check your configuration and make sure OXP service is running."
+                        )
+                elif msg_json["operation"] == "delete":
+                    try:
+                        r = requests.delete(str(OXP_CONNECTION_URL), json=connection)
+                        self.logger.info(f"Status from OXP: {r}")
+                    except Exception as e:
+                        self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
+                        self.logger.info(
+                            "Check your configuration and make sure OXP service is running."
+                        )
             elif "version" in msg_json:
                 msg_id = msg_json["id"]
                 lc_name = msg_json["name"]
