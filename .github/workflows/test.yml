@@ -8,8 +8,10 @@ name: Test
 on:
   push:
     branches:
-      - "main"
+      - "*"
   pull_request:
+    branches:
+      - "*"
 
 permissions:
   contents: read
