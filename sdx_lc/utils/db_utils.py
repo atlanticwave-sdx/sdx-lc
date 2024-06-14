@@ -5,16 +5,37 @@ import pymongo
 
 DB_NAME = os.environ.get("DB_NAME")
 DB_CONFIG_TABLE_NAME = os.environ.get("DB_CONFIG_TABLE_NAME")
-MONGODB_CONNSTRING = os.environ.get("MONGODB_CONNSTRING")
 
 
 class DbUtils(object):
     def __init__(self):
         self.db_name = DB_NAME
         self.config_table_name = DB_CONFIG_TABLE_NAME
-        self.mongo_client = pymongo.MongoClient(MONGODB_CONNSTRING)
+
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
+
+        mongo_user = os.getenv("MONGO_USER") or "guest"
+        mongo_pass = os.getenv("MONGO_PASS") or "guest"
+        mongo_host = os.getenv("MONGO_HOST")
+        mongo_port = os.getenv("MONGO_PORT")
+
+        if mongo_host is None:
+            raise Exception("MONGO_HOST environment variable is not set")
+
+        if mongo_port is None:
+            raise Exception("MONGO_PORT environment variable is not set")
+
+        mongo_connstring = (
+            f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
+        )
+
+        # Log DB URI, without a password.
+        self.logger.info(
+            f"[DB] Using mongodb://{mongo_user}@{mongo_host}:{mongo_port}/"
+        )
+
+        self.mongo_client = pymongo.MongoClient(mongo_connstring)
 
     def initialize_db(self):
         """Init database"""

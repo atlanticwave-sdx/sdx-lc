@@ -85,14 +85,45 @@ $ python3 -m sdx_lc
 
 ## Running tests
 
-To run tests, use [tox] and [tox-docker]:
+### With tox
+
+An easy way to run tests is using [tox] and [tox-docker].  You will
+need Docker installed and running.
 
 ```console
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
-$ pip install 'tox>=4' tox-docker
+$ pip install 'tox>=4' 'tox-docker>=5'
 $ tox
 ```
+
+### With pytest
+
+If you want to avoid tox and run [pytest] directly, that is possible
+too.  You will need to run RabbitMQ and MongoDB, with Docker perhaps.
+See above for the steps.
+
+Some environment variables are expected to be set for the tests to
+work as expected, so you may want to copy `env.template` to `.env` and
+edit it according to your environment, and make sure the env vars are
+present in your shell:
+
+```console
+$ cp env.template .env 
+$ # and then edit .env to suit your environment
+$ source .env
+```
+
+And now, activate a virtual environment, install the requirements, and
+then run `pytest`:
+
+```
+$ python3 -m venv venv --upgrade-deps
+$ source ./venv/bin/activate
+$ pip3 install --editable .[test]
+$ pytest
+```
+`
 
 ## Communication between SDX Controller and Local Controller
 
@@ -131,3 +162,4 @@ Local controller sends domain information to SDX controller:
 
 [tox]: https://tox.wiki/en/latest/
 [tox-docker]: https://tox-docker.readthedocs.io/
+[pytest]: https://docs.pytest.org/
