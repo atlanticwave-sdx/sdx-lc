@@ -85,12 +85,15 @@ $ python3 -m sdx_lc
 
 ## Running tests
 
-To run tests, use [tox] and [tox-docker]:
+### With tox
+
+An easy way to run tests is using [tox] and [tox-docker].  You will
+need Docker installed and running.
 
 ```console
 $ python3 -m venv venv --upgrade-deps
 $ source venv/bin/activate
-$ pip install 'tox>=4' tox-docker
+$ pip install 'tox>=4' 'tox-docker>=5'
 $ tox
 ```
 
