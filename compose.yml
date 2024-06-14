@@ -5,8 +5,8 @@ services:
     expose:
       - ${MONGO_PORT}
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-guest}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-guest}
     volumes:
       # See https://docs.docker.com/storage/volumes/
       #
@@ -52,9 +52,9 @@ services:
       - DB_CONFIG_TABLE_NAME=${DB_CONFIG_TABLE_NAME}
       # Message queue settings.
       - MQ_HOST=${MQ_HOST}
-      - MQ_PORT=${MQ_PORT}
-      - MQ_USER=${MQ_USER}
-      - MQ_PASS=${MQ_PASS}
+      - MQ_PORT=${MQ_PORT:-5672}
+      - MQ_USER=${MQ_USER:-guest}
+      - MQ_PASS=${MQ_PASS:-guest}
       # OXP settings.
       - OXP_PROVISION_URL=${OXP_PROVISION_URL}
       - OXP_PULL_URL=${OXP_PULL_URL}
