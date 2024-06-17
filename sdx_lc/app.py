@@ -80,6 +80,14 @@ def create_app():
 
     return app.app
 
+# We can run the app using flask, like so:
+#
+#     $ flask --app sdx_lc.app:app run --debug
+#
+# Or with an WSGI server such as gunicorn:
+#
+#     $ gunicorn --bind localhost:$SDXLC_PORT sdx_lc.app:app
+#
 app = create_app()
 
 # We use WsgiToAsgi adapter so that we can use an ASGI server (such as
