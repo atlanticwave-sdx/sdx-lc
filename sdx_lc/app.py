@@ -51,7 +51,10 @@ def start_pull_topology_change():
     call(["python", "sdx_lc/jobs/pull_topo_changes.py"])
 
 
-def main():
+def create_app():
+    """
+    Create a Flas/Connexion App.
+    """
     if LOG_FILE:
         logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
     else:
@@ -78,6 +81,9 @@ def main():
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
 
+    return app.app
+
+app = create_app()
 
 if __name__ == "__main__":
-    main()
+    app.run()
