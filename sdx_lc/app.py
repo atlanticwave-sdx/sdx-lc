@@ -10,6 +10,7 @@ from optparse import OptionParser
 from subprocess import call
 
 import connexion
+from asgiref.wsgi import WsgiToAsgi
 from flask import redirect
 
 from sdx_lc import encoder
@@ -80,6 +81,13 @@ def create_app():
     return app.app
 
 app = create_app()
+
+# We use WsgiToAsgi adapter so that we can use an ASGI server (such as
+# uvicorn or hypercorn), like so:
+#
+#     $ uvicorn sdx_lc.app:asgi_app --host 0.0.0.0 --port 8080
+#
+asgi_app = WsgiToAsgi(app)
 
 @app.route("/", methods=["GET"])
 def index():
