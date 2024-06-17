@@ -10,6 +10,7 @@ from optparse import OptionParser
 from subprocess import call
 
 import connexion
+from flask import redirect
 
 from sdx_lc import encoder
 from sdx_lc.messaging.topic_queue_consumer import *
@@ -79,6 +80,10 @@ def create_app():
     return app.app
 
 app = create_app()
+
+@app.route("/", methods=["GET"])
+def index():
+    return redirect("/SDX-LC/2.0.0/ui/")
 
 if __name__ == "__main__":
     app.run(port=os.getenv("SDXLC_PORT") or 8080)
