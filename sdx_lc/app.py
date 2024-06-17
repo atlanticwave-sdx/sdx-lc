@@ -65,11 +65,6 @@ def create_app():
     app.app.json_encoder = encoder.JSONEncoder
     app.add_api("swagger.yaml", arguments={"title": "SDX LC"}, pythonic_params=True)
 
-    # Run swagger in a thread
-    threading.Thread(
-        target=lambda: app.run(port=os.getenv("SDXLC_PORT") or 8080)
-    ).start()
-
     # Start pulling topology changes from domain controller in a
     # separate subprocess
     processThread = threading.Thread(target=start_pull_topology_change)
