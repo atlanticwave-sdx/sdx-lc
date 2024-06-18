@@ -14,10 +14,6 @@ from sdx_lc import encoder
 from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
 from sdx_lc.utils.db_utils import DbUtils
 
-logger = logging.getLogger(__name__)
-logging.getLogger("pika").setLevel(logging.WARNING)
-LOG_FILE = os.environ.get("LOG_FILE")
-
 
 def start_consumer(thread_queue, db_instance):
     """
@@ -43,8 +39,14 @@ def create_app():
     """
     Create a Flas/Connexion App.
     """
-    if LOG_FILE:
-        logging.basicConfig(filename=LOG_FILE, level=logging.INFO)
+
+    logger = logging.getLogger(__name__)
+    logging.getLogger("pika").setLevel(logging.WARNING)
+
+    log_file = os.environ.get("LOG_FILE")
+
+    if log_file:
+        logging.basicConfig(filename=log_file, level=logging.INFO)
     else:
         logging.basicConfig(level=logging.INFO)
 
