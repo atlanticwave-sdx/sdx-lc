@@ -77,6 +77,7 @@ def create_app():
 
     return app.app
 
+
 # We can run the app using flask, like so:
 #
 #     $ flask --app sdx_lc.app:app run --debug
@@ -94,10 +95,12 @@ app = create_app()
 #
 asgi_app = WsgiToAsgi(app)
 
+
 # Set up a redirect for convenience.
 @app.route("/", methods=["GET"])
 def index():
     return redirect("/SDX-LC/2.0.0/ui/")
+
 
 if __name__ == "__main__":
     app.run(port=os.getenv("SDXLC_PORT") or 8080)
