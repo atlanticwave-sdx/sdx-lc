@@ -79,7 +79,7 @@ example -- see above), and then run the server:
 
 ```console
 $ source .env
-$ python3 -m sdx_lc
+$ flask --app sdx_lc.app:app run --debug
 ```
 
 
