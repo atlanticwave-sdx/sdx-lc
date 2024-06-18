@@ -3,6 +3,7 @@
 import logging
 import os
 import threading
+from queue import Queue
 from subprocess import call
 
 import connexion
@@ -10,8 +11,8 @@ from asgiref.wsgi import WsgiToAsgi
 from flask import redirect
 
 from sdx_lc import encoder
-from sdx_lc.messaging.topic_queue_consumer import *
-from sdx_lc.utils.db_utils import *
+from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
+from sdx_lc.utils.db_utils import DbUtils
 
 logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
