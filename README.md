@@ -123,7 +123,6 @@ $ source ./venv/bin/activate
 $ pip3 install --editable .[test]
 $ pytest
 ```
-`
 
 ## Communication between SDX Controller and Local Controller
 
