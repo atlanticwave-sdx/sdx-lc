@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import json
 import logging
 import os
 import threading
@@ -17,14 +16,6 @@ from sdx_lc.utils.db_utils import *
 logger = logging.getLogger(__name__)
 logging.getLogger("pika").setLevel(logging.WARNING)
 LOG_FILE = os.environ.get("LOG_FILE")
-
-
-def is_json(myjson):
-    try:
-        json.loads(myjson)
-    except ValueError:
-        return False
-    return True
 
 
 def start_consumer(thread_queue, db_instance):
