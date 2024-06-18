@@ -90,7 +90,7 @@ app = create_app()
 # We use WsgiToAsgi adapter so that we can use an ASGI server (such as
 # uvicorn or hypercorn), like so:
 #
-#     $ uvicorn sdx_lc.app:asgi_app --host 0.0.0.0 --port 8080
+#     $ uvicorn sdx_lc.app:asgi_app --host 0.0.0.0 --port $SDXLC_PORT
 #
 asgi_app = WsgiToAsgi(app)
 
