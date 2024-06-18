@@ -1,0 +1,7 @@
+ignored:
+  # DL3013 recommends that Python dependencies be pinned, but we
+  # probably do not want to do that right now.  Unpinned dependencies
+  # has been working okay for us so far, and pinning (using pip-tools
+  # would be ideal) should be done separately after a discussion,
+  # because that would change the workflow a bit.
+  - DL3013
