@@ -63,6 +63,8 @@ def create_app():
     # Get DB connection and tables set up.
     db_instance = DbUtils()
     db_instance.initialize_db()
+
+    # Consume connection/link messages
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
 
