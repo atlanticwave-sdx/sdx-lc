@@ -97,6 +97,7 @@ app = create_app()
 #
 asgi_app = WsgiToAsgi(app)
 
+# Set up a redirect for convenience.
 @app.route("/", methods=["GET"])
 def index():
     return redirect("/SDX-LC/2.0.0/ui/")
