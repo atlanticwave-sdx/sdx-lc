@@ -5,6 +5,13 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
+# create a venv.
+RUN python3 -m venv /opt/venv --upgrade-deps
+
+# Make sure we use the venv.
+ENV PATH="/opt/venv/bin:$PATH"
+ENV VIRTUAL_ENV="/opt/venv"
+
 RUN pip3 install --no-cache-dir .[wsgi]
 
 EXPOSE 8080
