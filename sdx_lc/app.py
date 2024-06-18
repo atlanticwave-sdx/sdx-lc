@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
-import argparse
 import json
 import logging
 import os
 import threading
-import time
-from optparse import OptionParser
 from subprocess import call
 
 import connexion
