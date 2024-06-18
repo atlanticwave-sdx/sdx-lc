@@ -43,12 +43,18 @@ def create_app():
     logger = logging.getLogger(__name__)
     logging.getLogger("pika").setLevel(logging.WARNING)
 
-    log_file = os.environ.get("LOG_FILE")
+    log_file = os.getenv("LOG_FILE")
 
     if log_file:
         logging.basicConfig(filename=log_file, level=logging.INFO)
     else:
         logging.basicConfig(level=logging.INFO)
+
+    logger.info(
+        f"SDX Local Controller starting up ("
+        f"name: {os.getenv('SDXLC_NAME')}, "
+        f"domain: {os.getenv('SDXLC_DOMAIN')})"
+    )
 
     # Run swagger service
     app = connexion.App(__name__, specification_dir="./swagger/")
