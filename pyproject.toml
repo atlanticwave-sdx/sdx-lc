@@ -26,6 +26,7 @@ dependencies = [
     "setuptools >= 21.0.0",
     "pika >= 1.2.0",
     "connexion[swagger-ui] == 2.14.2",
+    "asgiref >= 3.7.2",    
     "pymongo > 3.0",
 ]
 
@@ -42,6 +43,9 @@ test = [
 format = [
     "black == 24.*",
     "isort == 5.*",
+]
+wsgi = [
+    "uvicorn"
 ]
 
 [options.packages.find]
