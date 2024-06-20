@@ -49,7 +49,7 @@ Or, to build the image and run:
 
 ```console
 $ docker build -t sdx_lc .
-$ docker run -p 8080:8080 sdx_lc
+$ docker run --env-file=.env -p 8080:8080 sdx_lc
 ```
 
 
