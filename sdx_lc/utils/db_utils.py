@@ -21,14 +21,16 @@ class DbUtils(object):
         mongo_port = os.getenv("MONGO_PORT")
 
         if mongo_host is None:
-            raise Exception("MONGO_HOST environment variable is not set")
+            mongo_connstring = os.getenv("MONGODB_CONNSTRING")
+            if mongo_connstring is None:
+                raise Exception("Neither MONGO_HOST nor MONGODB_CONNSTRING is set")
 
         if mongo_port is None:
             raise Exception("MONGO_PORT environment variable is not set")
-
-        mongo_connstring = (
-            f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
-        )
+        else:
+            mongo_connstring = (
+                f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
+            )
 
         # Log DB URI, without a password.
         self.logger.info(
