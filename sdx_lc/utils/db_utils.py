@@ -1,10 +1,22 @@
 import logging
 import os
+from urllib.parse import urlparse
 
 import pymongo
 
 DB_NAME = os.environ.get("DB_NAME")
 DB_CONFIG_TABLE_NAME = os.environ.get("DB_CONFIG_TABLE_NAME")
+
+
+def obfuscate_password_in_uri(uri: str) -> str:
+    """
+    Replace password field in URIs with a `*`, for logging.
+    """
+    parts = urlparse(uri)
+    if parts.password:
+        return f"{parts.scheme}://{parts.username}:*@{parts.hostname}:{parts.port}/"
+    else:
+        return uri
 
 
 class DbUtils(object):
@@ -33,9 +45,7 @@ class DbUtils(object):
             )
 
         # Log DB URI, without a password.
-        self.logger.info(
-            f"[DB] Using mongodb://{mongo_user}@{mongo_host}:{mongo_port}/"
-        )
+        self.logger.info(f"[DB] Using {obfuscate_password_in_uri(mongo_connstring)}")
 
         self.mongo_client = pymongo.MongoClient(mongo_connstring)
 
