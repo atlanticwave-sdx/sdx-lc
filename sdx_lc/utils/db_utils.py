@@ -5,9 +5,6 @@ from urllib.parse import urlparse
 import pymongo
 
 
-DB_CONFIG_TABLE_NAME = os.environ.get("DB_CONFIG_TABLE_NAME")
-
-
 def obfuscate_password_in_uri(uri: str) -> str:
     """
     Replace password field in URIs with a `*`, for logging.
@@ -22,11 +19,13 @@ def obfuscate_password_in_uri(uri: str) -> str:
 class DbUtils(object):
     def __init__(self):
         self.db_name = os.getenv("DB_NAME")
+        self.config_table_name = os.getenv("DB_CONFIG_TABLE_NAME")
 
         if not self.db_name:
             raise Exception("DB_NAME environment variable is not set")
 
-        self.config_table_name = DB_CONFIG_TABLE_NAME
+        if not self.config_table_name:
+            raise Exception("DB_CONFIG_TABLE_NAME environment variable is not set")
 
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
