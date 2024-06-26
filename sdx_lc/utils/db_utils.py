@@ -33,15 +33,12 @@ class DbUtils(object):
         mongo_user = os.getenv("MONGO_USER") or "guest"
         mongo_pass = os.getenv("MONGO_PASS") or "guest"
         mongo_host = os.getenv("MONGO_HOST")
-        mongo_port = os.getenv("MONGO_PORT")
+        mongo_port = os.getenv("MONGO_PORT") or 27017
 
         if mongo_host is None:
             mongo_connstring = os.getenv("MONGODB_CONNSTRING")
             if mongo_connstring is None:
                 raise Exception("Neither MONGO_HOST nor MONGODB_CONNSTRING is set")
-
-        if mongo_port is None:
-            raise Exception("MONGO_PORT environment variable is not set")
         else:
             mongo_connstring = (
                 f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
