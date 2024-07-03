@@ -391,7 +391,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/connection'
+              oneOf:
+                - $ref: '#/components/schemas/connection'
+                - $ref: '#/components/schemas/connection_v2'
         required: true
       responses:
         "200":
@@ -642,7 +644,7 @@ paths:
       x-openapi-router-controller: sdx_lc.controllers.user_controller
 components:
   schemas:
-    connection:
+    connection_v2:
       required:
       - description
       - endpoints
@@ -740,6 +742,122 @@ components:
             strict: true
         notifications:
         - email: muhaziz@fiu.edu
+      xml:
+        name: Connection
+    connection:
+      required:
+      - egress_port
+      - id
+      - ingress_port
+      - name
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        ingress_port:
+          $ref: '#/components/schemas/port'
+        egress_port:
+          $ref: '#/components/schemas/port'
+        quantity:
+          type: integer
+          format: int32
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        multi_path:
+          type: boolean
+        preempt:
+          type: boolean
+        backup_path_type:
+          type: string
+          enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        exclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        inclusive_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/link'
+        bandwidth_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        bandwidth_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_required:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        latency_measured:
+          maximum: 1000000
+          minimum: 1
+          type: number
+        packetloss_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        packetloss_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_required:
+          maximum: 100
+          minimum: 0
+          type: number
+        availability_measured:
+          maximum: 100
+          minimum: 0
+          type: number
+        paths:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          description: Connection Status
+          enum:
+          - success
+          - fail
+          - scheduled
+          - provisioining
+        complete:
+          type: boolean
+          default: false
+      example:
+        start_time: 2000-01-23T04:56:07.000Z
+        name: name
+        end_time: 2000-01-23T04:56:07.000Z
+        id: a9a861f9-da3b-4fde-86b7-9435b5a33648
+        bandwidth_required: 100
+        latency_required: 20
+        egress_port:
+          node: urn:sdx:port:amlight.net:Novi07
+          name: urn:sdx:port:amlight.net:Novi07:10
+          short_name: "10"
+          id: id
+          label: vlan
+          label_range: 100
+          status: up
+        ingress_port:
+          node: urn:sdx:port:amlight.net:Novi06
+          name: urn:sdx:port:amlight.net:Novi06:9
+          short_name: "9"
+          id: id
+          label: vlan
+          label_range: 100
+          status: up
       xml:
         name: Connection
     User:

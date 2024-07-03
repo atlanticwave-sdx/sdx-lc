@@ -1,16 +1,14 @@
 # coding: utf-8
 
 from __future__ import absolute_import
-
 from datetime import date, datetime  # noqa: F401
-from typing import Dict, List  # noqa: F401
 
-from sdx_lc import util
+from typing import List, Dict  # noqa: F401
+
 from sdx_lc.models.base_model_ import Model
-from sdx_lc.models.connection_qos_metrics import ConnectionQosMetrics  # noqa: F401,E501
-from sdx_lc.models.connection_scheduling import ConnectionScheduling  # noqa: F401,E501
 from sdx_lc.models.link import Link  # noqa: F401,E501
 from sdx_lc.models.port import Port  # noqa: F401,E501
+from sdx_lc import util
 
 
 class Connection(Model):
@@ -18,50 +16,23 @@ class Connection(Model):
 
     Do not edit the class manually.
     """
-
-    def __init__(
-        self,
-        id=None,
-        name=None,
-        endpoints=None,
-        description=None,
-        notifications=None,
-        scheduling=None,
-        qos_metrics=None,
-        paths=None,
-        status=None,
-        complete=False,
-        quantity=None,
-        multi_path=None,
-        preempt=None,
-        backup_path_type=None,
-        exclusive_links=None,
-        inclusive_links=None,
-    ):  # noqa: E501
+    def __init__(self, id=None, name=None, ingress_port=None, egress_port=None, quantity=None, start_time=None, end_time=None, multi_path=None, preempt=None, backup_path_type=None, exclusive_links=None, inclusive_links=None, bandwidth_required=None, bandwidth_measured=None, latency_required=None, latency_measured=None, packetloss_required=None, packetloss_measured=None, availability_required=None, availability_measured=None, paths=None, status=None, complete=False):  # noqa: E501
         """Connection - a model defined in Swagger
 
         :param id: The id of this Connection.  # noqa: E501
         :type id: str
         :param name: The name of this Connection.  # noqa: E501
         :type name: str
-        :param endpoints: The endpoints of this Connection.  # noqa: E501
-        :type endpoints: List[Port]
-        :param description: The description of this Connection.  # noqa: E501
-        :type description: str
-        :param notifications: The notifications of this Connection.  # noqa: E501
-        :type notifications: List[Dict[str, object]]
-        :param scheduling: The scheduling of this Connection.  # noqa: E501
-        :type scheduling: ConnectionScheduling
-        :param qos_metrics: The qos_metrics of this Connection.  # noqa: E501
-        :type qos_metrics: Dict[str, ConnectionQosMetrics]
-        :param paths: The paths of this Connection.  # noqa: E501
-        :type paths: List[str]
-        :param status: The status of this Connection.  # noqa: E501
-        :type status: str
-        :param complete: The complete of this Connection.  # noqa: E501
-        :type complete: bool
+        :param ingress_port: The ingress_port of this Connection.  # noqa: E501
+        :type ingress_port: Port
+        :param egress_port: The egress_port of this Connection.  # noqa: E501
+        :type egress_port: Port
         :param quantity: The quantity of this Connection.  # noqa: E501
         :type quantity: int
+        :param start_time: The start_time of this Connection.  # noqa: E501
+        :type start_time: datetime
+        :param end_time: The end_time of this Connection.  # noqa: E501
+        :type end_time: datetime
         :param multi_path: The multi_path of this Connection.  # noqa: E501
         :type multi_path: bool
         :param preempt: The preempt of this Connection.  # noqa: E501
@@ -72,60 +43,103 @@ class Connection(Model):
         :type exclusive_links: List[Link]
         :param inclusive_links: The inclusive_links of this Connection.  # noqa: E501
         :type inclusive_links: List[Link]
+        :param bandwidth_required: The bandwidth_required of this Connection.  # noqa: E501
+        :type bandwidth_required: float
+        :param bandwidth_measured: The bandwidth_measured of this Connection.  # noqa: E501
+        :type bandwidth_measured: float
+        :param latency_required: The latency_required of this Connection.  # noqa: E501
+        :type latency_required: float
+        :param latency_measured: The latency_measured of this Connection.  # noqa: E501
+        :type latency_measured: float
+        :param packetloss_required: The packetloss_required of this Connection.  # noqa: E501
+        :type packetloss_required: float
+        :param packetloss_measured: The packetloss_measured of this Connection.  # noqa: E501
+        :type packetloss_measured: float
+        :param availability_required: The availability_required of this Connection.  # noqa: E501
+        :type availability_required: float
+        :param availability_measured: The availability_measured of this Connection.  # noqa: E501
+        :type availability_measured: float
+        :param paths: The paths of this Connection.  # noqa: E501
+        :type paths: List[str]
+        :param status: The status of this Connection.  # noqa: E501
+        :type status: str
+        :param complete: The complete of this Connection.  # noqa: E501
+        :type complete: bool
         """
         self.swagger_types = {
-            "id": str,
-            "name": str,
-            "endpoints": List[Port],
-            "description": str,
-            "notifications": List[Dict[str, object]],
-            "scheduling": ConnectionScheduling,
-            "qos_metrics": Dict[str, ConnectionQosMetrics],
-            "paths": List[str],
-            "status": str,
-            "complete": bool,
-            "quantity": int,
-            "multi_path": bool,
-            "preempt": bool,
-            "backup_path_type": str,
-            "exclusive_links": List[Link],
-            "inclusive_links": List[Link],
+            'id': str,
+            'name': str,
+            'ingress_port': Port,
+            'egress_port': Port,
+            'quantity': int,
+            'start_time': datetime,
+            'end_time': datetime,
+            'multi_path': bool,
+            'preempt': bool,
+            'backup_path_type': str,
+            'exclusive_links': List[Link],
+            'inclusive_links': List[Link],
+            'bandwidth_required': float,
+            'bandwidth_measured': float,
+            'latency_required': float,
+            'latency_measured': float,
+            'packetloss_required': float,
+            'packetloss_measured': float,
+            'availability_required': float,
+            'availability_measured': float,
+            'paths': List[str],
+            'status': str,
+            'complete': bool
         }
 
         self.attribute_map = {
-            "id": "id",
-            "name": "name",
-            "endpoints": "endpoints",
-            "description": "description",
-            "notifications": "notifications",
-            "scheduling": "scheduling",
-            "qos_metrics": "qos_metrics",
-            "paths": "paths",
-            "status": "status",
-            "complete": "complete",
-            "quantity": "quantity",
-            "multi_path": "multi_path",
-            "preempt": "preempt",
-            "backup_path_type": "backup_path_type",
-            "exclusive_links": "exclusive_links",
-            "inclusive_links": "inclusive_links",
+            'id': 'id',
+            'name': 'name',
+            'ingress_port': 'ingress_port',
+            'egress_port': 'egress_port',
+            'quantity': 'quantity',
+            'start_time': 'start_time',
+            'end_time': 'end_time',
+            'multi_path': 'multi_path',
+            'preempt': 'preempt',
+            'backup_path_type': 'backup_path_type',
+            'exclusive_links': 'exclusive_links',
+            'inclusive_links': 'inclusive_links',
+            'bandwidth_required': 'bandwidth_required',
+            'bandwidth_measured': 'bandwidth_measured',
+            'latency_required': 'latency_required',
+            'latency_measured': 'latency_measured',
+            'packetloss_required': 'packetloss_required',
+            'packetloss_measured': 'packetloss_measured',
+            'availability_required': 'availability_required',
+            'availability_measured': 'availability_measured',
+            'paths': 'paths',
+            'status': 'status',
+            'complete': 'complete'
         }
         self._id = id
         self._name = name
-        self._endpoints = endpoints
-        self._description = description
-        self._notifications = notifications
-        self._scheduling = scheduling
-        self._qos_metrics = qos_metrics
-        self._paths = paths
-        self._status = status
-        self._complete = complete
+        self._ingress_port = ingress_port
+        self._egress_port = egress_port
         self._quantity = quantity
+        self._start_time = start_time
+        self._end_time = end_time
         self._multi_path = multi_path
         self._preempt = preempt
         self._backup_path_type = backup_path_type
         self._exclusive_links = exclusive_links
         self._inclusive_links = inclusive_links
+        self._bandwidth_required = bandwidth_required
+        self._bandwidth_measured = bandwidth_measured
+        self._latency_required = latency_required
+        self._latency_measured = latency_measured
+        self._packetloss_required = packetloss_required
+        self._packetloss_measured = packetloss_measured
+        self._availability_required = availability_required
+        self._availability_measured = availability_measured
+        self._paths = paths
+        self._status = status
+        self._complete = complete
 
     @classmethod
     def from_dict(cls, dikt):
@@ -180,208 +194,55 @@ class Connection(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError(
-                "Invalid value for `name`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
         self._name = name
 
     @property
-    def endpoints(self):
-        """Gets the endpoints of this Connection.
+    def ingress_port(self):
+        """Gets the ingress_port of this Connection.
 
 
-        :return: The endpoints of this Connection.
-        :rtype: List[Port]
+        :return: The ingress_port of this Connection.
+        :rtype: Port
         """
-        return self._endpoints
+        return self._ingress_port
 
-    @endpoints.setter
-    def endpoints(self, endpoints):
-        """Sets the endpoints of this Connection.
+    @ingress_port.setter
+    def ingress_port(self, ingress_port):
+        """Sets the ingress_port of this Connection.
 
 
-        :param endpoints: The endpoints of this Connection.
-        :type endpoints: List[Port]
+        :param ingress_port: The ingress_port of this Connection.
+        :type ingress_port: Port
         """
-        if endpoints is None:
-            raise ValueError(
-                "Invalid value for `endpoints`, must not be `None`"
-            )  # noqa: E501
+        if ingress_port is None:
+            raise ValueError("Invalid value for `ingress_port`, must not be `None`")  # noqa: E501
 
-        self._endpoints = endpoints
+        self._ingress_port = ingress_port
 
     @property
-    def description(self):
-        """Gets the description of this Connection.
+    def egress_port(self):
+        """Gets the egress_port of this Connection.
 
 
-        :return: The description of this Connection.
-        :rtype: str
+        :return: The egress_port of this Connection.
+        :rtype: Port
         """
-        return self._description
+        return self._egress_port
 
-    @description.setter
-    def description(self, description):
-        """Sets the description of this Connection.
+    @egress_port.setter
+    def egress_port(self, egress_port):
+        """Sets the egress_port of this Connection.
 
 
-        :param description: The description of this Connection.
-        :type description: str
+        :param egress_port: The egress_port of this Connection.
+        :type egress_port: Port
         """
-        if description is None:
-            raise ValueError(
-                "Invalid value for `description`, must not be `None`"
-            )  # noqa: E501
+        if egress_port is None:
+            raise ValueError("Invalid value for `egress_port`, must not be `None`")  # noqa: E501
 
-        self._description = description
-
-    @property
-    def notifications(self):
-        """Gets the notifications of this Connection.
-
-
-        :return: The notifications of this Connection.
-        :rtype: List[Dict[str, object]]
-        """
-        return self._notifications
-
-    @notifications.setter
-    def notifications(self, notifications):
-        """Sets the notifications of this Connection.
-
-
-        :param notifications: The notifications of this Connection.
-        :type notifications: List[Dict[str, object]]
-        """
-        if notifications is None:
-            raise ValueError(
-                "Invalid value for `notifications`, must not be `None`"
-            )  # noqa: E501
-
-        self._notifications = notifications
-
-    @property
-    def scheduling(self):
-        """Gets the scheduling of this Connection.
-
-
-        :return: The scheduling of this Connection.
-        :rtype: ConnectionScheduling
-        """
-        return self._scheduling
-
-    @scheduling.setter
-    def scheduling(self, scheduling):
-        """Sets the scheduling of this Connection.
-
-
-        :param scheduling: The scheduling of this Connection.
-        :type scheduling: ConnectionScheduling
-        """
-        if scheduling is None:
-            raise ValueError(
-                "Invalid value for `scheduling`, must not be `None`"
-            )  # noqa: E501
-
-        self._scheduling = scheduling
-
-    @property
-    def qos_metrics(self):
-        """Gets the qos_metrics of this Connection.
-
-
-        :return: The qos_metrics of this Connection.
-        :rtype: Dict[str, ConnectionQosMetrics]
-        """
-        return self._qos_metrics
-
-    @qos_metrics.setter
-    def qos_metrics(self, qos_metrics):
-        """Sets the qos_metrics of this Connection.
-
-
-        :param qos_metrics: The qos_metrics of this Connection.
-        :type qos_metrics: Dict[str, ConnectionQosMetrics]
-        """
-        if qos_metrics is None:
-            raise ValueError(
-                "Invalid value for `qos_metrics`, must not be `None`"
-            )  # noqa: E501
-
-        self._qos_metrics = qos_metrics
-
-    @property
-    def paths(self):
-        """Gets the paths of this Connection.
-
-
-        :return: The paths of this Connection.
-        :rtype: List[str]
-        """
-        return self._paths
-
-    @paths.setter
-    def paths(self, paths):
-        """Sets the paths of this Connection.
-
-
-        :param paths: The paths of this Connection.
-        :type paths: List[str]
-        """
-
-        self._paths = paths
-
-    @property
-    def status(self):
-        """Gets the status of this Connection.
-
-        Connection Status  # noqa: E501
-
-        :return: The status of this Connection.
-        :rtype: str
-        """
-        return self._status
-
-    @status.setter
-    def status(self, status):
-        """Sets the status of this Connection.
-
-        Connection Status  # noqa: E501
-
-        :param status: The status of this Connection.
-        :type status: str
-        """
-        allowed_values = ["success", "fail", "scheduled", "provisioining"]  # noqa: E501
-        if status not in allowed_values:
-            raise ValueError(
-                "Invalid value for `status` ({0}), must be one of {1}".format(
-                    status, allowed_values
-                )
-            )
-
-        self._status = status
-
-    @property
-    def complete(self):
-        """Gets the complete of this Connection.
-
-
-        :return: The complete of this Connection.
-        :rtype: bool
-        """
-        return self._complete
-
-    @complete.setter
-    def complete(self, complete):
-        """Sets the complete of this Connection.
-
-
-        :param complete: The complete of this Connection.
-        :type complete: bool
-        """
-
-        self._complete = complete
+        self._egress_port = egress_port
 
     @property
     def quantity(self):
@@ -403,6 +264,48 @@ class Connection(Model):
         """
 
         self._quantity = quantity
+
+    @property
+    def start_time(self):
+        """Gets the start_time of this Connection.
+
+
+        :return: The start_time of this Connection.
+        :rtype: datetime
+        """
+        return self._start_time
+
+    @start_time.setter
+    def start_time(self, start_time):
+        """Sets the start_time of this Connection.
+
+
+        :param start_time: The start_time of this Connection.
+        :type start_time: datetime
+        """
+
+        self._start_time = start_time
+
+    @property
+    def end_time(self):
+        """Gets the end_time of this Connection.
+
+
+        :return: The end_time of this Connection.
+        :rtype: datetime
+        """
+        return self._end_time
+
+    @end_time.setter
+    def end_time(self, end_time):
+        """Sets the end_time of this Connection.
+
+
+        :param end_time: The end_time of this Connection.
+        :type end_time: datetime
+        """
+
+        self._end_time = end_time
 
     @property
     def multi_path(self):
@@ -467,9 +370,8 @@ class Connection(Model):
         allowed_values = ["0", "1", "2", "3"]  # noqa: E501
         if backup_path_type not in allowed_values:
             raise ValueError(
-                "Invalid value for `backup_path_type` ({0}), must be one of {1}".format(
-                    backup_path_type, allowed_values
-                )
+                "Invalid value for `backup_path_type` ({0}), must be one of {1}"
+                .format(backup_path_type, allowed_values)
             )
 
         self._backup_path_type = backup_path_type
@@ -515,3 +417,242 @@ class Connection(Model):
         """
 
         self._inclusive_links = inclusive_links
+
+    @property
+    def bandwidth_required(self):
+        """Gets the bandwidth_required of this Connection.
+
+
+        :return: The bandwidth_required of this Connection.
+        :rtype: float
+        """
+        return self._bandwidth_required
+
+    @bandwidth_required.setter
+    def bandwidth_required(self, bandwidth_required):
+        """Sets the bandwidth_required of this Connection.
+
+
+        :param bandwidth_required: The bandwidth_required of this Connection.
+        :type bandwidth_required: float
+        """
+
+        self._bandwidth_required = bandwidth_required
+
+    @property
+    def bandwidth_measured(self):
+        """Gets the bandwidth_measured of this Connection.
+
+
+        :return: The bandwidth_measured of this Connection.
+        :rtype: float
+        """
+        return self._bandwidth_measured
+
+    @bandwidth_measured.setter
+    def bandwidth_measured(self, bandwidth_measured):
+        """Sets the bandwidth_measured of this Connection.
+
+
+        :param bandwidth_measured: The bandwidth_measured of this Connection.
+        :type bandwidth_measured: float
+        """
+
+        self._bandwidth_measured = bandwidth_measured
+
+    @property
+    def latency_required(self):
+        """Gets the latency_required of this Connection.
+
+
+        :return: The latency_required of this Connection.
+        :rtype: float
+        """
+        return self._latency_required
+
+    @latency_required.setter
+    def latency_required(self, latency_required):
+        """Sets the latency_required of this Connection.
+
+
+        :param latency_required: The latency_required of this Connection.
+        :type latency_required: float
+        """
+
+        self._latency_required = latency_required
+
+    @property
+    def latency_measured(self):
+        """Gets the latency_measured of this Connection.
+
+
+        :return: The latency_measured of this Connection.
+        :rtype: float
+        """
+        return self._latency_measured
+
+    @latency_measured.setter
+    def latency_measured(self, latency_measured):
+        """Sets the latency_measured of this Connection.
+
+
+        :param latency_measured: The latency_measured of this Connection.
+        :type latency_measured: float
+        """
+
+        self._latency_measured = latency_measured
+
+    @property
+    def packetloss_required(self):
+        """Gets the packetloss_required of this Connection.
+
+
+        :return: The packetloss_required of this Connection.
+        :rtype: float
+        """
+        return self._packetloss_required
+
+    @packetloss_required.setter
+    def packetloss_required(self, packetloss_required):
+        """Sets the packetloss_required of this Connection.
+
+
+        :param packetloss_required: The packetloss_required of this Connection.
+        :type packetloss_required: float
+        """
+
+        self._packetloss_required = packetloss_required
+
+    @property
+    def packetloss_measured(self):
+        """Gets the packetloss_measured of this Connection.
+
+
+        :return: The packetloss_measured of this Connection.
+        :rtype: float
+        """
+        return self._packetloss_measured
+
+    @packetloss_measured.setter
+    def packetloss_measured(self, packetloss_measured):
+        """Sets the packetloss_measured of this Connection.
+
+
+        :param packetloss_measured: The packetloss_measured of this Connection.
+        :type packetloss_measured: float
+        """
+
+        self._packetloss_measured = packetloss_measured
+
+    @property
+    def availability_required(self):
+        """Gets the availability_required of this Connection.
+
+
+        :return: The availability_required of this Connection.
+        :rtype: float
+        """
+        return self._availability_required
+
+    @availability_required.setter
+    def availability_required(self, availability_required):
+        """Sets the availability_required of this Connection.
+
+
+        :param availability_required: The availability_required of this Connection.
+        :type availability_required: float
+        """
+
+        self._availability_required = availability_required
+
+    @property
+    def availability_measured(self):
+        """Gets the availability_measured of this Connection.
+
+
+        :return: The availability_measured of this Connection.
+        :rtype: float
+        """
+        return self._availability_measured
+
+    @availability_measured.setter
+    def availability_measured(self, availability_measured):
+        """Sets the availability_measured of this Connection.
+
+
+        :param availability_measured: The availability_measured of this Connection.
+        :type availability_measured: float
+        """
+
+        self._availability_measured = availability_measured
+
+    @property
+    def paths(self):
+        """Gets the paths of this Connection.
+
+
+        :return: The paths of this Connection.
+        :rtype: List[str]
+        """
+        return self._paths
+
+    @paths.setter
+    def paths(self, paths):
+        """Sets the paths of this Connection.
+
+
+        :param paths: The paths of this Connection.
+        :type paths: List[str]
+        """
+
+        self._paths = paths
+
+    @property
+    def status(self):
+        """Gets the status of this Connection.
+
+        Connection Status  # noqa: E501
+
+        :return: The status of this Connection.
+        :rtype: str
+        """
+        return self._status
+
+    @status.setter
+    def status(self, status):
+        """Sets the status of this Connection.
+
+        Connection Status  # noqa: E501
+
+        :param status: The status of this Connection.
+        :type status: str
+        """
+        allowed_values = ["success", "fail", "scheduled", "provisioining"]  # noqa: E501
+        if status not in allowed_values:
+            raise ValueError(
+                "Invalid value for `status` ({0}), must be one of {1}"
+                .format(status, allowed_values)
+            )
+
+        self._status = status
+
+    @property
+    def complete(self):
+        """Gets the complete of this Connection.
+
+
+        :return: The complete of this Connection.
+        :rtype: bool
+        """
+        return self._complete
+
+    @complete.setter
+    def complete(self, complete):
+        """Sets the complete of this Connection.
+
+
+        :param complete: The complete of this Connection.
+        :type complete: bool
+        """
+
+        self._complete = complete
