@@ -7,7 +7,7 @@ import datetime
 from flask import json
 from six import BytesIO
 
-from sdx_lc.models.connection_v1 import Connection  # noqa: E501
+from sdx_lc.models.connection import Connection  # noqa: E501
 from sdx_lc.models.port import Port
 from sdx_lc.test import BaseTestCase
 
