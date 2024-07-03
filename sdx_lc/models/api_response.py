@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from sdx_lc.models.base_model_ import Model
 from sdx_lc import util
+from sdx_lc.models.base_model_ import Model
 
 
 class ApiResponse(Model):
@@ -14,6 +14,7 @@ class ApiResponse(Model):
 
     Do not edit the class manually.
     """
+
     def __init__(self, code=None, type=None, message=None):  # noqa: E501
         """ApiResponse - a model defined in Swagger
 
@@ -24,17 +25,9 @@ class ApiResponse(Model):
         :param message: The message of this ApiResponse.  # noqa: E501
         :type message: str
         """
-        self.swagger_types = {
-            'code': int,
-            'type': str,
-            'message': str
-        }
+        self.swagger_types = {"code": int, "type": str, "message": str}
 
-        self.attribute_map = {
-            'code': 'code',
-            'type': 'type',
-            'message': 'message'
-        }
+        self.attribute_map = {"code": "code", "type": "type", "message": "message"}
         self._code = code
         self._type = type
         self._message = message

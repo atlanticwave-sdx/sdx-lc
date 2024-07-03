@@ -1,16 +1,16 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from sdx_lc import util
 from sdx_lc.models.base_model_ import Model
 from sdx_lc.models.connection_qos_metrics import ConnectionQosMetrics  # noqa: F401,E501
 from sdx_lc.models.connection_scheduling import ConnectionScheduling  # noqa: F401,E501
 from sdx_lc.models.link import Link  # noqa: F401,E501
 from sdx_lc.models.port import Port  # noqa: F401,E501
-from sdx_lc import util
 
 
 class Connection(Model):
@@ -18,7 +18,26 @@ class Connection(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, id=None, name=None, endpoints=None, description=None, notifications=None, scheduling=None, qos_metrics=None, paths=None, status=None, complete=False, quantity=None, multi_path=None, preempt=None, backup_path_type=None, exclusive_links=None, inclusive_links=None):  # noqa: E501
+
+    def __init__(
+        self,
+        id=None,
+        name=None,
+        endpoints=None,
+        description=None,
+        notifications=None,
+        scheduling=None,
+        qos_metrics=None,
+        paths=None,
+        status=None,
+        complete=False,
+        quantity=None,
+        multi_path=None,
+        preempt=None,
+        backup_path_type=None,
+        exclusive_links=None,
+        inclusive_links=None,
+    ):  # noqa: E501
         """Connection - a model defined in Swagger
 
         :param id: The id of this Connection.  # noqa: E501
@@ -55,41 +74,41 @@ class Connection(Model):
         :type inclusive_links: List[Link]
         """
         self.swagger_types = {
-            'id': str,
-            'name': str,
-            'endpoints': List[Port],
-            'description': str,
-            'notifications': List[Dict[str, object]],
-            'scheduling': ConnectionScheduling,
-            'qos_metrics': Dict[str, ConnectionQosMetrics],
-            'paths': List[str],
-            'status': str,
-            'complete': bool,
-            'quantity': int,
-            'multi_path': bool,
-            'preempt': bool,
-            'backup_path_type': str,
-            'exclusive_links': List[Link],
-            'inclusive_links': List[Link]
+            "id": str,
+            "name": str,
+            "endpoints": List[Port],
+            "description": str,
+            "notifications": List[Dict[str, object]],
+            "scheduling": ConnectionScheduling,
+            "qos_metrics": Dict[str, ConnectionQosMetrics],
+            "paths": List[str],
+            "status": str,
+            "complete": bool,
+            "quantity": int,
+            "multi_path": bool,
+            "preempt": bool,
+            "backup_path_type": str,
+            "exclusive_links": List[Link],
+            "inclusive_links": List[Link],
         }
 
         self.attribute_map = {
-            'id': 'id',
-            'name': 'name',
-            'endpoints': 'endpoints',
-            'description': 'description',
-            'notifications': 'notifications',
-            'scheduling': 'scheduling',
-            'qos_metrics': 'qos_metrics',
-            'paths': 'paths',
-            'status': 'status',
-            'complete': 'complete',
-            'quantity': 'quantity',
-            'multi_path': 'multi_path',
-            'preempt': 'preempt',
-            'backup_path_type': 'backup_path_type',
-            'exclusive_links': 'exclusive_links',
-            'inclusive_links': 'inclusive_links'
+            "id": "id",
+            "name": "name",
+            "endpoints": "endpoints",
+            "description": "description",
+            "notifications": "notifications",
+            "scheduling": "scheduling",
+            "qos_metrics": "qos_metrics",
+            "paths": "paths",
+            "status": "status",
+            "complete": "complete",
+            "quantity": "quantity",
+            "multi_path": "multi_path",
+            "preempt": "preempt",
+            "backup_path_type": "backup_path_type",
+            "exclusive_links": "exclusive_links",
+            "inclusive_links": "inclusive_links",
         }
         self._id = id
         self._name = name
@@ -161,7 +180,9 @@ class Connection(Model):
         :type name: str
         """
         if name is None:
-            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `name`, must not be `None`"
+            )  # noqa: E501
 
         self._name = name
 
@@ -184,7 +205,9 @@ class Connection(Model):
         :type endpoints: List[Port]
         """
         if endpoints is None:
-            raise ValueError("Invalid value for `endpoints`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `endpoints`, must not be `None`"
+            )  # noqa: E501
 
         self._endpoints = endpoints
 
@@ -207,7 +230,9 @@ class Connection(Model):
         :type description: str
         """
         if description is None:
-            raise ValueError("Invalid value for `description`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `description`, must not be `None`"
+            )  # noqa: E501
 
         self._description = description
 
@@ -230,7 +255,9 @@ class Connection(Model):
         :type notifications: List[Dict[str, object]]
         """
         if notifications is None:
-            raise ValueError("Invalid value for `notifications`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `notifications`, must not be `None`"
+            )  # noqa: E501
 
         self._notifications = notifications
 
@@ -253,7 +280,9 @@ class Connection(Model):
         :type scheduling: ConnectionScheduling
         """
         if scheduling is None:
-            raise ValueError("Invalid value for `scheduling`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `scheduling`, must not be `None`"
+            )  # noqa: E501
 
         self._scheduling = scheduling
 
@@ -276,7 +305,9 @@ class Connection(Model):
         :type qos_metrics: Dict[str, ConnectionQosMetrics]
         """
         if qos_metrics is None:
-            raise ValueError("Invalid value for `qos_metrics`, must not be `None`")  # noqa: E501
+            raise ValueError(
+                "Invalid value for `qos_metrics`, must not be `None`"
+            )  # noqa: E501
 
         self._qos_metrics = qos_metrics
 
@@ -324,8 +355,9 @@ class Connection(Model):
         allowed_values = ["success", "fail", "scheduled", "provisioining"]  # noqa: E501
         if status not in allowed_values:
             raise ValueError(
-                "Invalid value for `status` ({0}), must be one of {1}"
-                .format(status, allowed_values)
+                "Invalid value for `status` ({0}), must be one of {1}".format(
+                    status, allowed_values
+                )
             )
 
         self._status = status
@@ -435,8 +467,9 @@ class Connection(Model):
         allowed_values = ["0", "1", "2", "3"]  # noqa: E501
         if backup_path_type not in allowed_values:
             raise ValueError(
-                "Invalid value for `backup_path_type` ({0}), must be one of {1}"
-                .format(backup_path_type, allowed_values)
+                "Invalid value for `backup_path_type` ({0}), must be one of {1}".format(
+                    backup_path_type, allowed_values
+                )
             )
 
         self._backup_path_type = backup_path_type

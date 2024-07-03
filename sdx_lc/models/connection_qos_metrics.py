@@ -1,13 +1,13 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
+from sdx_lc import util
 from sdx_lc.models.base_model_ import Model
 from sdx_lc.models.connection_qos_unit import ConnectionQosUnit  # noqa: F401,E501
-from sdx_lc import util
 
 
 class ConnectionQosMetrics(Model):
@@ -15,7 +15,19 @@ class ConnectionQosMetrics(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, min_bw=None, max_delay=None, max_number_oxps=None, bandwidth_measured=None, latency_measured=None, packetloss_required=None, packetloss_measured=None, availability_required=None, availability_measured=None):  # noqa: E501
+
+    def __init__(
+        self,
+        min_bw=None,
+        max_delay=None,
+        max_number_oxps=None,
+        bandwidth_measured=None,
+        latency_measured=None,
+        packetloss_required=None,
+        packetloss_measured=None,
+        availability_required=None,
+        availability_measured=None,
+    ):  # noqa: E501
         """ConnectionQosMetrics - a model defined in Swagger
 
         :param min_bw: The min_bw of this ConnectionQosMetrics.  # noqa: E501
@@ -38,27 +50,27 @@ class ConnectionQosMetrics(Model):
         :type availability_measured: float
         """
         self.swagger_types = {
-            'min_bw': ConnectionQosUnit,
-            'max_delay': ConnectionQosUnit,
-            'max_number_oxps': ConnectionQosUnit,
-            'bandwidth_measured': float,
-            'latency_measured': float,
-            'packetloss_required': float,
-            'packetloss_measured': float,
-            'availability_required': float,
-            'availability_measured': float
+            "min_bw": ConnectionQosUnit,
+            "max_delay": ConnectionQosUnit,
+            "max_number_oxps": ConnectionQosUnit,
+            "bandwidth_measured": float,
+            "latency_measured": float,
+            "packetloss_required": float,
+            "packetloss_measured": float,
+            "availability_required": float,
+            "availability_measured": float,
         }
 
         self.attribute_map = {
-            'min_bw': 'min_bw',
-            'max_delay': 'max_delay',
-            'max_number_oxps': 'max_number_oxps',
-            'bandwidth_measured': 'bandwidth_measured',
-            'latency_measured': 'latency_measured',
-            'packetloss_required': 'packetloss_required',
-            'packetloss_measured': 'packetloss_measured',
-            'availability_required': 'availability_required',
-            'availability_measured': 'availability_measured'
+            "min_bw": "min_bw",
+            "max_delay": "max_delay",
+            "max_number_oxps": "max_number_oxps",
+            "bandwidth_measured": "bandwidth_measured",
+            "latency_measured": "latency_measured",
+            "packetloss_required": "packetloss_required",
+            "packetloss_measured": "packetloss_measured",
+            "availability_required": "availability_required",
+            "availability_measured": "availability_measured",
         }
         self._min_bw = min_bw
         self._max_delay = max_delay

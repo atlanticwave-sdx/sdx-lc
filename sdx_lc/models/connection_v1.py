@@ -197,9 +197,7 @@ class Connection(Model):
         :type id: str
         """
         if id is None:
-            raise ValueError(
-                "Invalid value for `id`, must not be `None`"
-            )  # noqa: E501
+            raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
         self._id = id
 
@@ -262,15 +260,11 @@ class Connection(Model):
         :type: Port
         """
         if ingress_port is None:
-            raise ValueError(
-                "Invalid value for `ingress_port`: must not be `None`"
-            )
+            raise ValueError("Invalid value for `ingress_port`: must not be `None`")
 
         # TODO: use tooling (mypy, pytypes, etc) to enforce types.
         if not isinstance(ingress_port, Port):
-            raise TypeError(
-                "Invalid type for `ingress_port`: must be of type `Port`"
-            )
+            raise TypeError("Invalid type for `ingress_port`: must be of type `Port`")
 
         self._ingress_port = ingress_port
         return self._ingress_port
@@ -309,15 +303,11 @@ class Connection(Model):
         :type: Port
         """
         if egress_port is None:
-            raise ValueError(
-                "Invalid value for `egress_port`: must not be `None`"
-            )
+            raise ValueError("Invalid value for `egress_port`: must not be `None`")
 
         # TODO: use tooling (mypy, pytypes, etc) to enforce types.
         if not isinstance(egress_port, Port):
-            raise TypeError(
-                "Invalid type for `egress_port`, must be of type `Port`"
-            )
+            raise TypeError("Invalid type for `egress_port`, must be of type `Port`")
 
         self._egress_port = egress_port
         return self._egress_port

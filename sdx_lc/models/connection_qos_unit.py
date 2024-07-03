@@ -1,12 +1,12 @@
 # coding: utf-8
 
 from __future__ import absolute_import
+
 from datetime import date, datetime  # noqa: F401
+from typing import Dict, List  # noqa: F401
 
-from typing import List, Dict  # noqa: F401
-
-from sdx_lc.models.base_model_ import Model
 from sdx_lc import util
+from sdx_lc.models.base_model_ import Model
 
 
 class ConnectionQosUnit(Model):
@@ -14,6 +14,7 @@ class ConnectionQosUnit(Model):
 
     Do not edit the class manually.
     """
+
     def __init__(self, value=None, strict=None):  # noqa: E501
         """ConnectionQosUnit - a model defined in Swagger
 
@@ -22,15 +23,9 @@ class ConnectionQosUnit(Model):
         :param strict: The strict of this ConnectionQosUnit.  # noqa: E501
         :type strict: bool
         """
-        self.swagger_types = {
-            'value': int,
-            'strict': bool
-        }
+        self.swagger_types = {"value": int, "strict": bool}
 
-        self.attribute_map = {
-            'value': 'value',
-            'strict': 'strict'
-        }
+        self.attribute_map = {"value": "value", "strict": "strict"}
         self._value = value
         self._strict = strict
 
