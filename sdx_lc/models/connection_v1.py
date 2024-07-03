@@ -5,10 +5,10 @@ from __future__ import absolute_import
 from datetime import date, datetime  # noqa: F401
 from typing import Dict, List  # noqa: F401
 
-from sdx_datamodel import util
-from sdx_datamodel.models.base_model_ import Model
-from sdx_datamodel.models.link import Link  # noqa: F401,E501
-from sdx_datamodel.models.port import Port  # noqa: F401,E501
+from sdx_lc import util
+from sdx_lc.models.base_model_ import Model
+from sdx_lc.models.link import Link  # noqa: F401,E501
+from sdx_lc.models.port import Port  # noqa: F401,E501
 
 
 class Connection(Model):
