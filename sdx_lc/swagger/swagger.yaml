@@ -662,7 +662,12 @@ components:
         endpoints:
           type: array
           items:
-            $ref: '#/components/schemas/port'
+            type: object
+            properties:
+              port_id:
+                type: string
+              vlan:
+                type: string
         description:
           type: string
         notifications:
