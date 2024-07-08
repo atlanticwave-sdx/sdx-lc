@@ -3,7 +3,7 @@ import unittest
 
 from sdx_lc.models.connection_qos_metrics import ConnectionQosMetrics
 from sdx_lc.models.connection_scheduling import ConnectionScheduling
-from sdx_lc.models.connection_v2 import Connection
+from sdx_lc.models.connection_v2 import ConnectionV2 as Connection
 from sdx_lc.models.link import Link
 from sdx_lc.models.port import Port
 
