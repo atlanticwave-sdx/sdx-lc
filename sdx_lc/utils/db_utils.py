@@ -11,7 +11,7 @@ def obfuscate_password_in_uri(uri: str) -> str:
     """
     parts = urlparse(uri)
     if parts.password:
-        return f"{parts.scheme}://{parts.username}:*@{parts.hostname}:{parts.port}/"
+        return uri.replace(parts.password, "*")
     else:
         return uri
 
