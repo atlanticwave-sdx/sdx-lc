@@ -1,16 +1,31 @@
 import logging
 import os
+from urllib.parse import urlparse
 
 import pymongo
 
-DB_NAME = os.environ.get("DB_NAME")
-DB_CONFIG_TABLE_NAME = os.environ.get("DB_CONFIG_TABLE_NAME")
+
+def obfuscate_password_in_uri(uri: str) -> str:
+    """
+    Replace password field in URIs with a `*`, for logging.
+    """
+    parts = urlparse(uri)
+    if parts.password:
+        return uri.replace(parts.password, "*")
+    else:
+        return uri
 
 
 class DbUtils(object):
     def __init__(self):
-        self.db_name = DB_NAME
-        self.config_table_name = DB_CONFIG_TABLE_NAME
+        self.db_name = os.getenv("DB_NAME")
+        self.config_table_name = os.getenv("DB_CONFIG_TABLE_NAME")
+
+        if not self.db_name:
+            raise Exception("DB_NAME environment variable is not set")
+
+        if not self.config_table_name:
+            raise Exception("DB_CONFIG_TABLE_NAME environment variable is not set")
 
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(logging.DEBUG)
@@ -18,22 +33,19 @@ class DbUtils(object):
         mongo_user = os.getenv("MONGO_USER") or "guest"
         mongo_pass = os.getenv("MONGO_PASS") or "guest"
         mongo_host = os.getenv("MONGO_HOST")
-        mongo_port = os.getenv("MONGO_PORT")
+        mongo_port = os.getenv("MONGO_PORT") or 27017
 
         if mongo_host is None:
-            raise Exception("MONGO_HOST environment variable is not set")
-
-        if mongo_port is None:
-            raise Exception("MONGO_PORT environment variable is not set")
-
-        mongo_connstring = (
-            f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
-        )
+            mongo_connstring = os.getenv("MONGODB_CONNSTRING")
+            if mongo_connstring is None:
+                raise Exception("Neither MONGO_HOST nor MONGODB_CONNSTRING is set")
+        else:
+            mongo_connstring = (
+                f"mongodb://{mongo_user}:{mongo_pass}@{mongo_host}:{mongo_port}/"
+            )
 
         # Log DB URI, without a password.
-        self.logger.info(
-            f"[DB] Using mongodb://{mongo_user}@{mongo_host}:{mongo_port}/"
-        )
+        self.logger.info(f"[DB] Using {obfuscate_password_in_uri(mongo_connstring)}")
 
         self.mongo_client = pymongo.MongoClient(mongo_connstring)
 
