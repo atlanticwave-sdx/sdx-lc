@@ -29,6 +29,7 @@ class TestNodeController(BaseTestCase):
             status="up",
             state="enabled",
             type="100GE",
+            private=None,
         )
     ]
 

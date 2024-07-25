@@ -49,7 +49,6 @@ class TestConnectionController(BaseTestCase):
             label_range=None,
             status="unknown",
             state="unknown",
-            private_attributes=None,
         )
 
         egress_port = Port(
@@ -59,7 +58,6 @@ class TestConnectionController(BaseTestCase):
             label_range=None,
             status="unknown",
             state="unknown",
-            private_attributes=None,
         )
 
         body = Connection(

@@ -32,7 +32,7 @@ class Link(Model):
         availability=None,
         status=None,
         state=None,
-        private_attributes=None,
+        private=None,
         timestamp=None,
         measurement_period=None,
     ):  # noqa: E501
@@ -60,8 +60,8 @@ class Link(Model):
         :type status: str
         :param state: The state of this Link.  # noqa: E501
         :type state: str
-        :param private_attributes: The private_attributes of this Link.  # noqa: E501
-        :type private_attributes: List[str]
+        :param private: The private attributes of this Link.  # noqa: E501
+        :type private: List[str]
         :param timestamp: The timestamp of this Link.  # noqa: E501
         :type timestamp: datetime
         :param measurement_period: The measurement_period of this Link.  # noqa: E501
@@ -79,7 +79,7 @@ class Link(Model):
             "availability": float,
             "status": str,
             "state": str,
-            "private_attributes": List[str],
+            "private": List[str],
             "timestamp": datetime,
             "measurement_period": LinkMeasurementPeriod,
         }
@@ -96,7 +96,7 @@ class Link(Model):
             "availability": "availability",
             "status": "status",
             "state": "state",
-            "private_attributes": "private_attributes",
+            "private": "private",
             "timestamp": "timestamp",
             "measurement_period": "measurement_period",
         }
@@ -111,7 +111,7 @@ class Link(Model):
         self._availability = availability
         self._status = status
         self._state = state
-        self._private_attributes = private_attributes
+        self._private = private
         self._timestamp = timestamp
         self._measurement_period = measurement_period
 
@@ -368,25 +368,25 @@ class Link(Model):
         self._state = state
 
     @property
-    def private_attributes(self):
-        """Gets the private_attributes of this Link.
+    def private(self):
+        """Gets the private attributes of this Link.
 
 
-        :return: The private_attributes of this Link.
+        :return: The private attributes of this Link.
         :rtype: List[str]
         """
-        return self._private_attributes
+        return self._private
 
-    @private_attributes.setter
-    def private_attributes(self, private_attributes):
-        """Sets the private_attributes of this Link.
+    @private.setter
+    def private(self, private):
+        """Sets the private attributes of this Link.
 
 
-        :param private_attributes: The private_attributes of this Link.
-        :type private_attributes: List[str]
+        :param private: The private attributes of this Link.
+        :type private: List[str]
         """
 
-        self._private_attributes = private_attributes
+        self._private = private
 
     @property
     def timestamp(self):

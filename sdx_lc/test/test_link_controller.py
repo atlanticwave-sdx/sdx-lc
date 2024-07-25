@@ -85,6 +85,7 @@ class TestLinkController(BaseTestCase):
             availability=0.0,
             status="down",
             state="enabled",
+            private=list(),
             measurement_period=None,
         )
         response = self.client.open(

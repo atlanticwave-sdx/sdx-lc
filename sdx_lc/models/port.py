@@ -29,7 +29,7 @@ class Port(Model):
         type=None,
         mtu=None,
         services=None,
-        private_attributes=None,
+        private=None,
     ):  # noqa: E501
         """Port - a model defined in Swagger
 
@@ -55,8 +55,8 @@ class Port(Model):
         :type mtu: int
         :param services: The services of this Port.  # noqa: E501
         :type services: Service
-        :param private_attributes: The private_attributes of this Port.  # noqa: E501
-        :type private_attributes: List[str]
+        :param private: The private of this Port.  # noqa: E501
+        :type private: List[str]
         """
         self.swagger_types = {
             "id": str,
@@ -70,7 +70,7 @@ class Port(Model):
             "type": str,
             "mtu": int,
             "services": Service,
-            "private_attributes": List[str],
+            "private": List[str],
         }
 
         self.attribute_map = {
@@ -85,7 +85,7 @@ class Port(Model):
             "type": "type",
             "mtu": "mtu",
             "services": "services",
-            "private_attributes": "private_attributes",
+            "private": "private",
         }
         self._id = id
         self._name = name
@@ -98,7 +98,7 @@ class Port(Model):
         self._type = type
         self._mtu = mtu
         self._services = services
-        self._private_attributes = private_attributes
+        self._private = private
 
     @classmethod
     def from_dict(cls, dikt):
@@ -357,22 +357,22 @@ class Port(Model):
         self._services = services
 
     @property
-    def private_attributes(self):
-        """Gets the private_attributes of this Port.
+    def private(self):
+        """Gets the private of this Port.
 
 
-        :return: The private_attributes of this Port.
+        :return: The private of this Port.
         :rtype: List[str]
         """
-        return self._private_attributes
+        return self._private
 
-    @private_attributes.setter
-    def private_attributes(self, private_attributes):
-        """Sets the private_attributes of this Port.
+    @private.setter
+    def private(self, private):
+        """Sets the private of this Port.
 
 
-        :param private_attributes: The private_attributes of this Port.
-        :type private_attributes: List[str]
+        :param private: The private of this Port.
+        :type private: List[str]
         """
 
-        self._private_attributes = private_attributes
+        self._private = private
