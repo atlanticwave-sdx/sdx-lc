@@ -762,9 +762,9 @@ components:
         name:
           type: string
         ingress_port:
-          $ref: '#/components/schemas/port'
+          $ref: '#/components/schemas/connection_port'
         egress_port:
-          $ref: '#/components/schemas/port'
+          $ref: '#/components/schemas/connection_port'
         quantity:
           type: integer
           format: int32
@@ -865,6 +865,57 @@ components:
           status: up
       xml:
         name: Connection
+    connection_port:
+      required:
+      - id
+      - name
+      - node
+      - status
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: urn:sdx:port:amlight.net:Novi06:9
+        short_name:
+          type: string
+          example: "9"
+        node:
+          type: string
+          example: urn:sdx:port:amlight.net:Novi06
+        label_range:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          example: up
+        state:
+          type: string
+          example: enabled
+        nni:
+          type: string
+          example: urn:sdx:link:amlight.net:Novi03/2_s3/s3-eth2
+        services:
+          $ref: '#/components/schemas/service'
+        private_attributes:
+          type: array
+          items:
+            type: string
+      example:
+        node: urn:sdx:port:amlight.net:Novi06
+        name: urn:sdx:port:amlight.net:Novi06:9
+        short_name: "9"
+        id: id
+        status: up
+        services:
+          l2vpn-ptp:
+            vlan_range:
+            - 1000
+            - 2000
+      xml:
+        name: port
     User:
       type: object
       properties:

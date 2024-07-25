@@ -20,19 +20,19 @@ class TestLinkController(BaseTestCase):
         add a new link to the topology
         """
         body = Link(
-            id="test_add_link_id",
+            id="urn:sdx:link:test.net:test_add_link_name",
             name="test_add_link_name",
-            short_name="test_add_link_short_name",
-            ports=list(),
+            ports=[
+                "urn:sdx:port:test.net:test1:1",
+                "urn:sdx:port:test.net:test2:2",
+            ],
             bandwidth=1.0,
             residual_bandwidth=1.0,
             latency=1.0,
             packet_loss=0.0,
             availability=0.0,
-            status="unknown",
-            state="unknown",
-            private_attributes=list(),
-            timestamp=datetime.datetime.fromtimestamp(0),
+            status="up",
+            state="enabled",
             measurement_period=None,
         )
         response = self.client.open(
@@ -72,19 +72,19 @@ class TestLinkController(BaseTestCase):
         Update an existing link
         """
         body = Link(
-            id="test_update_link_id",
+            id="urn:sdx:link:test.net:test_update_link_name",
             name="test_update_link_name",
-            short_name="test_update_link_short_name",
-            ports=list(),
+            ports=[
+                "urn:sdx:port:test.net:test1:1",
+                "urn:sdx:port:test.net:test2:2",
+            ],
             bandwidth=1.0,
             residual_bandwidth=1.0,
             latency=1.0,
             packet_loss=0.0,
             availability=0.0,
-            status="unknown",
-            state="unknown",
-            private_attributes=list(),
-            timestamp=datetime.datetime.fromtimestamp(0),
+            status="down",
+            state="enabled",
             measurement_period=None,
         )
         response = self.client.open(

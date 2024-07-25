@@ -23,54 +23,84 @@ class TestTopologyController(BaseTestCase):
         address="unknown",
         latitude=0.0,
         longitude=0.0,
+        iso3166_2_lvl4="US-FL",
     )
 
     __ports = [
         Port(
-            id="test_topology_port_id",
+            id="urn:sdx:port:example.net:test1:1",
             name="test_topology_port_name",
-            short_name="test_topology_port_short_name",
-            node="test_topology_id",
-            label_range=None,
-            status="unknown",
-            state="unknown",
-            private_attributes=None,
-        )
+            node="urn:sdx:node:example.net:test1",
+            nni="urn:sdx:link:example.net:test1/1_test1/2",
+            status="up",
+            state="enabled",
+            type="100GE",
+            mtu=9000,
+        ),
+        Port(
+            id="urn:sdx:port:example.net:test1:2",
+            name="test_topology_port_name2",
+            node="urn:sdx:node:example.net:test1",
+            nni="urn:sdx:link:example.net:test1/1_test1/2",
+            status="up",
+            state="enabled",
+            type="100GE",
+            mtu=9000,
+        ),
+        Port(
+            id="urn:sdx:port:example.net:test1:3",
+            name="test_topology_port_name3",
+            node="urn:sdx:node:example.net:test1",
+            nni="",
+            status="up",
+            state="enabled",
+            type="100GE",
+            mtu=9000,
+        ),
+        Port(
+            id="urn:sdx:port:example.net:test1:4",
+            name="test_topology_port_name4",
+            node="urn:sdx:node:example.net:test1",
+            nni="urn:sdx:port:otheroxp.net:other_sw:99",
+            status="up",
+            state="enabled",
+            type="100GE",
+            mtu=9000,
+        ),
     ]
 
     __nodes = [
         Node(
-            id="test_topology_node_id",
+            id="urn:sdx:node:example.net:test1",
             name="test_topology_node_name",
-            short_name="test_topology_node_short_name",
             location=__location,
             ports=__ports,
-            private_attributes=None,
         )
     ]
 
     __links = [
         Link(
-            id="test_topology_link_id",
+            id="urn:sdx:link:example.net:test1/1_test1/2",
             name="test_topology_link_name",
-            short_name="test_topology_link_short_name",
-            ports=list(),
+            ports=[
+                "urn:sdx:port:example.net:test1:1",
+                "urn:sdx:port:example.net:test1:2",
+            ],
             bandwidth=1.0,
             residual_bandwidth=1.0,
             latency=1.0,
             packet_loss=0.0,
             availability=0.0,
-            status="unknown",
-            state="unknown",
-            private_attributes=list(),
-            timestamp=datetime.datetime.fromtimestamp(0),
+            status="error",
+            state="maintenance",
             measurement_period=None,
         )
     ]
 
     __topology = Topology(
-        id="test:topology:example.net",
+        id="urn:sdx:topology:example.net",
         name="test_topology_name",
+        model_version="2.0.0",
         services=None,
         version=0,
         timestamp=datetime.datetime.fromtimestamp(0),
