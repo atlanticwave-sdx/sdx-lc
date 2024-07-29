@@ -24,7 +24,6 @@ class Node(Model):
         short_name=None,
         location=None,
         ports=None,
-        private_attributes=None,
     ):  # noqa: E501
         """Node - a model defined in Swagger
 
@@ -38,8 +37,6 @@ class Node(Model):
         :type location: Location
         :param ports: The ports of this Node.  # noqa: E501
         :type ports: List[Port]
-        :param private_attributes: The private_attributes of this Node.  # noqa: E501
-        :type private_attributes: List[str]
         """
         self.swagger_types = {
             "id": str,
@@ -47,7 +44,6 @@ class Node(Model):
             "short_name": str,
             "location": Location,
             "ports": List[Port],
-            "private_attributes": List[str],
         }
 
         self.attribute_map = {
@@ -56,14 +52,12 @@ class Node(Model):
             "short_name": "short_name",
             "location": "location",
             "ports": "ports",
-            "private_attributes": "private_attributes",
         }
         self._id = id
         self._name = name
         self._short_name = short_name
         self._location = location
         self._ports = ports
-        self._private_attributes = private_attributes
 
     @classmethod
     def from_dict(cls, dikt):
@@ -194,24 +188,3 @@ class Node(Model):
             )  # noqa: E501
 
         self._ports = ports
-
-    @property
-    def private_attributes(self):
-        """Gets the private_attributes of this Node.
-
-
-        :return: The private_attributes of this Node.
-        :rtype: List[str]
-        """
-        return self._private_attributes
-
-    @private_attributes.setter
-    def private_attributes(self, private_attributes):
-        """Sets the private_attributes of this Node.
-
-
-        :param private_attributes: The private_attributes of this Node.
-        :type private_attributes: List[str]
-        """
-
-        self._private_attributes = private_attributes

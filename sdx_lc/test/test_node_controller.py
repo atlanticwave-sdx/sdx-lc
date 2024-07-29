@@ -18,28 +18,26 @@ class TestNodeController(BaseTestCase):
         address="unknown",
         latitude=0.0,
         longitude=0.0,
+        iso3166_2_lvl4="US-FL",
     )
 
     __ports = [
         Port(
-            id="test_node_port_id",
+            id="urn:sdx:port:test.net:test1:1",
             name="test_node_port_name",
-            short_name="test_node_port_short_name",
-            node="test_node_id",
-            label_range=None,
-            status="unknown",
-            state="unknown",
-            private_attributes=None,
+            node="urn:sdx:node:test.net:test1",
+            status="up",
+            state="enabled",
+            type="100GE",
+            private=None,
         )
     ]
 
     __node = Node(
-        id="test_node_id",
+        id="urn:sdx:node:test.net:test1",
         name="test_node_name",
-        short_name="test_node_short_name",
         location=__location,
         ports=__ports,
-        private_attributes=None,
     )
 
     def test_add_node(self):
@@ -87,6 +85,7 @@ class TestNodeController(BaseTestCase):
             address="unknown",
             latitude=0.0,
             longitude=0.0,
+            iso3166_2_lvl4="US-FL",
         )
         response = self.client.open(
             "/SDX-LC/2.0.0/node",

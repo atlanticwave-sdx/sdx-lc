@@ -26,8 +26,10 @@ class Port(Model):
         status=None,
         state=None,
         nni=None,
+        type=None,
+        mtu=None,
         services=None,
-        private_attributes=None,
+        private=None,
     ):  # noqa: E501
         """Port - a model defined in Swagger
 
@@ -47,10 +49,14 @@ class Port(Model):
         :type state: str
         :param nni: The nni of this Port.  # noqa: E501
         :type nni: str
+        :param type: Technology and bandwidth of this physical Port.  # noqa: E501
+        :type type: str
+        :param mtu: The Maximum Transmission Unit of this Port.  # noqa: E501
+        :type mtu: int
         :param services: The services of this Port.  # noqa: E501
         :type services: Service
-        :param private_attributes: The private_attributes of this Port.  # noqa: E501
-        :type private_attributes: List[str]
+        :param private: The private attributes of this Port.  # noqa: E501
+        :type private: List[str]
         """
         self.swagger_types = {
             "id": str,
@@ -61,8 +67,10 @@ class Port(Model):
             "status": str,
             "state": str,
             "nni": str,
+            "type": str,
+            "mtu": int,
             "services": Service,
-            "private_attributes": List[str],
+            "private": List[str],
         }
 
         self.attribute_map = {
@@ -74,8 +82,10 @@ class Port(Model):
             "status": "status",
             "state": "state",
             "nni": "nni",
+            "type": "type",
+            "mtu": "mtu",
             "services": "services",
-            "private_attributes": "private_attributes",
+            "private": "private",
         }
         self._id = id
         self._name = name
@@ -85,8 +95,10 @@ class Port(Model):
         self._status = status
         self._state = state
         self._nni = nni
+        self._type = type
+        self._mtu = mtu
         self._services = services
-        self._private_attributes = private_attributes
+        self._private = private
 
     @classmethod
     def from_dict(cls, dikt):
@@ -282,6 +294,48 @@ class Port(Model):
         self._nni = nni
 
     @property
+    def type(self):
+        """Gets the type of this Port.
+
+
+        :return: The type of this Port.
+        :type: str
+        """
+        return self._type
+
+    @type.setter
+    def type(self, type):
+        """Sets the type of this Port.
+
+
+        :param type: The type of this Port.
+        :type type: str
+        """
+
+        self._type = type
+
+    @property
+    def mtu(self):
+        """Gets the mtu of this Port.
+
+
+        :return: The mtu of this Port.
+        :type: int
+        """
+        return self._mtu
+
+    @mtu.setter
+    def mtu(self, mtu):
+        """Sets the mtu of this Port.
+
+
+        :param mtu: The mtu of this Port.
+        :type mtu: int
+        """
+
+        self._mtu = mtu
+
+    @property
     def services(self):
         """Gets the services of this Port.
 
@@ -303,22 +357,22 @@ class Port(Model):
         self._services = services
 
     @property
-    def private_attributes(self):
-        """Gets the private_attributes of this Port.
+    def private(self):
+        """Gets the private of this Port.
 
 
-        :return: The private_attributes of this Port.
+        :return: The private of this Port.
         :rtype: List[str]
         """
-        return self._private_attributes
+        return self._private
 
-    @private_attributes.setter
-    def private_attributes(self, private_attributes):
-        """Sets the private_attributes of this Port.
+    @private.setter
+    def private(self, private):
+        """Sets the private of this Port.
 
 
-        :param private_attributes: The private_attributes of this Port.
-        :type private_attributes: List[str]
+        :param private: The private of this Port.
+        :type private: List[str]
         """
 
-        self._private_attributes = private_attributes
+        self._private = private
