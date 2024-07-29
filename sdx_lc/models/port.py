@@ -55,7 +55,7 @@ class Port(Model):
         :type mtu: int
         :param services: The services of this Port.  # noqa: E501
         :type services: Service
-        :param private: The private of this Port.  # noqa: E501
+        :param private: The private attributes of this Port.  # noqa: E501
         :type private: List[str]
         """
         self.swagger_types = {
