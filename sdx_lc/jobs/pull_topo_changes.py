@@ -50,7 +50,7 @@ def process_domain_controller_topo(db_instance):
 
         try:
             pulled_topology = urllib.request.urlopen(OXP_PULL_URL).read()
-        except urllib.request.URLError:
+        except (urllib.request.URLError, ConnectionResetError):
             logger.debug("Error connecting to domain controller...")
             time.sleep(int(OXP_PULL_INTERVAL))
             continue
