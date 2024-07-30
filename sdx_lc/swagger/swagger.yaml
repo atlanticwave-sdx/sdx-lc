@@ -1128,7 +1128,7 @@ components:
           enum: ['enabled', 'disabled', 'maintenance']
         services:
           $ref: '#/components/schemas/service'
-        private_attributes:
+        private:
           type: array
           items:
             type: string
