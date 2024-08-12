@@ -46,9 +46,9 @@ def create_app():
     log_file = os.getenv("LOG_FILE")
 
     if log_file:
-        logging.basicConfig(filename=log_file, level=logging.INFO)
+        logging.basicConfig(filename=log_file, level=logging.DEBUG)
     else:
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.DEBUG)
 
     logger.info(
         f"SDX Local Controller starting up ("
