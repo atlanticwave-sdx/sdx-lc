@@ -18,7 +18,7 @@ from utils.db_utils import DbUtils
 OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
 OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.DEBUG)
+
 
 def main():
     db_instance = DbUtils()
@@ -72,7 +72,7 @@ def process_domain_controller_topo(db_instance):
         except KeyError:
             logger.debug("Error getting topo version")
             continue
-        
+
         if latest_topology_exists and latest_topo_version == pulled_topo_version:
             time.sleep(int(OXP_PULL_INTERVAL))
             continue
