@@ -86,7 +86,7 @@ def process_domain_controller_topo(db_instance):
         # initiate rpc producer with 5 seconds timeout
         rpc_producer = RpcProducer(5, "", "topo")
         # publish topology to message queue for sdx-controller
-        response = rpc_producer.call(pulled_topology)
+        response = rpc_producer.call(json.dumps(json_pulled_topology))
         # Signal to end keep alive pings.
         rpc_producer.stop()
 
