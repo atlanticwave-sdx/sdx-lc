@@ -29,6 +29,7 @@ def main():
 
 def process_domain_controller_topo(db_instance):
     while True:
+        time.sleep(int(OXP_PULL_INTERVAL))
         latest_topology_exists = False
         latest_topology = db_instance.read_from_db("latest_topology")
 
@@ -52,11 +53,9 @@ def process_domain_controller_topo(db_instance):
             pulled_topology = urllib.request.urlopen(OXP_PULL_URL).read()
         except (urllib.request.URLError, ConnectionResetError):
             logger.debug("Error connecting to domain controller...")
-            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         if not pulled_topology:
-            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         logger.debug("Pulled request from domain controller")
@@ -89,8 +88,6 @@ def process_domain_controller_topo(db_instance):
         response = rpc_producer.call(json.dumps(json_pulled_topology))
         # Signal to end keep alive pings.
         rpc_producer.stop()
-
-        time.sleep(int(OXP_PULL_INTERVAL))
 
 
 if __name__ == "__main__":
