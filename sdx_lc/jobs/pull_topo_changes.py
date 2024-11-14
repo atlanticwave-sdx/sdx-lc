@@ -73,7 +73,6 @@ def process_domain_controller_topo(db_instance):
             continue
 
         if latest_topology_exists and latest_topo_version == pulled_topo_version:
-            time.sleep(int(OXP_PULL_INTERVAL))
             continue
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
