@@ -15,6 +15,8 @@ MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
 
+OXPO_USER = os.environ.get("OXPO_USER", None)
+OXPO_PASS = os.environ.get("OXPO_PASS", None)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 
 
@@ -104,7 +106,11 @@ class TopicQueueConsumer(object):
                 # send connection info to OXP
                 if msg_json.get("operation") == "post":
                     try:
-                        r = requests.post(str(OXP_CONNECTION_URL), json=connection)
+                        r = requests.post(
+                            str(OXP_CONNECTION_URL),
+                            json=connection,
+                            auth=(OXPO_USER, OXPO_PASS),
+                        )
                         self.logger.info(f"Status from OXP: {r}")
                     except Exception as e:
                         self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
@@ -113,7 +119,11 @@ class TopicQueueConsumer(object):
                         )
                 elif msg_json.get("operation") == "delete":
                     try:
-                        r = requests.delete(str(OXP_CONNECTION_URL), json=connection)
+                        r = requests.delete(
+                            str(OXP_CONNECTION_URL),
+                            json=connection,
+                            auth=(OXPO_USER, OXPO_PASS),
+                        )
                         self.logger.info(f"Status from OXP: {r}")
                     except Exception as e:
                         self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
