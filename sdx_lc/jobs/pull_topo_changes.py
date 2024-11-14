@@ -5,7 +5,7 @@ import os.path
 import sys
 import threading
 import time
-import urllib.request
+import requests
 
 # append abspath, so this file can import other modules from parent directory
 sys.path.append(
@@ -15,6 +15,8 @@ sys.path.append(
 from messaging.rpc_queue_producer import RpcProducer
 from utils.db_utils import DbUtils
 
+OXPO_USER = os.environ.get("OXPO_USER", None)
+OXPO_PASS = os.environ.get("OXPO_PASS", None)
 OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
 OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
 logger = logging.getLogger(__name__)
@@ -50,18 +52,18 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Latest topology does not exist")
 
         try:
-            pulled_topology = urllib.request.urlopen(OXP_PULL_URL).read()
-        except (urllib.request.URLError, ConnectionResetError):
+            pulled_topology = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
+        except (requests.ConnectionError, requests.HTTPError):
             logger.debug("Error connecting to domain controller...")
             continue
 
-        if not pulled_topology:
+        if not pulled_topology.ok:
             continue
 
         logger.debug("Pulled request from domain controller")
 
         try:
-            json_pulled_topology = json.loads(pulled_topology)
+            json_pulled_topology = pulled_topology.json()
         except ValueError:
             logger.debug("Cannot parse pulled topology, invalid JSON")
             continue
