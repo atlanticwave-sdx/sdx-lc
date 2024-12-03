@@ -4,6 +4,9 @@ from urllib.parse import urlparse
 
 import pymongo
 
+pymongo_logger = logging.getLogger("pymongo")
+pymongo_logger.setLevel(logging.INFO)
+
 
 def obfuscate_password_in_uri(uri: str) -> str:
     """
