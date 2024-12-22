@@ -118,7 +118,10 @@ def get_topology():  # noqa: E501
 
 def get_topology_timestamp():  # noqa: E501
     """get timestamp of latest topology pulling from OXP"""
-    return "do some magic!"
+    latest_topology_ts = db_instance.read_from_db("latest_topology_ts")
+    if not latest_topology_ts:
+        return "No topology was pulled from OXP yet", 404
+    return latest_topology_ts["latest_topology_ts"]
 
 def get_topologyby_version(topology_id, version):  # noqa: E501
     """Find topology by version

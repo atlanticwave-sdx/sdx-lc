@@ -1,9 +1,7 @@
-import argparse
 import json
 import logging
 import os.path
 import sys
-import threading
 import time
 import urllib.request
 
@@ -82,6 +80,8 @@ def process_domain_controller_topo(db_instance):
             f"topoVersion{json_pulled_topology['version']}", pulled_topology
         )
         db_instance.add_key_value_pair_to_db("latest_topology", pulled_topology)
+        topology_ts = int(time.time())
+        db_instance.add_key_value_pair_to_db("latest_topology_ts", str(topology_ts))
         logger.debug("Added pulled topo to db")
         # initiate rpc producer with 5 seconds timeout
         rpc_producer = RpcProducer(5, "", "topo")
