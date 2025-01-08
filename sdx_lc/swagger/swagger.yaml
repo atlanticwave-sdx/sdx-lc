@@ -119,6 +119,24 @@ paths:
         "404":
           description: topology not found
       x-openapi-router-controller: sdx_lc.controllers.topology_controller
+  /topology/time:
+    get:
+      tags:
+      - topology
+      summary: get timestamp of latest topology pulling from OXP
+      description: ID of the topology
+      operationId: get_topology_timestamp
+      responses:
+        "200":
+          description: ok
+          content:
+            text/plain:
+              schema:
+                type: string
+                x-content-type: text/plain
+        "404":
+          description: Topology timestamp not found
+      x-openapi-router-controller: sdx_lc.controllers.topology_controller
   /topology/version:
     get:
       tags:
