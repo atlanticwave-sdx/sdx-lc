@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-import json
 import logging
 import os
 import threading
 from queue import Queue
 
 import pika
-import requests
+
+from sdx_lc.handlers.sdx_controller_msg_handler import SdxControllerMsgHandler
+
 
 from sdx_lc.utils.db_utils import DbUtils
 
@@ -14,16 +15,6 @@ MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
-
-OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
-
-
-def is_json(myjson):
-    try:
-        json.loads(myjson)
-    except ValueError as e:
-        return False
-    return True
 
 
 class TopicQueueConsumer(object):
@@ -48,6 +39,7 @@ class TopicQueueConsumer(object):
         # Get DB connection and tables set up.
         self.db_instance = DbUtils()
         self.db_instance.initialize_db()
+        self.sdx_controller_msg_handler = SdxControllerMsgHandler(self.db_instance)
 
         self.heartbeat_id = 0
         self.message_id = 0
@@ -74,68 +66,7 @@ class TopicQueueConsumer(object):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def callback(self, ch, method, properties, body):
-        # if 'Heart Beat' not in str(body):
-        #     print(" [x] %r:%r" % (method.routing_key, body))
-        self.handle_mq_msg(body)
-
-    def handle_mq_msg(self, msg_body):
-        if "Heart Beat" in str(msg_body):
-            self.heartbeat_id += 1
-            self.logger.debug("Heart beat received. ID: " + str(self.heartbeat_id))
-            return
-
-        self.logger.info("MQ received message:" + str(msg_body))
-
-        if is_json(msg_body):
-            self.logger.info("JSON message")
-            msg_json = json.loads(msg_body)
-            if (
-                "link" in msg_json
-                and "uni_a" in msg_json["link"]
-                and "uni_z" in msg_json["link"]
-            ):
-                connection = msg_json["link"]
-                self.logger.info("Got connection message.")
-                self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
-                self.logger.info("Save to database complete.")
-                self.logger.info("Message ID:" + str(self.message_id))
-                self.message_id += 1
-                self.logger.info("Sending connection info to OXP.")
-                # send connection info to OXP
-                if msg_json.get("operation") == "post":
-                    try:
-                        r = requests.post(str(OXP_CONNECTION_URL), json=connection)
-                        self.logger.info(f"Status from OXP: {r}")
-                    except Exception as e:
-                        self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
-                        self.logger.info(
-                            "Check your configuration and make sure OXP service is running."
-                        )
-                elif msg_json.get("operation") == "delete":
-                    try:
-                        r = requests.delete(str(OXP_CONNECTION_URL), json=connection)
-                        self.logger.info(f"Status from OXP: {r}")
-                    except Exception as e:
-                        self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
-                        self.logger.info(
-                            "Check your configuration and make sure OXP service is running."
-                        )
-            elif "version" in msg_json:
-                msg_id = msg_json["id"]
-                lc_name = msg_json["name"]
-                msg_version = msg_json["version"]
-                db_msg_id = str(lc_name) + "-" + str(msg_id) + "-" + str(msg_version)
-                self.db_instance.add_key_value_pair_to_db(db_msg_id, msg_body)
-                self.logger.info("Save to database complete.")
-                self.logger.info("message ID:" + str(db_msg_id))
-            else:
-                self.logger.info("Got message: " + str(msg_body))
-        else:
-            self.logger.info("Other type of message")
-            self.db_instance.add_key_value_pair_to_db(self.message_id, msg_body)
-            self.logger.info("Save to database complete.")
-            self.logger.info("Message ID:" + str(self.message_id))
-            self.message_id += 1
+        self.sdx_controller_msg_handler.process_sdx_controller_json_msg(body)
 
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)
@@ -143,7 +74,6 @@ class TopicQueueConsumer(object):
             exchange=self.exchange_name, exchange_type="topic"
         )
         queue_name = self.result.method.queue
-        # print('queue_name: ' + queue_name)
 
         self.channel.queue_bind(
             exchange=self.exchange_name, queue=queue_name, routing_key=self.routing_key
