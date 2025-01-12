@@ -35,14 +35,7 @@ class TopicQueueConsumer(object):
         self._thread_queue = thread_queue
 
         self.routing_key = os.getenv("SDXLC_DOMAIN")
-
-        # Get DB connection and tables set up.
-        self.db_instance = DbUtils()
-        self.db_instance.initialize_db()
-        self.sdx_controller_msg_handler = SdxControllerMsgHandler(self.db_instance)
-
-        self.heartbeat_id = 0
-        self.message_id = 0
+        self.sdx_controller_msg_handler = SdxControllerMsgHandler()
 
     def on_rpc_request(self, ch, method, props, message_body):
         response = message_body

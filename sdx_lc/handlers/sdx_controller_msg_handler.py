@@ -3,6 +3,8 @@ import logging
 import requests
 import os
 
+from sdx_lc.utils.db_utils import DbUtils
+
 logger = logging.getLogger(__name__)
 
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
@@ -17,8 +19,13 @@ def is_json(myjson):
 
 
 class SdxControllerMsgHandler:
-    def __init__(self, db_instance):
-        self.db_instance = db_instance
+    def __init__(self):
+        self.logger = logging.getLogger(__name__)
+        # Get DB connection and tables set up.
+        self.db_instance = DbUtils()
+        self.db_instance.initialize_db()
+        self.heartbeat_id = 0
+        self.message_id = 0
 
     def process_sdx_controller_json_msg(self, msg):
         if "Heart Beat" in str(msg):
