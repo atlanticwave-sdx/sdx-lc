@@ -4,6 +4,7 @@ import requests
 import os
 
 from sdx_lc.utils.db_utils import DbUtils
+from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,21 @@ class SdxControllerMsgHandler:
         self.heartbeat_id = 0
         self.message_id = 0
 
+    def send_conn_response_to_sdx_controller(self, connection, oxp_response):
+        oxp_response_json = oxp_response.json()
+        rpc_message = {
+            "msg_type": "oxp_conn_response",
+            "service_id": connection.get("service_id"),
+            "oxp_response_code": oxp_response.status_code,
+            "oxp_response": oxp_response_json.get("description"),
+        }
+        self.rpc_producer = RpcProducer(5, "", "conn")
+        response = self.rpc_producer.call(json.dumps(rpc_message))
+        self.rpc_producer.stop()
+        self.logger.debug(
+            f"Sent OXP connection response to SDX controller via MQ. MQ response: {response}"
+        )
+
     def process_sdx_controller_json_msg(self, msg):
         if "Heart Beat" in str(msg):
             self.heartbeat_id += 1
@@ -42,8 +58,7 @@ class SdxControllerMsgHandler:
             self.logger.info("Message ID:" + str(self.message_id))
             self.message_id += 1
             return
-
-        self.logger.info("JSON message")
+        
         msg_json = json.loads(msg)
         if (
             "link" in msg_json
@@ -60,22 +75,28 @@ class SdxControllerMsgHandler:
             # send connection info to OXP
             if msg_json.get("operation") == "post":
                 try:
-                    r = requests.post(str(OXP_CONNECTION_URL), json=connection)
-                    self.logger.info(f"Status from OXP: {r}")
+                    oxp_response = requests.post(
+                        str(OXP_CONNECTION_URL), json=connection
+                    )
                 except Exception as e:
                     self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
+                self.logger.info(f"Status from OXP: {oxp_response}")
+                self.send_conn_response_to_sdx_controller(connection, oxp_response)
             elif msg_json.get("operation") == "delete":
                 try:
-                    r = requests.delete(str(OXP_CONNECTION_URL), json=connection)
-                    self.logger.info(f"Status from OXP: {r}")
+                    oxp_response = requests.delete(
+                        str(OXP_CONNECTION_URL), json=connection
+                    )
                 except Exception as e:
                     self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
+                self.logger.info(f"Status from OXP: {oxp_response}")
+                self.send_conn_response_to_sdx_controller(connection, oxp_response)
         elif "version" in msg_json:
             msg_id = msg_json["id"]
             lc_name = msg_json["name"]
