@@ -28,16 +28,16 @@ class SdxControllerMsgHandler:
         self.heartbeat_id = 0
         self.message_id = 0
 
-    def send_conn_response_to_sdx_controller(self, connection, oxp_response):
+    def send_conn_response_to_sdx_controller(self, service_id, oxp_response):
         oxp_response_json = oxp_response.json()
-        rpc_message = {
+        rpc_msg = {
             "msg_type": "oxp_conn_response",
-            "service_id": connection.get("service_id"),
+            "service_id": service_id,
             "oxp_response_code": oxp_response.status_code,
             "oxp_response": oxp_response_json.get("description"),
         }
-        self.rpc_producer = RpcProducer(5, "", "conn")
-        response = self.rpc_producer.call(json.dumps(rpc_message))
+        self.rpc_producer = RpcProducer(5, "", "oxp_update")
+        response = self.rpc_producer.call(json.dumps(rpc_msg))
         self.rpc_producer.stop()
         self.logger.debug(
             f"Sent OXP connection response to SDX controller via MQ. MQ response: {response}"
@@ -60,12 +60,14 @@ class SdxControllerMsgHandler:
             return
         
         msg_json = json.loads(msg)
+
         if (
             "link" in msg_json
             and "uni_a" in msg_json["link"]
             and "uni_z" in msg_json["link"]
         ):
-            connection = msg_json["link"]
+            service_id = msg_json.get("service_id")
+            connection = msg_json.get("link")
             self.logger.info("Got connection message.")
             self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
             self.logger.info("Save to database complete.")
@@ -84,7 +86,7 @@ class SdxControllerMsgHandler:
                         "Check your configuration and make sure OXP service is running."
                     )
                 self.logger.info(f"Status from OXP: {oxp_response}")
-                self.send_conn_response_to_sdx_controller(connection, oxp_response)
+                self.send_conn_response_to_sdx_controller(service_id, oxp_response)
             elif msg_json.get("operation") == "delete":
                 try:
                     oxp_response = requests.delete(
@@ -96,7 +98,7 @@ class SdxControllerMsgHandler:
                         "Check your configuration and make sure OXP service is running."
                     )
                 self.logger.info(f"Status from OXP: {oxp_response}")
-                self.send_conn_response_to_sdx_controller(connection, oxp_response)
+                self.send_conn_response_to_sdx_controller(service_id, oxp_response)
         elif "version" in msg_json:
             msg_id = msg_json["id"]
             lc_name = msg_json["name"]
