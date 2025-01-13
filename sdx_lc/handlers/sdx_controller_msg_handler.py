@@ -58,7 +58,7 @@ class SdxControllerMsgHandler:
             self.logger.info("Message ID:" + str(self.message_id))
             self.message_id += 1
             return
-        
+
         msg_json = json.loads(msg)
 
         if (
