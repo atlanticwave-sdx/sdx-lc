@@ -82,7 +82,7 @@ def process_domain_controller_topo(db_instance):
         db_instance.add_key_value_pair_to_db("latest_topology_ts", str(topology_ts))
         logger.debug("Added pulled topo to db")
         # initiate rpc producer with 5 seconds timeout
-        rpc_producer = RpcProducer(5, "", "topo")
+        rpc_producer = RpcProducer(5, "", "oxp_update")
         # publish topology to message queue for sdx-controller
         response = rpc_producer.call(json.dumps(json_pulled_topology))
         # Signal to end keep alive pings.

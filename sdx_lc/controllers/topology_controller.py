@@ -66,7 +66,7 @@ def add_topology(body):  # noqa: E501
     logger.debug("Publishing Message to MQ: {}".format(body))
 
     # initiate rpc producer with 5 seconds timeout
-    rpc = RpcProducer(5, "", "topo")
+    rpc = RpcProducer(5, "", "oxp_update")
     response = rpc.call(json_body)
     # Signal to end keep alive pings.
     rpc.stop()
