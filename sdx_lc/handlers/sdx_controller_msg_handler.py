@@ -1,10 +1,11 @@
 import json
 import logging
-import requests
 import os
 
-from sdx_lc.utils.db_utils import DbUtils
+import requests
+
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
+from sdx_lc.utils.db_utils import DbUtils
 
 logger = logging.getLogger(__name__)
 

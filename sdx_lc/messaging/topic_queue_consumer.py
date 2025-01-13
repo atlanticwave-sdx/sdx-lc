@@ -8,7 +8,6 @@ import pika
 
 from sdx_lc.handlers.sdx_controller_msg_handler import SdxControllerMsgHandler
 
-
 MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
