@@ -14,7 +14,6 @@ from sdx_lc import encoder
 from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
 from sdx_lc.utils.db_utils import DbUtils
 
-
 SUB_QUEUE = os.environ.get("SUB_QUEUE")
 
 
