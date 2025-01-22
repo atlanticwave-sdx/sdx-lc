@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 PUB_QUEUE = os.environ.get("PUB_QUEUE")
 
+
 def is_json(myjson):
     try:
         json.loads(myjson)
