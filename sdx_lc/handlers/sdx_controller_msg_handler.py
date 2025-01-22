@@ -10,7 +10,7 @@ from sdx_lc.utils.db_utils import DbUtils
 logger = logging.getLogger(__name__)
 
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
-SUB_QUEUE = os.environ.get("SUB_QUEUE")
+PUB_QUEUE = os.environ.get("PUB_QUEUE")
 
 def is_json(myjson):
     try:
@@ -37,7 +37,7 @@ class SdxControllerMsgHandler:
             "oxp_response_code": oxp_response.status_code,
             "oxp_response": oxp_response_json.get("description"),
         }
-        self.rpc_producer = RpcProducer(5, "", SUB_QUEUE)
+        self.rpc_producer = RpcProducer(5, "", PUB_QUEUE)
         response = self.rpc_producer.call(json.dumps(rpc_msg))
         self.rpc_producer.stop()
         self.logger.debug(
