@@ -17,6 +17,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
+PUB_QUEUE = os.environ.get("PUB_QUEUE")
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()
@@ -66,7 +67,7 @@ def add_topology(body):  # noqa: E501
     logger.debug("Publishing Message to MQ: {}".format(body))
 
     # initiate rpc producer with 5 seconds timeout
-    rpc = RpcProducer(5, "", "oxp_update")
+    rpc = RpcProducer(5, "", PUB_QUEUE)
     response = rpc.call(json_body)
     # Signal to end keep alive pings.
     rpc.stop()

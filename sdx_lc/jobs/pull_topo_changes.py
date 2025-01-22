@@ -15,6 +15,7 @@ from utils.db_utils import DbUtils
 
 OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
 OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
+PUB_QUEUE = os.environ.get("PUB_QUEUE")
 logger = logging.getLogger(__name__)
 
 
@@ -82,7 +83,7 @@ def process_domain_controller_topo(db_instance):
         db_instance.add_key_value_pair_to_db("latest_topology_ts", str(topology_ts))
         logger.debug("Added pulled topo to db")
         # initiate rpc producer with 5 seconds timeout
-        rpc_producer = RpcProducer(5, "", "oxp_update")
+        rpc_producer = RpcProducer(5, "", PUB_QUEUE)
         # publish topology to message queue for sdx-controller
         response = rpc_producer.call(json.dumps(json_pulled_topology))
         # Signal to end keep alive pings.
