@@ -86,8 +86,9 @@ class TopicQueueConsumer(object):
 
 
 if __name__ == "__main__":
+    SUB_QUEUE = os.environ.get("SUB_QUEUE")
     thread_queue = Queue()
-    consumer = TopicQueueConsumer(thread_queue, "connection")
+    consumer = TopicQueueConsumer(thread_queue, SUB_QUEUE)
 
     t1 = threading.Thread(target=consumer.start_consumer, args=())
     t1.start()

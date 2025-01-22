@@ -55,6 +55,7 @@ services:
       - MQ_PORT=${MQ_PORT:-5672}
       - MQ_USER=${MQ_USER:-guest}
       - MQ_PASS=${MQ_PASS:-guest}
+      - SUB_QUEUE=${SUB_QUEUE}
       - PUB_QUEUE=${PUB_QUEUE}
       # OXP settings.
       - OXP_PROVISION_URL=${OXP_PROVISION_URL}

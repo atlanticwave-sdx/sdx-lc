@@ -15,6 +15,8 @@ from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
 from sdx_lc.utils.db_utils import DbUtils
 
 
+SUB_QUEUE = os.environ.get("SUB_QUEUE")
+
 def start_consumer(thread_queue, db_instance):
     """
     Accept connection (also called link) messages from SDX Controller.
@@ -24,7 +26,7 @@ def start_consumer(thread_queue, db_instance):
         function.
     """
 
-    rpc = TopicQueueConsumer(thread_queue=thread_queue, exchange_name="connection")
+    rpc = TopicQueueConsumer(thread_queue=thread_queue, exchange_name=SUB_QUEUE)
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
 
