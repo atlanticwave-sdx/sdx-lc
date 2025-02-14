@@ -82,7 +82,9 @@ class SdxControllerMsgHandler:
             if msg_json.get("operation") == "post":
                 try:
                     oxp_response = requests.post(
-                        str(OXP_CONNECTION_URL), json=connection, auth=(OXP_USER, OXP_PASS)
+                        str(OXP_CONNECTION_URL),
+                        json=connection,
+                        auth=(OXP_USER, OXP_PASS),
                     )
                 except Exception as e:
                     self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
@@ -94,7 +96,9 @@ class SdxControllerMsgHandler:
             elif msg_json.get("operation") == "delete":
                 try:
                     oxp_response = requests.delete(
-                        str(OXP_CONNECTION_URL), json=connection, auth=(OXP_USER, OXP_PASS)
+                        str(OXP_CONNECTION_URL),
+                        json=connection,
+                        auth=(OXP_USER, OXP_PASS),
                     )
                 except Exception as e:
                     self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
