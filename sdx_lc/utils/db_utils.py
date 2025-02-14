@@ -30,8 +30,9 @@ class DbUtils(object):
         if not self.config_table_name:
             raise Exception("DB_CONFIG_TABLE_NAME environment variable is not set")
 
+        log_level = logging.getLevelName(os.getenv("LOG_LEVEL", "DEBUG"))
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(log_level)
 
         mongo_user = os.getenv("MONGO_USER") or "guest"
         mongo_pass = os.getenv("MONGO_PASS") or "guest"
