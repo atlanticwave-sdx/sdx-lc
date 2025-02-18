@@ -3,10 +3,10 @@ import logging
 import os
 
 import requests
+from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.utils.db_utils import DbUtils
-from sdx_datamodel.constants import MessageQueueNames
 
 logger = logging.getLogger(__name__)
 

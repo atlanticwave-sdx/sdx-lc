@@ -5,9 +5,9 @@ import threading
 from queue import Queue
 
 import pika
+from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.handlers.sdx_controller_msg_handler import SdxControllerMsgHandler
-from sdx_datamodel.constants import MessageQueueNames
 
 MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
