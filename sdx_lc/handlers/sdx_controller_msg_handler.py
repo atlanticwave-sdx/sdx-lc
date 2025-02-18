@@ -6,11 +6,12 @@ import requests
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.utils.db_utils import DbUtils
+from sdx_datamodel.constants import Constants
 
 logger = logging.getLogger(__name__)
 
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
-PUB_QUEUE = os.environ.get("PUB_QUEUE")
+PUB_QUEUE = Constants.OXP_UPDATE
 
 
 def is_json(myjson):

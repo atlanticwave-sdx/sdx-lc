@@ -18,7 +18,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
-PUB_QUEUE = os.environ.get("PUB_QUEUE")
+PUB_QUEUE = Constants.OXP_UPDATE
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()

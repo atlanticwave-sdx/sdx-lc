@@ -17,7 +17,7 @@ from utils.db_utils import DbUtils
 
 OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
 OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
-PUB_QUEUE = os.environ.get("PUB_QUEUE")
+PUB_QUEUE = Constants.OXP_UPDATE
 logger = logging.getLogger(__name__)
 
 
