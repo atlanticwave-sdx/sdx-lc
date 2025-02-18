@@ -5,7 +5,7 @@ import sys
 import time
 import urllib.request
 
-from sdx_datamodel.constants import MessageQueueNames
+from sdx_datamodel.constants import Constants, MessageQueueNames
 
 # append abspath, so this file can import other modules from parent directory
 sys.path.append(
