@@ -3,7 +3,7 @@ import logging
 import os
 
 import connexion
-from sdx_datamodel.constants import MessageQueueNames
+from sdx_datamodel.constants import Constants, MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.models.topology import Topology  # noqa: E501
