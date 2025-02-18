@@ -5,7 +5,7 @@ import sys
 import time
 import urllib.request
 
-from sdx_datamodel.constants import Constants
+from sdx_datamodel.constants import MessageQueueNames
 
 # append abspath, so this file can import other modules from parent directory
 sys.path.append(
@@ -17,7 +17,7 @@ from utils.db_utils import DbUtils
 
 OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
 OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
-PUB_QUEUE = Constants.OXP_UPDATE
+PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 logger = logging.getLogger(__name__)
 
 

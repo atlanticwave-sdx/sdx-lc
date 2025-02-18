@@ -3,7 +3,7 @@ import logging
 import os
 
 import connexion
-from sdx_datamodel.constants import Constants
+from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.models.topology import Topology  # noqa: E501
@@ -18,7 +18,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
-PUB_QUEUE = Constants.OXP_UPDATE
+PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()
