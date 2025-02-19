@@ -47,11 +47,12 @@ def create_app():
     logging.getLogger("pika").setLevel(logging.WARNING)
 
     log_file = os.getenv("LOG_FILE")
+    log_level = logging.getLevelName(os.getenv("LOG_LEVEL", "DEBUG"))
 
     if log_file:
-        logging.basicConfig(filename=log_file, level=logging.DEBUG)
+        logging.basicConfig(filename=log_file, level=log_level)
     else:
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=log_level)
 
     logger.info(
         f"SDX Local Controller starting up ("
