@@ -10,6 +10,8 @@ from sdx_lc.utils.db_utils import DbUtils
 
 logger = logging.getLogger(__name__)
 
+OXP_USER = os.environ.get("OXP_USER", None)
+OXP_PASS = os.environ.get("OXP_PASS", None)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
@@ -81,7 +83,9 @@ class SdxControllerMsgHandler:
             if msg_json.get("operation") == "post":
                 try:
                     oxp_response = requests.post(
-                        str(OXP_CONNECTION_URL), json=connection
+                        str(OXP_CONNECTION_URL),
+                        json=connection,
+                        auth=(OXP_USER, OXP_PASS),
                     )
                 except Exception as e:
                     self.logger.error(f"Error on POST to {OXP_CONNECTION_URL}: {e}")
@@ -93,7 +97,9 @@ class SdxControllerMsgHandler:
             elif msg_json.get("operation") == "delete":
                 try:
                     oxp_response = requests.delete(
-                        str(OXP_CONNECTION_URL), json=connection
+                        str(OXP_CONNECTION_URL),
+                        json=connection,
+                        auth=(OXP_USER, OXP_PASS),
                     )
                 except Exception as e:
                     self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
