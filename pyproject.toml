@@ -34,7 +34,7 @@ dependencies = [
 test = [
     "flask_testing==0.8.1",
     "coverage>=4.0.3",
-    "pluggy>=0.3.1",
+    "pluggy>=1.5,<2",
     "py>=1.8.2",
     "randomize>=0.13",
     "pytest>=7.2.0",
