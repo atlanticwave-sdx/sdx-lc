@@ -32,13 +32,14 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
-    "flask_testing==0.8.1",
-    "coverage>=4.0.3",
-    "pluggy>=1.5,<2",
-    "py>=1.8.2",
-    "randomize>=0.13",
-    "pytest>=7.2.0",
-    "pytest-cov>=3.0.0",
+    "flask_testing == 0.8.1",
+    "coverage >= 4.0.3",
+    "networkx == 2.8.8",
+    "pytest >= 7.2.0",
+    "pytest-cov >= 4.0.0",
+    "pluggy >= 0.3.1",
+    "py >= 1.4.31",
+    "randomize >= 0.13",
 ]
 format = [
     "black == 24.*",
