@@ -5,6 +5,7 @@ import threading
 from queue import Queue
 
 import pika
+from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.handlers.sdx_controller_msg_handler import SdxControllerMsgHandler
 
@@ -86,7 +87,7 @@ class TopicQueueConsumer(object):
 
 
 if __name__ == "__main__":
-    SUB_QUEUE = os.environ.get("SUB_QUEUE")
+    SUB_QUEUE = MessageQueueNames.CONNECTIONS
     thread_queue = Queue()
     consumer = TopicQueueConsumer(thread_queue, SUB_QUEUE)
 

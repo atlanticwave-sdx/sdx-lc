@@ -9,12 +9,13 @@ from subprocess import call
 import connexion
 from asgiref.wsgi import WsgiToAsgi
 from flask import redirect
+from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc import encoder
 from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
 from sdx_lc.utils.db_utils import DbUtils
 
-SUB_QUEUE = os.environ.get("SUB_QUEUE")
+SUB_QUEUE = MessageQueueNames.CONNECTIONS
 
 
 def start_consumer(thread_queue, db_instance):

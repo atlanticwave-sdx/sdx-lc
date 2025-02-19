@@ -3,6 +3,7 @@ import logging
 import os
 
 import connexion
+from sdx_datamodel.constants import Constants, MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.models.topology import Topology  # noqa: E501
@@ -17,7 +18,7 @@ logging.getLogger("pika").setLevel(logging.WARNING)
 
 MANIFEST = os.environ.get("MANIFEST")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
-PUB_QUEUE = os.environ.get("PUB_QUEUE")
+PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
 # Get DB connection and tables set up.
 db_instance = DbUtils()
@@ -60,8 +61,10 @@ def add_topology(body):  # noqa: E501
     json_body = json.dumps(body)
 
     logger.debug("Adding topology. Saving to database.")
-    db_instance.add_key_value_pair_to_db(f"topoVersion{body['version']}", json_body)
-    db_instance.add_key_value_pair_to_db("latest_topology", json_body)
+    db_instance.add_key_value_pair_to_db(
+        f"{Constants.TOPOLOGY_VERSION}_{body['version']}", json_body
+    )
+    db_instance.add_key_value_pair_to_db(Constants.LATEST_TOPOLOGY, json_body)
     logger.debug("Saving to database complete.")
 
     logger.debug("Publishing Message to MQ: {}".format(body))
@@ -120,10 +123,10 @@ def get_topology():  # noqa: E501
 
 def get_topology_timestamp():  # noqa: E501
     """get timestamp of latest topology pulling from OXP"""
-    latest_topology_ts = db_instance.read_from_db("latest_topology_ts")
+    latest_topology_ts = db_instance.read_from_db(Constants.LATEST_TOPOLOGY_TS)
     if not latest_topology_ts:
         return "No topology was pulled from OXP yet", 404
-    return latest_topology_ts["latest_topology_ts"]
+    return latest_topology_ts[Constants.LATEST_TOPOLOGY_TS]
 
 
 def get_topologyby_version(topology_id, version):  # noqa: E501
