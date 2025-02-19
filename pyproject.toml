@@ -35,9 +35,9 @@ test = [
     "flask_testing==0.8.1",
     "coverage>=4.0.3",
     "pluggy>=0.3.1",
-    "py>=1.4.31",
+    "py>=1.8.2",
     "randomize>=0.13",
-    "pytest>=7.1.2",
+    "pytest >= 7.2.0",
     "pytest-cov>=3.0.0",
 ]
 format = [
