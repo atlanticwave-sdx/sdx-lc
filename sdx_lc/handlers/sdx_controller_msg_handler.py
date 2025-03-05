@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 OXP_USER = os.environ.get("OXP_USER", None)
 OXP_PASS = os.environ.get("OXP_PASS", None)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
-SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
+SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN", "")
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
 
