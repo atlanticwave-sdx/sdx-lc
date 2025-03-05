@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 OXP_USER = os.environ.get("OXP_USER", None)
 OXP_PASS = os.environ.get("OXP_PASS", None)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
+SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
 
@@ -36,6 +37,7 @@ class SdxControllerMsgHandler:
     def send_conn_response_to_sdx_controller(self, service_id, oxp_response):
         oxp_response_json = oxp_response.json()
         rpc_msg = {
+            "lc_domain": SDXLC_DOMAIN,
             "msg_type": "oxp_conn_response",
             "service_id": service_id,
             "oxp_response_code": oxp_response.status_code,
