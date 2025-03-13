@@ -1146,6 +1146,10 @@ components:
           enum: ['enabled', 'disabled', 'maintenance']
         services:
           $ref: '#/components/schemas/service'
+        entities:
+          type: array
+          items:
+            type: string
         private:
           type: array
           items:
