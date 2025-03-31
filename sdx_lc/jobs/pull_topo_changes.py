@@ -55,18 +55,19 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Latest topology does not exist")
 
         try:
-            pulled_topology = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
+            response = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
+            pulled_topology = response.content
         except (requests.ConnectionError, requests.HTTPError):
             logger.debug("Error connecting to domain controller...")
             continue
 
-        if not pulled_topology.ok:
+        if not response.ok:
             continue
 
         logger.debug("Pulled request from domain controller")
 
         try:
-            json_pulled_topology = pulled_topology.json()
+            json_pulled_topology = response.json()
         except ValueError:
             logger.debug("Cannot parse pulled topology, invalid JSON")
             continue
@@ -83,7 +84,7 @@ def process_domain_controller_topo(db_instance):
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
             f"{Constants.TOPOLOGY_VERSION}_{json_pulled_topology['version']}",
-            pulled_topology,
+            json.dumps(json_pulled_topology),
         )
         db_instance.add_key_value_pair_to_db(Constants.LATEST_TOPOLOGY, pulled_topology)
         topology_ts = int(time.time())
