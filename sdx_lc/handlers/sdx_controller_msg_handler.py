@@ -34,14 +34,15 @@ class SdxControllerMsgHandler:
         self.heartbeat_id = 0
         self.message_id = 0
 
-    def send_conn_response_to_sdx_controller(self, service_id, oxp_response):
+    def send_conn_response_to_sdx_controller(self, service_id, operation, oxp_response):
         oxp_response_json = oxp_response.json()
         rpc_msg = {
             "lc_domain": SDXLC_DOMAIN,
             "msg_type": "oxp_conn_response",
             "service_id": service_id,
+            "operation": operation,
             "oxp_response_code": oxp_response.status_code,
-            "oxp_response": oxp_response_json.get("description"),
+            "oxp_response": oxp_response_json,
         }
         self.rpc_producer = RpcProducer(5, "", PUB_QUEUE)
         response = self.rpc_producer.call(json.dumps(rpc_msg))
@@ -94,8 +95,12 @@ class SdxControllerMsgHandler:
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
-                self.logger.info(f"Status from OXP: {oxp_response}")
-                self.send_conn_response_to_sdx_controller(service_id, oxp_response)
+                self.logger.info(
+                    f"Status from OXP: {oxp_response} - {oxp_response.text}"
+                )
+                self.send_conn_response_to_sdx_controller(
+                    service_id, msg_json["operation"], oxp_response
+                )
             elif msg_json.get("operation") == "delete":
                 try:
                     oxp_response = requests.delete(
@@ -108,8 +113,12 @@ class SdxControllerMsgHandler:
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
-                self.logger.info(f"Status from OXP: {oxp_response}")
-                self.send_conn_response_to_sdx_controller(service_id, oxp_response)
+                self.logger.info(
+                    f"Status from OXP: {oxp_response} - {oxp_response.text}"
+                )
+                self.send_conn_response_to_sdx_controller(
+                    service_id, msg_json["operation"], oxp_response
+                )
         elif "version" in msg_json:
             msg_id = msg_json["id"]
             lc_name = msg_json["name"]
