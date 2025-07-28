@@ -70,8 +70,7 @@ class SdxControllerMsgHandler:
 
         if (
             "link" in msg_json
-            and "uni_a" in msg_json["link"]
-            and "uni_z" in msg_json["link"]
+            and "endpoints" in msg_json["link"]
         ):
             service_id = msg_json.get("service_id")
             connection = msg_json.get("link")
