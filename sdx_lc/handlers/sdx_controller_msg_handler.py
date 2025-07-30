@@ -3,6 +3,7 @@ import logging
 import os
 
 import requests
+from urllib.parse import urljoin
 from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
@@ -96,9 +97,11 @@ class SdxControllerMsgHandler:
                 self.logger.info(f"Status from OXP: {oxp_response}")
                 self.send_conn_response_to_sdx_controller(service_id, oxp_response)
             elif msg_json.get("operation") == "delete":
+                connection_json = json.loads(connection)
+                evc_id = connection.get("evc_id")
                 try:
                     oxp_response = requests.delete(
-                        str(OXP_CONNECTION_URL),
+                        urljoin(str(OXP_CONNECTION_URL), evc_id),
                         json=connection,
                         auth=(OXP_USER, OXP_PASS),
                     )
