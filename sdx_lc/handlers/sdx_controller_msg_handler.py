@@ -1,9 +1,9 @@
 import json
 import logging
 import os
+from urllib.parse import urljoin
 
 import requests
-from urllib.parse import urljoin
 from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
