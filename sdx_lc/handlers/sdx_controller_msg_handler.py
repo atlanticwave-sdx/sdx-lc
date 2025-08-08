@@ -1,9 +1,9 @@
 import json
 import logging
 import os
+from urllib.parse import urljoin
 
 import requests
-from urllib.parse import urljoin
 from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
@@ -69,10 +69,7 @@ class SdxControllerMsgHandler:
 
         msg_json = json.loads(msg)
 
-        if (
-            "link" in msg_json
-            and "endpoints" in msg_json["link"]
-        ):
+        if "link" in msg_json and "endpoints" in msg_json["link"]:
             service_id = msg_json.get("service_id")
             connection = msg_json.get("link")
             self.logger.info("Got connection message.")
