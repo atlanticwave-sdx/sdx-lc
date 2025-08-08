@@ -42,7 +42,7 @@ class SdxControllerMsgHandler:
             "msg_type": "oxp_conn_response",
             "service_id": service_id,
             "oxp_response_code": oxp_response.status_code,
-            "oxp_response": oxp_response_json.get("description"),
+            "oxp_response": oxp_response_json,
         }
         self.rpc_producer = RpcProducer(5, "", PUB_QUEUE)
         response = self.rpc_producer.call(json.dumps(rpc_msg))
