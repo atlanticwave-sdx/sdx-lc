@@ -68,12 +68,12 @@ class SdxControllerMsgHandler:
             self.message_id += 1
             return
 
-        msg_json = json.loads(msg)
+        msg_str = msg.decode("utf-8")
+        msg_json = json.loads(msg_str)
 
-        if "link" in msg_json and "endpoints" in msg_json["link"]:
+        if "link" in msg_json and ("endpoints" in msg_json["link"]):
             service_id = msg_json.get("service_id")
             connection = msg_json.get("link")
-            self.logger.info("Got connection message.")
             self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
             self.logger.info("Save to database complete.")
             self.logger.info("Message ID:" + str(self.message_id))
@@ -99,8 +99,7 @@ class SdxControllerMsgHandler:
                     service_id, msg_json["operation"], oxp_response
                 )
             elif msg_json.get("operation") == "delete":
-                connection_json = json.loads(connection)
-                evc_id = connection.get("evc_id")
+                evc_id = msg_json.get("evc_id")
                 try:
                     oxp_response = requests.delete(
                         urljoin(str(OXP_CONNECTION_URL), evc_id),
