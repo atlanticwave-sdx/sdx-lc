@@ -81,7 +81,9 @@ class SdxControllerMsgHandler:
             self.logger.info("Sending connection info to OXP.")
             # send connection info to OXP
             if msg_json.get("operation") == "post":
-                self.logger.info(f"Sending DELETE request to URL: {str(OXP_CONNECTION_URL)}")
+                self.logger.info(
+                    f"Sending POST request to URL: {str(OXP_CONNECTION_URL)}"
+                )
                 try:
                     oxp_response = requests.post(
                         str(OXP_CONNECTION_URL),
@@ -102,7 +104,9 @@ class SdxControllerMsgHandler:
             elif msg_json.get("operation") == "delete":
                 evc_id = msg_json.get("evc_id")
                 try:
-                    dest_url = urljoin(str(OXP_CONNECTION_URL).rstrip('/') + '/', evc_id)
+                    dest_url = urljoin(
+                        str(OXP_CONNECTION_URL).rstrip("/") + "/", evc_id
+                    )
                     self.logger.info(f"Sending DELETE request to URL: {dest_url}")
                     oxp_response = requests.delete(
                         dest_url,
