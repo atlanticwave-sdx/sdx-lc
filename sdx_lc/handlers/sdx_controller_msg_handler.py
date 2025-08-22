@@ -38,7 +38,9 @@ class SdxControllerMsgHandler:
         try:
             oxp_response_json = oxp_response.json()
         except:
-            oxp_response_json = {"msg": "Failed to parse OXP response. Please check the OXP logs."}
+            oxp_response_json = {
+                "msg": "Failed to parse OXP response. Please check the OXP logs."
+            }
         rpc_msg = {
             "lc_domain": SDXLC_DOMAIN,
             "msg_type": "oxp_conn_response",
