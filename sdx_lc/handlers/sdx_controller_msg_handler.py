@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from urllib.parse import urljoin
 
 import requests
 from sdx_datamodel.constants import MessageQueueNames
@@ -72,16 +73,12 @@ class SdxControllerMsgHandler:
             self.message_id += 1
             return
 
-        msg_json = json.loads(msg)
+        msg_str = msg.decode("utf-8")
+        msg_json = json.loads(msg_str)
 
-        if (
-            "link" in msg_json
-            and "uni_a" in msg_json["link"]
-            and "uni_z" in msg_json["link"]
-        ):
+        if "link" in msg_json and ("endpoints" in msg_json["link"]):
             service_id = msg_json.get("service_id")
             connection = msg_json.get("link")
-            self.logger.info("Got connection message.")
             self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
             self.logger.info("Save to database complete.")
             self.logger.info("Message ID:" + str(self.message_id))
@@ -89,6 +86,9 @@ class SdxControllerMsgHandler:
             self.logger.info("Sending connection info to OXP.")
             # send connection info to OXP
             if msg_json.get("operation") == "post":
+                self.logger.info(
+                    f"Sending POST request to URL: {str(OXP_CONNECTION_URL)}"
+                )
                 try:
                     oxp_response = requests.post(
                         str(OXP_CONNECTION_URL),
@@ -107,9 +107,14 @@ class SdxControllerMsgHandler:
                     service_id, msg_json["operation"], oxp_response
                 )
             elif msg_json.get("operation") == "delete":
+                evc_id = msg_json.get("evc_id")
                 try:
+                    dest_url = urljoin(
+                        str(OXP_CONNECTION_URL).rstrip("/") + "/", evc_id
+                    )
+                    self.logger.info(f"Sending DELETE request to URL: {dest_url}")
                     oxp_response = requests.delete(
-                        str(OXP_CONNECTION_URL),
+                        dest_url,
                         json=connection,
                         auth=(OXP_USER, OXP_PASS),
                     )
