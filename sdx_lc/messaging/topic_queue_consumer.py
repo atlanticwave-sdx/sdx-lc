@@ -2,6 +2,7 @@
 import logging
 import os
 import threading
+import traceback
 from queue import Queue
 
 import pika
@@ -57,7 +58,11 @@ class TopicQueueConsumer(object):
         ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def callback(self, ch, method, properties, body):
-        self.sdx_controller_msg_handler.process_sdx_controller_json_msg(body)
+        try:
+            self.sdx_controller_msg_handler.process_sdx_controller_json_msg(body)
+        except Exception as exc:
+            err = traceback.format_exc().replace("\n", ", ")
+            self.logger.error(f"Failed to process msg: {exc} - {err}")
 
     def start_consumer(self):
         # self.channel.queue_declare(queue=SUB_QUEUE)
