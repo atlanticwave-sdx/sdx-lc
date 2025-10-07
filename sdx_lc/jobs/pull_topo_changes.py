@@ -1,3 +1,4 @@
+import importlib
 import json
 import logging
 import os.path
@@ -14,6 +15,9 @@ sys.path.append(
 
 from messaging.rpc_queue_producer import RpcProducer
 from utils.db_utils import DbUtils
+
+CLIENT_PACKAGE = os.getenv("CLIENT_PACKAGE", None)
+CLIENT_TOPOLOGY_FUNCTION = os.getenv("CLIENT_TOPOLOGY_FUNCTION", None)
 
 OXPO_USER = os.environ.get("OXPO_USER", None)
 OXPO_PASS = os.environ.get("OXPO_PASS", None)
@@ -47,7 +51,12 @@ def process_domain_controller_topo(db_instance):
                 continue
 
             try:
-                latest_topo_version = json_latest_topology["version"]
+                if not CLIENT_PACKAGE:
+                    latest_topo_version = json_latest_topology["version"]
+                else:
+                    client_module = importlib.import_module(CLIENT_PACKAGE)
+                    topology_function = getattr(client_module, CLIENT_TOPOLOGY_FUNCTION)
+                    topology_function()
             except KeyError:
                 logger.debug("Error getting topo version")
                 continue
@@ -55,8 +64,13 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Latest topology does not exist")
 
         try:
-            response = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
-            pulled_topology = response.content
+            if not CLIENT_PACKAGE:
+                response = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
+                pulled_topology = response.content
+            else:
+                client_module = importlib.import_module(CLIENT_PACKAGE)
+                topology_function = getattr(client_module, CLIENT_TOPOLOGY_FUNCTION)
+                topology_function()
         except (requests.ConnectionError, requests.HTTPError):
             logger.debug("Error connecting to domain controller...")
             continue
