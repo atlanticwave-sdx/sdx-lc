@@ -2,7 +2,6 @@ import datetime
 import typing
 
 import six
-
 from sdx_lc import type_util
 
 

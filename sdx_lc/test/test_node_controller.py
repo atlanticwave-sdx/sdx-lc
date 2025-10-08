@@ -3,12 +3,11 @@
 from __future__ import absolute_import
 
 from flask import json
-from six import BytesIO
-
 from sdx_lc.models.location import Location
 from sdx_lc.models.node import Node  # noqa: E501
 from sdx_lc.models.port import Port
 from sdx_lc.test import BaseTestCase
+from six import BytesIO
 
 
 class TestNodeController(BaseTestCase):

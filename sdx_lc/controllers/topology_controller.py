@@ -3,7 +3,6 @@ import logging
 import os
 
 import connexion
-
 from sdx_lc.messaging.rpc_queue_producer import RpcProducer
 from sdx_lc.models.topology import Topology  # noqa: E501
 from sdx_lc.utils.db_utils import DbUtils

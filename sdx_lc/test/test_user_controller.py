@@ -3,10 +3,9 @@
 from __future__ import absolute_import
 
 from flask import json
-from six import BytesIO
-
 from sdx_lc.models.user import User  # noqa: E501
 from sdx_lc.test import BaseTestCase
+from six import BytesIO
 
 
 class TestUserController(BaseTestCase):

@@ -7,9 +7,9 @@ from typing import Dict, List  # noqa: F401
 
 from sdx_lc import util
 from sdx_lc.models.base_model_ import Model
-from sdx_lc.models.link_measurement_period import (  # noqa: F401,E501
+from sdx_lc.models.link_measurement_period import (
     LinkMeasurementPeriod,
-)
+)  # noqa: F401,E501
 from sdx_lc.models.port import Port  # noqa: F401,E501
 
 

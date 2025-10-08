@@ -1,6 +1,5 @@
 import connexion
 import six
-
 from sdx_lc import util
 from sdx_lc.models.node import Node  # noqa: E501
 

@@ -5,8 +5,6 @@ from __future__ import absolute_import
 import datetime
 
 from flask import json
-from six import BytesIO
-
 from sdx_lc.models.api_response import ApiResponse  # noqa: E501
 from sdx_lc.models.link import Link
 from sdx_lc.models.location import Location
@@ -14,6 +12,7 @@ from sdx_lc.models.node import Node
 from sdx_lc.models.port import Port
 from sdx_lc.models.topology import Topology  # noqa: E501
 from sdx_lc.test import BaseTestCase
+from six import BytesIO
 
 
 class TestTopologyController(BaseTestCase):

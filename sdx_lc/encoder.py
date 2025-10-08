@@ -1,6 +1,5 @@
 import six
 from connexion.apps.flask_app import FlaskJSONEncoder
-
 from sdx_lc.models.base_model_ import Model
 
 
