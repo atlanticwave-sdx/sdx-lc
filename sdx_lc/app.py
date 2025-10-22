@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import logging
+from dotenv import load_dotenv
 import os
 import threading
 from queue import Queue
@@ -42,6 +43,8 @@ def create_app():
     """
     Create a Flas/Connexion App.
     """
+
+    load_dotenv()
 
     logger = logging.getLogger(__name__)
     logging.getLogger("pika").setLevel(logging.WARNING)

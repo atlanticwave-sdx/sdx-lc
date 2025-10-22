@@ -17,7 +17,7 @@ from messaging.rpc_queue_producer import RpcProducer
 from utils.db_utils import DbUtils
 
 CLIENT_PACKAGE = os.getenv("CLIENT_PACKAGE", None)
-CLIENT_TOPOLOGY_FUNCTION = os.getenv("CLIENT_TOPOLOGY_FUNCTION", None)
+CLIENT_FUNCTION = os.getenv("CLIENT_FUNCTION", None)
 
 OXPO_USER = os.environ.get("OXPO_USER", None)
 OXPO_PASS = os.environ.get("OXPO_PASS", None)
@@ -51,49 +51,37 @@ def process_domain_controller_topo(db_instance):
                 continue
 
             try:
-                if not CLIENT_PACKAGE:
-                    latest_topo_version = json_latest_topology["version"]
-                else:
-                    client_module = importlib.import_module(CLIENT_PACKAGE)
-                    topology_function = getattr(client_module, CLIENT_TOPOLOGY_FUNCTION)
-                    topology_function()
+                latest_topo_version = json_latest_topology["version"]
             except KeyError:
                 logger.debug("Error getting topo version")
                 continue
         else:
             logger.debug("Latest topology does not exist")
 
-        try:
-            if not CLIENT_PACKAGE:
+        if not CLIENT_PACKAGE:
+            try:
                 response = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
                 pulled_topology = response.content
-            else:
-                client_module = importlib.import_module(CLIENT_PACKAGE)
-                topology_function = getattr(client_module, CLIENT_TOPOLOGY_FUNCTION)
-                topology_function()
-        except (requests.ConnectionError, requests.HTTPError):
-            logger.debug("Error connecting to domain controller...")
-            continue
-
-        if not response.ok:
-            continue
-
-        logger.debug("Pulled request from domain controller")
-
-        try:
-            json_pulled_topology = response.json()
-        except ValueError:
-            logger.debug("Cannot parse pulled topology, invalid JSON")
-            continue
-
-        try:
-            pulled_topo_version = json_pulled_topology["version"]
-        except KeyError:
-            logger.debug("Error getting topo version")
-            continue
-
-        if latest_topology_exists and latest_topo_version == pulled_topo_version:
-            continue
+                if not response.ok:
+                    continue
+                logger.debug("Pulled request from domain controller")
+                json_pulled_topology = response.json()
+                pulled_topo_version = json_pulled_topology["version"]
+            except (requests.ConnectionError, requests.HTTPError):
+                logger.debug("Error connecting to domain controller...")
+                continue
+            except ValueError:
+                logger.debug("Cannot parse pulled topology, invalid JSON")
+                continue
+            except KeyError:
+                logger.debug("Error getting topo version")
+                continue
+            if latest_topology_exists and latest_topo_version == pulled_topo_version:
+                continue
+        else:
+            client_module = importlib.import_module(CLIENT_PACKAGE)
+            topology_function = getattr(client_module, CLIENT_FUNCTION)
+            pulled_topology = topology_function()
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
