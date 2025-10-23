@@ -1,4 +1,5 @@
 import importlib
+import importlib.util
 import json
 import logging
 import os.path
@@ -18,6 +19,7 @@ from utils.db_utils import DbUtils
 
 CLIENT_PACKAGE = os.getenv("CLIENT_PACKAGE", None)
 CLIENT_FUNCTION = os.getenv("CLIENT_FUNCTION", None)
+CLIENT_TOPOLOGY_TRANSLATOR = os.getenv("CLIENT_TOPOLOGY_TRANSLATOR", None)
 
 OXPO_USER = os.environ.get("OXPO_USER", None)
 OXPO_PASS = os.environ.get("OXPO_PASS", None)
@@ -80,8 +82,15 @@ def process_domain_controller_topo(db_instance):
                 continue
         else:
             client_module = importlib.import_module(CLIENT_PACKAGE)
+            path = client_module.__dict__.get('__path__')[0]
+            spec = importlib.util.spec_from_file_location(CLIENT_TOPOLOGY_TRANSLATOR, path+"/"+CLIENT_FUNCTION)
+            client = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(client)
+            pulled_topology = client.topology_translate()
+
             topology_function = getattr(client_module, CLIENT_FUNCTION)
             pulled_topology = topology_function()
+            json_pulled_topology = json.loads(pulled_topology)
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
