@@ -89,9 +89,6 @@ def process_domain_controller_topo(db_instance):
             client = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(client)
             pulled_topology = client.topology_translate()
-
-            topology_function = getattr(client_module, CLIENT_FUNCTION)
-            pulled_topology = topology_function()
             json_pulled_topology = json.loads(pulled_topology)
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
