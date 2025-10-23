@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import logging
-from dotenv import load_dotenv
 import os
 import threading
 from queue import Queue
@@ -9,6 +8,7 @@ from subprocess import call
 
 import connexion
 from asgiref.wsgi import WsgiToAsgi
+from dotenv import load_dotenv
 from flask import redirect
 from sdx_datamodel.constants import MessageQueueNames
 

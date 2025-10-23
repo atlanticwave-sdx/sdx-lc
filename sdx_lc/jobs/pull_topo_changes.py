@@ -82,8 +82,10 @@ def process_domain_controller_topo(db_instance):
                 continue
         else:
             client_module = importlib.import_module(CLIENT_PACKAGE)
-            path = client_module.__dict__.get('__path__')[0]
-            spec = importlib.util.spec_from_file_location(CLIENT_TOPOLOGY_TRANSLATOR, path+"/"+CLIENT_FUNCTION)
+            path = client_module.__dict__.get("__path__")[0]
+            spec = importlib.util.spec_from_file_location(
+                CLIENT_TOPOLOGY_TRANSLATOR, path + "/" + CLIENT_FUNCTION
+            )
             client = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(client)
             pulled_topology = client.topology_translate()
