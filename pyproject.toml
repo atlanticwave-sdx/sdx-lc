@@ -29,7 +29,7 @@ dependencies = [
     "pymongo > 3.0",
     "dotenv",
     "sense-sdx @ git+https://github.com/atlanticwave-sdx/sense-sdx.git",
-    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@3.0.0.dev5",
+    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@3.0.0.dev13",
 ]
 
 [project.optional-dependencies]
