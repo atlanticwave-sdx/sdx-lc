@@ -90,6 +90,7 @@ def process_domain_controller_topo(db_instance):
             spec.loader.exec_module(client)
             pulled_topology = client.topology_translate()
             json_pulled_topology = json.loads(pulled_topology)
+            json_pulled_topology["version"] = 1
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
