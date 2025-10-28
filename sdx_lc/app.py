@@ -8,7 +8,6 @@ from subprocess import call
 
 import connexion
 from asgiref.wsgi import WsgiToAsgi
-from dotenv import load_dotenv
 from flask import redirect
 from sdx_datamodel.constants import MessageQueueNames
 
@@ -43,8 +42,6 @@ def create_app():
     """
     Create a Flas/Connexion App.
     """
-
-    load_dotenv()
 
     logger = logging.getLogger(__name__)
     logging.getLogger("pika").setLevel(logging.WARNING)
