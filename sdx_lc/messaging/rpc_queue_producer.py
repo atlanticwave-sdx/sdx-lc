@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+import json
 import logging
 import os
 import threading
 import time
 import uuid
-import json
+
 import pika
 
 MQ_HOST = os.environ.get("MQ_HOST")
@@ -55,10 +56,7 @@ class RpcProducer(object):
     def keep_live(self):
         while self.stop_keep_live != True:
             time.sleep(30)
-            msg = {
-                "type": "Heart Beat",
-                "domain": SDXLC_DOMAIN
-            }
+            msg = {"type": "Heart Beat", "domain": SDXLC_DOMAIN}
             self.logger.debug("Sending heart beat msg.")
             self.call(json.dumps(msg))
 
