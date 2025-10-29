@@ -81,16 +81,20 @@ def process_domain_controller_topo(db_instance):
             if latest_topology_exists and latest_topo_version == pulled_topo_version:
                 continue
         else:
-            client_module = importlib.import_module(CLIENT_PACKAGE)
-            path = client_module.__dict__.get("__path__")[0]
-            spec = importlib.util.spec_from_file_location(
-                CLIENT_TOPOLOGY_TRANSLATOR, path + "/" + CLIENT_FUNCTION
-            )
-            client = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(client)
-            pulled_topology = client.topology_translate()
-            json_pulled_topology = json.loads(pulled_topology)
-            json_pulled_topology["version"] = 1
+            try:
+                client_module = importlib.import_module(CLIENT_PACKAGE)
+                path = client_module.__dict__.get("__path__")[0]
+                spec = importlib.util.spec_from_file_location(
+                    CLIENT_TOPOLOGY_TRANSLATOR, path + "/" + CLIENT_FUNCTION
+                )
+                client = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(client)
+                pulled_topology = client.topology_translate()
+                json_pulled_topology = json.loads(pulled_topology)
+                json_pulled_topology["version"] = 1
+            except Exception as e:
+                logger.error("Client Error:{e} \}")
+                continue
 
         logger.debug("Pulled topo with different version. Adding pulled topo to db")
         db_instance.add_key_value_pair_to_db(
