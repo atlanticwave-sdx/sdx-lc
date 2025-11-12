@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import time
 from urllib.parse import urljoin
 
 import requests
@@ -15,6 +16,7 @@ OXP_USER = os.environ.get("OXP_USER", None)
 OXP_PASS = os.environ.get("OXP_PASS", None)
 OXP_CONNECTION_URL = os.environ.get("OXP_CONNECTION_URL")
 SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN", "")
+MQ_MESSAGE_EXPIRATION = os.environ.get("MQ_MESSAGE_EXPIRATION", 300)
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 
 
@@ -75,6 +77,17 @@ class SdxControllerMsgHandler:
 
         msg_str = msg.decode("utf-8")
         msg_json = json.loads(msg_str)
+
+        sent_time = msg_json.get("sent_time")
+        current_time = int(time.time())
+
+        if not isinstance(sent_time, (int, float)):
+            self.logger.info(f"Invalid MQ message time.")
+        elif current_time - sent_time >= MQ_MESSAGE_EXPIRATION:
+            self.logger.info(
+                f"SDX message was sent over {MQ_MESSAGE_EXPIRATION} seconds ago, ignored."
+            )
+            return
 
         if "link" in msg_json and ("endpoints" in msg_json["link"]):
             service_id = msg_json.get("service_id")
