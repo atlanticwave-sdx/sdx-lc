@@ -27,7 +27,9 @@ dependencies = [
     "connexion[swagger-ui] == 2.14.2",
     "asgiref >= 3.7.2",    
     "pymongo > 3.0",
-    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@3.0.0.dev5",
+    "dotenv",
+    "sense-sdx @ git+https://github.com/atlanticwave-sdx/sense-sdx.git",
+    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@3.0.0.dev13",
 ]
 
 [project.optional-dependencies]
