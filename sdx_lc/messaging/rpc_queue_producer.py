@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import json
 import logging
 import os
 import threading
@@ -11,6 +12,8 @@ MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
+SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
+HEARTBEAT_INTERVAL = int(os.getenv("HEARTBEAT_INTERVAL", 30))  # seconds
 
 
 class RpcProducer(object):
@@ -53,10 +56,10 @@ class RpcProducer(object):
 
     def keep_live(self):
         while self.stop_keep_live != True:
-            time.sleep(30)
-            msg = "[MQ]: Heart Beat"
+            time.sleep(HEARTBEAT_INTERVAL)
+            msg = {"type": "Heart Beat", "domain": SDXLC_DOMAIN}
             self.logger.debug("Sending heart beat msg.")
-            self.call(msg)
+            self.call(json.dumps(msg))
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
