@@ -78,8 +78,12 @@ class SdxControllerMsgHandler:
 
         if "link" in msg_json and ("endpoints" in msg_json["link"]):
             service_id = msg_json.get("service_id")
+            if not service_id:
+                self.logger.info(f"Connection did not include service_id. Ignored.")
+                return
+
             connection = msg_json.get("link")
-            self.db_instance.add_key_value_pair_to_db(self.message_id, connection)
+            self.db_instance.add_key_value_pair_to_db(service_id, connection)
             self.logger.info("Save to database complete.")
             self.logger.info("Message ID:" + str(self.message_id))
             self.message_id += 1

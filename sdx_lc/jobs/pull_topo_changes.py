@@ -17,8 +17,8 @@ from utils.db_utils import DbUtils
 
 OXPO_USER = os.environ.get("OXPO_USER", None)
 OXPO_PASS = os.environ.get("OXPO_PASS", None)
-OXP_PULL_URL = os.environ.get("OXP_PULL_URL")
-OXP_PULL_INTERVAL = os.environ.get("OXP_PULL_INTERVAL")
+OXP_TOPOLOGY_URL = os.environ.get("OXP_TOPOLOGY_URL")
+OXP_PULL_TOPOLOGY_INTERVAL = os.environ.get("OXP_PULL_TOPOLOGY_INTERVAL")
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ def main():
 
 def process_domain_controller_topo(db_instance):
     while True:
-        time.sleep(int(OXP_PULL_INTERVAL))
+        time.sleep(int(OXP_PULL_TOPOLOGY_INTERVAL))
         latest_topology_exists = False
         latest_topology = db_instance.read_from_db(Constants.LATEST_TOPOLOGY)
 
@@ -55,7 +55,7 @@ def process_domain_controller_topo(db_instance):
             logger.debug("Latest topology does not exist")
 
         try:
-            response = requests.get(OXP_PULL_URL, auth=(OXPO_USER, OXPO_PASS))
+            response = requests.get(OXP_TOPOLOGY_URL, auth=(OXPO_USER, OXPO_PASS))
             pulled_topology = response.content
         except (requests.ConnectionError, requests.HTTPError):
             logger.debug("Error connecting to domain controller...")
