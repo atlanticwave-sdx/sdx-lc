@@ -23,7 +23,10 @@ class RpcProducer(object):
             pika.ConnectionParameters(
                 host=MQ_HOST,
                 port=MQ_PORT,
-                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
+                credentials=pika.PlainCredentials(
+                    username=MQ_USER,
+                    password=MQ_PASS
+                ),
             )
         )
 
@@ -34,7 +37,7 @@ class RpcProducer(object):
 
         self.stop_keep_live = False
 
-        t1 = threading.Thread(target=self.keep_live, args=())
+        t1 = threading.Thread(target=self.keep_live, daemon=True)
         t1.start()
 
         # set up callback queue
@@ -55,24 +58,33 @@ class RpcProducer(object):
         self.stop_keep_live = True
 
     def keep_live(self):
-        while self.stop_keep_live != True:
+        """
+        Send heartbeat messages every HEARTBEAT_INTERVAL seconds.
+        """
+        while not self.stop_keep_live:
             time.sleep(HEARTBEAT_INTERVAL)
             msg = {"type": "Heart Beat", "domain": SDXLC_DOMAIN}
-            self.logger.debug("Sending heart beat msg.")
-            self.call(json.dumps(msg))
+
+            try:
+                self.logger.info("Sending heart beat msg.")
+
+                # Direct publish with no RPC
+                self.channel.basic_publish(
+                    exchange=self.exchange_name,
+                    routing_key=self.routing_key,
+                    body=json.dumps(msg),
+                )
+            except Exception as e:
+                self.logger.error(f"Failed to send heartbeat: {e}")
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
             self.response = body
 
     def call(self, body):
-        # if not self.connection or self.connection.is_closed:
-        #     # print("Reopening connection...")
-        #     self.connection = pika.BlockingConnection(pika.ConnectionParameters(host=MQ_HOST))
-        #     self.channel = self.connection.channel()
-        #     # print("Connection reopened.")
-        #     # channel.exchange_declare(exchange=self.exchange_name)
-
+        """
+        RPC request that waits for a response, for non-heartbeat messages.
+        """
         self.response = None
         self.corr_id = str(uuid.uuid4())
 
@@ -94,7 +106,6 @@ class RpcProducer(object):
                 return "No response from MQ receiver"
             self.connection.process_data_events()
 
-        # self.channel.close()
         return self.response
 
 
