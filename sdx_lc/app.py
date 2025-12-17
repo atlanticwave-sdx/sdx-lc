@@ -38,8 +38,7 @@ def start_consumer(thread_queue, db_instance):
 def start_heartbeat():
     global _heartbeat_producer
     _heartbeat_producer = HeartbeatProducer(
-        exchange_name="",
-        routing_key=MessageQueueNames.HEARTBEATS
+        exchange_name="", routing_key=MessageQueueNames.HEARTBEATS
     )
     _heartbeat_producer.start()
 

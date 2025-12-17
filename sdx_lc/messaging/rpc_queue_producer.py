@@ -20,10 +20,7 @@ class RpcProducer(object):
             pika.ConnectionParameters(
                 host=MQ_HOST,
                 port=MQ_PORT,
-                credentials=pika.PlainCredentials(
-                    username=MQ_USER,
-                    password=MQ_PASS
-                ),
+                credentials=pika.PlainCredentials(username=MQ_USER, password=MQ_PASS),
             )
         )
 
