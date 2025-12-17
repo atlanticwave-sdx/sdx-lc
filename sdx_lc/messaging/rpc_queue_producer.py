@@ -2,7 +2,6 @@
 import json
 import logging
 import os
-import threading
 import time
 import uuid
 
@@ -12,8 +11,6 @@ MQ_HOST = os.environ.get("MQ_HOST")
 MQ_PORT = os.environ.get("MQ_PORT")
 MQ_USER = os.environ.get("MQ_USER")
 MQ_PASS = os.environ.get("MQ_PASS")
-SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
-HEARTBEAT_INTERVAL = int(os.getenv("HEARTBEAT_INTERVAL", 30))  # seconds
 
 
 class RpcProducer(object):
@@ -35,11 +32,6 @@ class RpcProducer(object):
         self.exchange_name = exchange_name
         self.routing_key = routing_key
 
-        self.stop_keep_live = False
-
-        t1 = threading.Thread(target=self.keep_live, daemon=True)
-        t1.start()
-
         # set up callback queue
         result = self.channel.queue_declare(queue="", exclusive=True)
         self.callback_queue = result.method.queue
@@ -51,31 +43,16 @@ class RpcProducer(object):
         )
 
     def stop(self):
-        """
-        Signal to stop keep-alive pings, so that RpcProducer instances
-        can be safely deleted.
-        """
-        self.stop_keep_live = True
-
-    def keep_live(self):
-        """
-        Send heartbeat messages every HEARTBEAT_INTERVAL seconds.
-        """
-        while not self.stop_keep_live:
-            time.sleep(HEARTBEAT_INTERVAL)
-            msg = {"type": "Heart Beat", "domain": SDXLC_DOMAIN}
-
-            try:
-                self.logger.info("Sending heart beat msg.")
-
-                # Direct publish with no RPC
-                self.channel.basic_publish(
-                    exchange=self.exchange_name,
-                    routing_key=self.routing_key,
-                    body=json.dumps(msg),
-                )
-            except Exception as e:
-                self.logger.error(f"Failed to send heartbeat: {e}")
+        try:
+            if self.channel.is_open:
+                self.channel.close()
+        except Exception:
+            pass
+        try:
+            if self.connection.is_open:
+                self.connection.close()
+        except Exception:
+            pass
 
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
