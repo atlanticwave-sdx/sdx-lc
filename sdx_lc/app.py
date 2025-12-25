@@ -68,7 +68,8 @@ def create_app():
     logger.info(
         f"SDX Local Controller starting up ("
         f"name: {os.getenv('SDXLC_NAME')}, "
-        f"domain: {os.getenv('SDXLC_DOMAIN')})"
+        f"domain: {os.getenv('SDXLC_DOMAIN')}),"
+        f"client package:{os.getenv('CLIENT_PACKAGE')}"
     )
 
     heartbeat_thread = threading.Thread(target=start_heartbeat)

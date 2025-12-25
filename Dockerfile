@@ -12,6 +12,8 @@ WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 
+COPY ./sense-o-auth.yaml.templat[e] /root/.sense-o-auth.yaml
+
 # create a venv.
 RUN python3 -m venv /opt/venv --upgrade-deps
 
