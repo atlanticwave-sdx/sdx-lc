@@ -15,8 +15,7 @@ sys.path.append(
 from messaging.rpc_queue_producer import RpcProducer
 from utils.db_utils import DbUtils
 
-OXPO_USER = os.environ.get("OXPO_USER", None)
-OXPO_PASS = os.environ.get("OXPO_PASS", None)
+SDXLC_DOMAIN = os.environ.get("SDXLC_DOMAIN")
 OXP_LIST_CONNECTIONS_URL = os.environ.get("OXP_LIST_CONNECTIONS_URL")
 OXP_PULL_CONNECTIONS_INTERVAL = os.environ.get("OXP_PULL_CONNECTIONS_INTERVAL")
 PUB_QUEUE = MessageQueueNames.OXP_UPDATE
