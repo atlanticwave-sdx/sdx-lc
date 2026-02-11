@@ -12,10 +12,13 @@ from flask import redirect
 from sdx_datamodel.constants import MessageQueueNames
 
 from sdx_lc import encoder
+from sdx_lc.messaging.heartbeat_producer import HeartbeatProducer
 from sdx_lc.messaging.topic_queue_consumer import TopicQueueConsumer
 from sdx_lc.utils.db_utils import DbUtils
 
 SUB_QUEUE = MessageQueueNames.CONNECTIONS
+
+_heartbeat_producer = None
 
 
 def start_consumer(thread_queue, db_instance):
@@ -30,6 +33,14 @@ def start_consumer(thread_queue, db_instance):
     rpc = TopicQueueConsumer(thread_queue=thread_queue, exchange_name=SUB_QUEUE)
     t1 = threading.Thread(target=rpc.start_consumer, args=())
     t1.start()
+
+
+def start_heartbeat():
+    global _heartbeat_producer
+    _heartbeat_producer = HeartbeatProducer(
+        exchange_name="", routing_key=MessageQueueNames.HEARTBEATS
+    )
+    _heartbeat_producer.start()
 
 
 def start_pull_topology_change():
@@ -59,6 +70,9 @@ def create_app():
         f"name: {os.getenv('SDXLC_NAME')}, "
         f"domain: {os.getenv('SDXLC_DOMAIN')})"
     )
+
+    heartbeat_thread = threading.Thread(target=start_heartbeat)
+    heartbeat_thread.start()
 
     # Run swagger service
     app = connexion.App(__name__, specification_dir="./swagger/")

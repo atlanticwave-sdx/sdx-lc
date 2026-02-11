@@ -1057,7 +1057,7 @@ components:
           pattern: '^urn:sdx:link:[A-Za-z0-9_,./-]*:[A-Za-z0-9_.,/-]*$'
         name:
           type: string
-          maxLength: 30
+          maxLength: 100
           pattern: '^[A-Za-z0-9_.,/-]*$'
         ports:
           type: array

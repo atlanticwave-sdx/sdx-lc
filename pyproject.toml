@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "sdx-lc"
-version = "3.0.0.dev2"
+version = "3.2.0"
 description = "AtlanticWave-SDX project's local controller"
 authors = [
     { name = "Yufeng Xin", email = "yxin@renci.org" },
@@ -27,7 +27,7 @@ dependencies = [
     "connexion[swagger-ui] == 2.14.2",
     "asgiref >= 3.7.2",    
     "pymongo > 3.0",
-    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@3.0.0.dev5",
+    "sdx-datamodel @ git+https://github.com/atlanticwave-sdx/datamodel@v3.2.1",
 ]
 
 [project.optional-dependencies]
