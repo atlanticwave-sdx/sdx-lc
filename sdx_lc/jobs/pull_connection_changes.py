@@ -87,9 +87,10 @@ def process_oxp_connections(db_instance):
             db_instance.add_key_value_pair_to_db(service_id, existing_connection_json)
             rpc_msg = {
                 "lc_domain": SDXLC_DOMAIN,
-                "msg_type": "oxp_conn_response",
+                "msg_type": "oxp_conn_status_change",
                 "service_id": service_id,
-                "oxp_response": existing_connection_json,
+                "existing_status": existing_connection_status,
+                "new_status": new_status
             }
             rpc_producer = RpcProducer(5, "", PUB_QUEUE)
             rpc_producer.call(json.dumps(rpc_msg))
