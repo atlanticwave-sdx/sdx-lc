@@ -97,7 +97,7 @@ def process_oxp_connections(db_instance):
                 "msg_type": "oxp_conn_status_change",
                 "service_id": service_id,
                 "existing_status": existing_connection_status,
-                "new_status": new_status
+                "new_status": new_status,
             }
             rpc_producer = RpcProducer(5, "", PUB_QUEUE)
             rpc_producer.call(json.dumps(rpc_msg))
