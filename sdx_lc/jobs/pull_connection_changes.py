@@ -28,6 +28,13 @@ def main():
     process_oxp_connections(db_instance)
 
 
+# Periodically pull l2vpn (connection) status from OXP, and handle status change.
+# Possible l2vpn status are:
+# “up” if the L2VPN is operational,
+# “down” if the L2VPN is not operational due to topology issues/lack of path, or endpoints being down,
+# “error” when there is an error with the L2VPN,
+# “under provisioning” when the L2VPN is still being provisioned by the OXPs,
+# “maintenance” when the L2VPN is being affected by a network maintenance.
 def process_oxp_connections(db_instance):
     while True:
         time.sleep(int(OXP_PULL_CONNECTIONS_INTERVAL))
