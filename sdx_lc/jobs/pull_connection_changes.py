@@ -42,11 +42,9 @@ def process_oxp_connections(db_instance):
         try:
             response = requests.get(OXP_LIST_CONNECTIONS_URL)
             connections = response.content
-        except (requests.ConnectionError, requests.HTTPError):
-            logger.debug("Error connecting to OXP...")
-            continue
-
-        if not response.ok:
+            assert response.ok, response.text
+        except (requests.ConnectionError, requests.HTTPError) as err:
+            logger.error(f"Error connecting to OXP: {err}")
             continue
 
         logger.debug("Received connections from OXP.")
