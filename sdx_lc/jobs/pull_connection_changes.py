@@ -89,7 +89,9 @@ def process_oxp_connections(db_instance):
                     f"Status change for {service_id}: "
                     f"{existing_connection_status} changed to {new_status}"
                 )
-                db_instance.add_key_value_pair_to_db(service_id, existing_connection_json)
+                db_instance.add_key_value_pair_to_db(
+                    service_id, existing_connection_json
+                )
                 rpc_msg = {
                     "lc_domain": SDXLC_DOMAIN,
                     "msg_type": "oxp_conn_status_change",
