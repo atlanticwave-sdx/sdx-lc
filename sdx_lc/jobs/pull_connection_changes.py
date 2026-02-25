@@ -38,68 +38,72 @@ def main():
 def process_oxp_connections(db_instance):
     while True:
         time.sleep(int(OXP_PULL_CONNECTIONS_INTERVAL))
-
         try:
-            response = requests.get(OXP_LIST_CONNECTIONS_URL, timeout=10)
-            connections = response.content
-            assert response.ok, response.text
-        except (requests.ConnectionError, requests.HTTPError) as err:
-            logger.error(f"Error connecting to OXP: {err}")
-            continue
-
-        logger.debug("Received connections from OXP.")
-
-        try:
-            connections_json = response.json()
-        except ValueError:
-            logger.debug("Cannot parse connections, invalid JSON.")
-            continue
-
-        if not connections_json:
-            logger.debug("No connections yet.")
-            continue
-
-        for service_id, connection in connections_json.items():
-            # Fetch existing connection from DB
-            existing_connection = db_instance.get_value_by_key(service_id)
-
-            if not existing_connection:
-                logger.debug(f"New connection {service_id}, ignored")
+            try:
+                response = requests.get(OXP_LIST_CONNECTIONS_URL, timeout=10)
+                connections = response.content
+                assert response.ok, response.text
+            except (requests.ConnectionError, requests.HTTPError) as err:
+                logger.error(f"Error connecting to OXP: {err}")
                 continue
+
+            logger.debug("Received connections from OXP.")
 
             try:
-                existing_connection_json = json.loads(existing_connection)
+                connections_json = response.json()
             except ValueError:
-                logger.debug(f"Invalid JSON in DB for {service_id}")
+                logger.debug("Cannot parse connections, invalid JSON.")
                 continue
 
-            existing_connection_status = (
-                existing_connection_json.get("status")
-                if existing_connection_json
-                else None
-            )
-            new_status = connection.get("status")
-
-            if existing_connection_status == new_status:
-                logger.debug(f"Status unchanged for {service_id}")
+            if not connections_json:
+                logger.debug("No connections yet.")
                 continue
 
-            existing_connection_json["status"] = new_status
-            logger.info(
-                f"Status change for {service_id}: "
-                f"{existing_connection_status} changed to {new_status}"
+            for service_id, connection in connections_json.items():
+                # Fetch existing connection from DB
+                existing_connection = db_instance.get_value_by_key(service_id)
+
+                if not existing_connection:
+                    logger.debug(f"New connection {service_id}, ignored")
+                    continue
+
+                try:
+                    existing_connection_json = json.loads(existing_connection)
+                except ValueError:
+                    logger.debug(f"Invalid JSON in DB for {service_id}")
+                    continue
+
+                existing_connection_status = (
+                    existing_connection_json.get("status")
+                    if existing_connection_json
+                    else None
+                )
+                new_status = connection.get("status")
+
+                if existing_connection_status == new_status:
+                    logger.debug(f"Status unchanged for {service_id}")
+                    continue
+
+                existing_connection_json["status"] = new_status
+                logger.info(
+                    f"Status change for {service_id}: "
+                    f"{existing_connection_status} changed to {new_status}"
+                )
+                db_instance.add_key_value_pair_to_db(service_id, existing_connection_json)
+                rpc_msg = {
+                    "lc_domain": SDXLC_DOMAIN,
+                    "msg_type": "oxp_conn_status_change",
+                    "service_id": service_id,
+                    "existing_status": existing_connection_status,
+                    "new_status": new_status,
+                }
+                rpc_producer = RpcProducer(5, "", PUB_QUEUE)
+                rpc_producer.call(json.dumps(rpc_msg))
+                rpc_producer.stop()
+        except Exception:
+            logger.exception(
+                "Unexpected error while processing OXP connections; Retrying."
             )
-            db_instance.add_key_value_pair_to_db(service_id, existing_connection_json)
-            rpc_msg = {
-                "lc_domain": SDXLC_DOMAIN,
-                "msg_type": "oxp_conn_status_change",
-                "service_id": service_id,
-                "existing_status": existing_connection_status,
-                "new_status": new_status,
-            }
-            rpc_producer = RpcProducer(5, "", PUB_QUEUE)
-            rpc_producer.call(json.dumps(rpc_msg))
-            rpc_producer.stop()
 
 
 if __name__ == "__main__":
