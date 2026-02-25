@@ -40,7 +40,7 @@ def process_oxp_connections(db_instance):
         time.sleep(int(OXP_PULL_CONNECTIONS_INTERVAL))
 
         try:
-            response = requests.get(OXP_LIST_CONNECTIONS_URL)
+            response = requests.get(OXP_LIST_CONNECTIONS_URL, timeout=10)
             connections = response.content
             assert response.ok, response.text
         except (requests.ConnectionError, requests.HTTPError) as err:
@@ -85,7 +85,7 @@ def process_oxp_connections(db_instance):
                 continue
 
             existing_connection_json["status"] = new_status
-            logger.debug(
+            logger.info(
                 f"Status change for {service_id}: "
                 f"{existing_connection_status} changed to {new_status}"
             )
