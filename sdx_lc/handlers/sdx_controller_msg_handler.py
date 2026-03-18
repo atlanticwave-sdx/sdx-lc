@@ -37,6 +37,14 @@ class SdxControllerMsgHandler:
         self.heartbeat_id = 0
         self.message_id = 0
 
+    @staticmethod
+    def _build_failure_response(status_code, message):
+        response = requests.Response()
+        response.status_code = status_code
+        response._content = json.dumps({"msg": message}).encode("utf-8")
+        response.headers["Content-Type"] = "application/json"
+        return response
+
     def send_conn_response_to_sdx_controller(self, service_id, operation, oxp_response):
         try:
             oxp_response_json = oxp_response.json()
@@ -113,6 +121,10 @@ class SdxControllerMsgHandler:
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
+                    oxp_response = self._build_failure_response(
+                        503,
+                        f"Error on POST to OXP: {e}",
+                    )
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
                 )
@@ -135,6 +147,10 @@ class SdxControllerMsgHandler:
                     self.logger.error(f"Error on DELETE {OXP_CONNECTION_URL}: {e}")
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
+                    )
+                    oxp_response = self._build_failure_response(
+                        503,
+                        f"Error on DELETE to OXP: {e}",
                     )
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
