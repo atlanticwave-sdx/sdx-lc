@@ -37,19 +37,37 @@ class SdxControllerMsgHandler:
         self.heartbeat_id = 0
         self.message_id = 0
 
-    def send_conn_response_to_sdx_controller(self, service_id, operation, oxp_response):
-        try:
-            oxp_response_json = oxp_response.json()
-        except:
+    def send_conn_response_to_sdx_controller(
+        self, service_id, operation, oxp_response=None, oxp_response_code=None
+    ):
+        if oxp_response_code is not None:
+            response_code = oxp_response_code
+        elif oxp_response is not None:
+            response_code = oxp_response.status_code
+        else:
+            response_code = 503
+
+        if isinstance(oxp_response, dict):
+            oxp_response_json = oxp_response
+        elif oxp_response is None:
             oxp_response_json = {
-                "msg": "Failed to parse OXP response. Please check the OXP logs."
+                "msg": "No response received from OXP.",
+                "error_source": "sdx-lc",
+                "error_type": "no_oxp_response",
             }
+        else:
+            try:
+                oxp_response_json = oxp_response.json()
+            except Exception:
+                oxp_response_json = {
+                    "msg": "Failed to parse OXP response. Please check the OXP logs."
+                }
         rpc_msg = {
             "lc_domain": SDXLC_DOMAIN,
             "msg_type": "oxp_conn_response",
             "service_id": service_id,
             "operation": operation,
-            "oxp_response_code": oxp_response.status_code,
+            "oxp_response_code": response_code,
             "oxp_response": oxp_response_json,
         }
         self.rpc_producer = RpcProducer(5, "", PUB_QUEUE)
@@ -58,6 +76,15 @@ class SdxControllerMsgHandler:
         self.logger.debug(
             f"Sent OXP connection response to SDX controller via MQ. MQ response: {response}"
         )
+
+    def _build_no_response_payload(self, operation, error):
+        return {
+            "msg": f"No response received from OXP during {operation.upper()} request.",
+            "error_source": "sdx-lc",
+            "error_type": "no_oxp_response",
+            "operation": operation,
+            "details": str(error),
+        }
 
     def process_sdx_controller_json_msg(self, msg):
         if "Heart Beat" in str(msg):
@@ -113,6 +140,13 @@ class SdxControllerMsgHandler:
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
+                    self.send_conn_response_to_sdx_controller(
+                        service_id,
+                        msg_json["operation"],
+                        oxp_response=self._build_no_response_payload("post", e),
+                        oxp_response_code=503,
+                    )
+                    return
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
                 )
@@ -136,6 +170,13 @@ class SdxControllerMsgHandler:
                     self.logger.info(
                         "Check your configuration and make sure OXP service is running."
                     )
+                    self.send_conn_response_to_sdx_controller(
+                        service_id,
+                        msg_json["operation"],
+                        oxp_response=self._build_no_response_payload("delete", e),
+                        oxp_response_code=503,
+                    )
+                    return
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
                 )
