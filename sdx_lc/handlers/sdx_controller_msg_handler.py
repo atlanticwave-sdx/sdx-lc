@@ -38,7 +38,12 @@ class SdxControllerMsgHandler:
         self.message_id = 0
 
     def send_conn_response_to_sdx_controller(
-        self, service_id, operation, oxp_response=None, oxp_response_code=None
+        self,
+        service_id,
+        operation,
+        oxp_response=None,
+        oxp_response_code=None,
+        breakdown_domain=None,
     ):
         if oxp_response_code is not None:
             response_code = oxp_response_code
@@ -70,6 +75,8 @@ class SdxControllerMsgHandler:
             "oxp_response_code": response_code,
             "oxp_response": oxp_response_json,
         }
+        if breakdown_domain:
+            rpc_msg["breakdown_domain"] = breakdown_domain
         self.rpc_producer = RpcProducer(5, "", PUB_QUEUE)
         response = self.rpc_producer.call(json.dumps(rpc_msg))
         self.rpc_producer.stop()
@@ -145,13 +152,17 @@ class SdxControllerMsgHandler:
                         msg_json["operation"],
                         oxp_response=self._build_no_response_payload("post", e),
                         oxp_response_code=503,
+                        breakdown_domain=msg_json.get("breakdown_domain"),
                     )
                     return
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
                 )
                 self.send_conn_response_to_sdx_controller(
-                    service_id, msg_json["operation"], oxp_response
+                    service_id,
+                    msg_json["operation"],
+                    oxp_response,
+                    breakdown_domain=msg_json.get("breakdown_domain"),
                 )
             elif msg_json.get("operation") == "delete":
                 evc_id = msg_json.get("evc_id")
@@ -175,13 +186,17 @@ class SdxControllerMsgHandler:
                         msg_json["operation"],
                         oxp_response=self._build_no_response_payload("delete", e),
                         oxp_response_code=503,
+                        breakdown_domain=msg_json.get("breakdown_domain"),
                     )
                     return
                 self.logger.info(
                     f"Status from OXP: {oxp_response} - {oxp_response.text}"
                 )
                 self.send_conn_response_to_sdx_controller(
-                    service_id, msg_json["operation"], oxp_response
+                    service_id,
+                    msg_json["operation"],
+                    oxp_response,
+                    breakdown_domain=msg_json.get("breakdown_domain"),
                 )
         elif "version" in msg_json:
             msg_id = msg_json["id"]
