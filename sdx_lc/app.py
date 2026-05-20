@@ -71,9 +71,6 @@ def create_app():
         f"domain: {os.getenv('SDXLC_DOMAIN')})"
     )
 
-    heartbeat_thread = threading.Thread(target=start_heartbeat)
-    heartbeat_thread.start()
-
     # Run swagger service
     app = connexion.App(__name__, specification_dir="./swagger/")
     app.app.json_encoder = encoder.JSONEncoder
@@ -91,6 +88,9 @@ def create_app():
     # Consume connection/link messages
     thread_queue = Queue()
     start_consumer(thread_queue, db_instance)
+
+    heartbeat_thread = threading.Thread(target=start_heartbeat)
+    heartbeat_thread.start()
 
     return app.app
 

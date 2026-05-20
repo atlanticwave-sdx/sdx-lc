@@ -2,6 +2,7 @@
 import logging
 import os
 import threading
+import time
 import traceback
 from queue import Queue
 
@@ -19,6 +20,14 @@ MQ_PASS = os.environ.get("MQ_PASS")
 class TopicQueueConsumer(object):
     def __init__(self, thread_queue, exchange_name):
         self.logger = logging.getLogger(__name__)
+        self.exchange_name = exchange_name
+        self._thread_queue = thread_queue
+        self.routing_key = os.getenv("SDXLC_DOMAIN")
+        self.sdx_controller_msg_handler = SdxControllerMsgHandler()
+        self._exit_event = threading.Event()
+        self._connect()
+
+    def _connect(self):
         self.connection = pika.BlockingConnection(
             pika.ConnectionParameters(
                 host=MQ_HOST,
@@ -28,13 +37,7 @@ class TopicQueueConsumer(object):
         )
 
         self.channel = self.connection.channel()
-        self.exchange_name = exchange_name
-
         self.result = self.channel.queue_declare(queue="", exclusive=True)
-        self._thread_queue = thread_queue
-
-        self.routing_key = os.getenv("SDXLC_DOMAIN")
-        self.sdx_controller_msg_handler = SdxControllerMsgHandler()
 
     def on_rpc_request(self, ch, method, props, message_body):
         response = message_body
@@ -65,30 +68,51 @@ class TopicQueueConsumer(object):
             self.logger.error(f"Failed to process msg: {exc} - {err}")
 
     def start_consumer(self):
-        # self.channel.queue_declare(queue=SUB_QUEUE)
-        self.channel.exchange_declare(
-            exchange=self.exchange_name, exchange_type="topic"
-        )
-        queue_name = self.result.method.queue
+        while not self._exit_event.is_set():
+            try:
+                if self.connection.is_closed or self.channel.is_closed:
+                    self._connect()
+                self.channel.exchange_declare(
+                    exchange=self.exchange_name, exchange_type="topic"
+                )
+                queue_name = self.result.method.queue
 
-        self.channel.queue_bind(
-            exchange=self.exchange_name, queue=queue_name, routing_key=self.routing_key
-        )
+                self.channel.queue_bind(
+                    exchange=self.exchange_name,
+                    queue=queue_name,
+                    routing_key=self.routing_key,
+                )
 
-        self.channel.basic_qos(prefetch_count=1)
+                self.channel.basic_qos(prefetch_count=1)
 
-        self.channel.basic_consume(
-            queue=queue_name, on_message_callback=self.callback, auto_ack=True
-        )
+                self.channel.basic_consume(
+                    queue=queue_name, on_message_callback=self.callback, auto_ack=True
+                )
 
-        self.logger.info(
-            f" [MQ] Awaiting requests from queue:'{queue_name}'"
-            f" with exchange_name: '{self.exchange_name}'"
-            f" routing_key:'{self.routing_key}'"
-            f" (MQ_HOST: {MQ_HOST}, MQ_PORT: {MQ_PORT})"
-        )
+                self.logger.info(
+                    f" [MQ] Awaiting requests from queue:'{queue_name}'"
+                    f" with exchange_name: '{self.exchange_name}'"
+                    f" routing_key:'{self.routing_key}'"
+                    f" (MQ_HOST: {MQ_HOST}, MQ_PORT: {MQ_PORT})"
+                )
 
-        self.channel.start_consuming()
+                self.channel.start_consuming()
+            except Exception as exc:
+                self.logger.warning(
+                    f"[MQ] Consumer for routing_key {self.routing_key} disconnected: {exc}"
+                )
+                try:
+                    self.connection.close()
+                except Exception:
+                    pass
+                time.sleep(5)
+                try:
+                    self._connect()
+                except Exception as reconnect_exc:
+                    self.logger.warning(
+                        f"[MQ] Reconnect failed for routing_key {self.routing_key}: {reconnect_exc}"
+                    )
+                    time.sleep(5)
 
 
 if __name__ == "__main__":
